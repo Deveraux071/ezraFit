@@ -1,0 +1,24 @@
+tools:
+  exceptions:
+    frontend: https://dcsil.sentry.io/projects/ezra-mvp-frontend/?project=4504776458698752
+    backend: https://dcsil.sentry.io/projects/ezra-mvp-backend/?project=4504776538324992
+  logging: 
+  ci: 
+
+services:
+  production:
+    frontend: https://ezrafit.onrender.com/
+    backend: https://ezrafit-backend.onrender.com/ 
+  production-dashboard:
+    frontend: 
+    backend: 
+
+docs:
+  getting_started: https://github.com/dcsil/ezra
+
+commands:
+  bootstrap: sh script/bootstrap
+  server: 
+    backend: cd backend; python3 app.py
+    frontend: cd frontend; npm start
+  test: cd frontend; npm test
