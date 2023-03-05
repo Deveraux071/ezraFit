@@ -12,7 +12,7 @@ jobs:
 #         run: |
 #           ls ${{ github.workspace }}
       - name: Run frontend
-        working-directory: ./frontend/src
+        working-directory: ../frontend
         run: |
             npm start
       - run: echo "This job's status is ${{ job.status }}."
