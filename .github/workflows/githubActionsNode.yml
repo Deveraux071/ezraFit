@@ -23,6 +23,5 @@ jobs:
       - name: Run frontend
         working-directory: ./frontend
         run: |
-            npm ci
             npm start
       - run: echo "This job's status is ${{ job.status }}."
