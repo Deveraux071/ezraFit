@@ -22,6 +22,5 @@ jobs:
 #           ls ${{ github.workspace }}
       - name: Run frontend
         working-directory: ./frontend
-      - run: npm ci
-      - run: npm start
-      - run: echo "This job's status is ${{ job.status }}."
+        run: |
+            npm test
