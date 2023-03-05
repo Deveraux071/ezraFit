@@ -24,4 +24,4 @@ jobs:
         working-directory: ./frontend
         run: |
             npm ci
-            npm start
+            npm test
