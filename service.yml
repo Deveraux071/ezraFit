@@ -2,11 +2,11 @@ tools:
   exceptions:
     frontend: https://dcsil.sentry.io/projects/ezra-mvp-frontend/?project=4504776458698752
     backend: https://dcsil.sentry.io/projects/ezra-mvp-backend/?project=4504776538324992
-  logging: 
+  logging: https://logtail.com/team/150073/tail?s=242934
   ci: https://github.com/dcsil/ezraFitMVP/blob/main/.github/workflows/githubActionsNode.yml
 
 services:
-  production:
+  production: 
     frontend: https://ezrafit.onrender.com/
     backend: https://ezrafit-backend.onrender.com/ 
 
@@ -14,8 +14,8 @@ docs:
   getting_started: https://github.com/dcsil/ezra
 
 commands:
-  bootstrap: sh script/bootstrap
-  database: ''
+  bootstrap: ./start-scripts/sh
+  database: https://console.firebase.google.com/u/0/project/ezrafit-e157e/database/ezrafit-e157/database
   server: 
     frontend: cd frontend; npm start
     backend: cd backend; python3 app.py
