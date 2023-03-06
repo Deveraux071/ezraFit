@@ -14,7 +14,7 @@ docs:
   getting_started: https://github.com/dcsil/ezra
 
 commands:
-  bootstrap: ./start-scripts/sh
+  bootstrap: ./scripts/bootstrap.sh
   database: https://console.firebase.google.com/u/0/project/ezrafit-e157e/database/ezrafit-e157/database
   server: 
     frontend: cd frontend; npm start
