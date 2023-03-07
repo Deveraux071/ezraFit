@@ -16,5 +16,5 @@ cd -
 cd backend
 python3 -m venv be
 source be/bin/activate
-python3 -m pip install –upgrade pip
+python3 -m pip install pip
 pip install -r requirements.txt
