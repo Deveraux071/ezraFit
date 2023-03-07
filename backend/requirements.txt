@@ -122,3 +122,4 @@ Werkzeug==2.2.2
 whitenoise==6.0.0
 wordcloud==1.8.2.2
 wsproto==1.2.0
+python-firebase

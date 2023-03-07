@@ -1,6 +1,9 @@
 import sentry_sdk
 from flask import Flask
 from sentry_sdk.integrations.flask import FlaskIntegration
+from firebase import firebase
+
+firebase = firebase.FirebaseApplication('https://ezrafit-e157e-default-rtdb.firebaseio.com/', None)
 
 sentry_sdk.init(
     dsn="https://7f880ed937ed44a5be93ec46fb1d3404@o358880.ingest.sentry.io/4504776538324992",
@@ -17,6 +20,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
+  result = firebase.get('/users', None)
+  print (result)
   return "Hello World!"
 
 @app.route('/debug-sentry')
