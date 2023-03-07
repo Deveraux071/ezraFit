@@ -18,5 +18,5 @@ commands:
   database: https://console.firebase.google.com/u/0/project/ezrafit-e157e/database/ezrafit-e157/database
   server: 
     frontend: cd frontend; npm start
-    backend: cd backend; python3 app.py
+    backend: cd backend; source be/bin/activate; python3 app.py
   test: cd frontend; npm test
