@@ -1,4 +1,5 @@
 import numpy as np
+
 '''
 Upper Body Recommender: 
 Required inputs: sizing chart, measurements
@@ -16,48 +17,36 @@ Required inputs: sizing chart, measurements
             t-shirt-tight-fit: ...
         }
 Process:
-    - Procedure 1: 
-        - take measurement for each body part and calculate difference w.r.t size
-        - find size with the smallest difference for each body part
-        - take majority response
-            NOTE: we may only want to consider something with a positive difference, since 
-            negative difference means that the clothing item may be tight
-    - Procedure 2: not a good idea
-        - for every size, create measurement-size pair
-        - calculate similarity value (cosine?)
-        - report the one with the smallest difference
-    - Procedure 3:
-        - take measurement for each body part and calculate difference w.r.t size
-        - compared to a [0, 0, 0, ..] array, calculate euclidean distance
-        - the one with the smallest euclidean distance is the right size
+    - take measurement for each body part and calculate difference w.r.t size
+    - compared to a [0, 0, 0, ..] array, calculate euclidean distance
+    - the one with the smallest euclidean distance is the right size
     - this must be done for each garment type for each size 
 Output:
     - size that is the closest match for each garment type
 
 '''
-# TODO: 
-#   need to figure out a way to leave out body parts that aren't common to both measurements and sizes dict.
-#   need to figure out if average is better than max count - might be if there's 1 of each size as best fit
-#   if taking average, might be better to assign number to each size - cannot average strings 
-#   is euclidean distance better than majority vote? should be 
 
-# uses Procedure 3
-def upper_body_size_3(measurements, sizes):
-    item_to_size = {}
-    ref = [0, 0, 0]
-    for items in sizes:
-        ms_to_size = {}
-        item = sizes[items]
-        for size in item:
-            curr_size = item[size]
-            euc = euclidean_dist(measurements, curr_size, ref)
-            ms_to_size[size] = euc
-        item_to_size[items] = min(ms_to_size.items(), key=lambda x: x[1])[0]
+def get_common_parts(ms, items):
+    '''
+    Helper function to get the body parts for which we have both measurements and sizing chart information
+    Returns a list of common body parts
+    '''
+    ms_parts = list(ms.keys())
+    item_keys = list(items.keys()) # tops, bottoms, etc.
+    size_keys = list(items[item_keys[0]].keys()) # small, medium, etc.
+    first_entry = items[item_keys[0]][size_keys[0]]
+    sz_parts = list(first_entry.keys())
+    common = [value for value in ms_parts if value in sz_parts]
+    return common
 
-    return item_to_size
-
-def euclidean_dist(ms, size, ref):
-    diff = [ms['waist'] - size['waist'], ms['chest'] - size['chest'], ms['arm'] - size['arm']]
+def euclidean_dist(ms, size, ref, common):
+    '''
+    Helper function to calculate the euclidean distance between two arrays
+    '''
+    diff = []
+    for part in common:
+        curr_dif = ms[part] - size[part]
+        diff.append(curr_dif)
     diff_np = np.array(diff)
     ref_np = np.array(ref)
     print(diff_np)
@@ -65,44 +54,19 @@ def euclidean_dist(ms, size, ref):
     dist = np.linalg.norm(diff_np - ref_np)
     return dist
 
-# uses Procedure 1
-def upper_body_size_1(measurements, sizes):
+def upper_body_size(measurements, sizes):
     item_to_size = {}
-    ms = [measurements['waist'], measurements['chest'], measurements['arm']]
-    
+    ref = [0, 0, 0]
+    common_parts = get_common_parts(measurements, sizes)
+
     for items in sizes:
-        diffs = {}
-        size_occurrence = {}
+        ms_to_size = {}
         item = sizes[items]
         for size in item:
             curr_size = item[size]
-            sz = [curr_size['waist'], curr_size['chest'], curr_size['arm']]
-            sub = [x1 - x2 for (x1, x2) in zip(sz, ms)]
-            if ('waist' in diffs):
-                diffs['waist'][size] = sub[0]
-            else:
-                diffs['waist'] = {size: sub[0]}
-            if ('chest' in diffs):
-                diffs['chest'][size] = sub[0]
-            else:
-                diffs['chest'] = {size: sub[0]}
-            if ('arm' in diffs):
-                diffs['arm'][size] = sub[0]
-            else:
-                diffs['arm'] = {size: sub[0]}
-        # loop through body part and find size with min diff
-        for body_part in diffs:
-            differences = diffs[body_part]
-            match = min(differences.items(), key=lambda x: x[1])[0]
-            if (match in size_occurrence):
-                size_occurrence[match] += 1
-            else:
-                size_occurrence[match] = 1
-        sum_sizes = sum(size_occurrence.values())
-        
-        #majority = max(size_occurrence.items(), key=lambda x: x[1])[0]
-        #print('majority is', majority)
-        item_to_size[items] = sum_sizes/3
+            euc = euclidean_dist(measurements, curr_size, ref, common_parts)
+            ms_to_size[size] = euc
+        item_to_size[items] = min(ms_to_size.items(), key=lambda x: x[1])[0]
 
     return item_to_size
 
@@ -200,4 +164,4 @@ chart = {
 }
 
 if __name__=='__main__':
-    print(upper_body_size_3(ms, chart))
+    print(upper_body_size(ms, chart))
