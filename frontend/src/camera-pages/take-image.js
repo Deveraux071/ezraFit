@@ -1,24 +1,23 @@
 import Webcam from 'react-webcam';
+import { useNavigate } from 'react-router-dom';
 import { useRef, useState, useEffect } from 'react';
 import { Grid, Box, Typography, Button } from "@mui/material"
 import { DropDown } from '../components/dropdown';
 import { Timer } from '../components/timer';
 import { FrontSilhouette } from '../assets/front-silhouette';
 import { SideSilhouette } from '../assets/side-silhouette';
+
 export const TakeImage = ( {imageType, svgType} ) => {
+    const navigate = useNavigate();
+
     const webRef = useRef(null);
-    const [img, setImg] = useState('')
-    const [imageTaken, setImageTaken] = useState(false);
-    const [time, setTime] = useState(0);
+    const [time, setTime] = useState('');
     const [dropdownVal, setDropdownVal] = useState('');
     const [isTimeSet, setIsTimeSet] = useState(false);    
 
     const showImage = () => {
         let img = webRef.current.getScreenshot();
         localStorage.setItem(imageType, img);
-        // TODO: move these to next page, not needed here since image isn't displayed here
-        setImg(img);
-        setImageTaken(true);
     }
 
     const onDropdownSelect = (t) => {
@@ -31,9 +30,12 @@ export const TakeImage = ( {imageType, svgType} ) => {
     }
 
     useEffect(() => {
-        if (time.isNan || time === 0) {
+        if (time.isNan) {
+            return;
+        }
+        if (time === 0) {
             showImage();
-            // TODO: navigate to next page
+            navigate('/view-image')
             return;
         }
         
@@ -82,7 +84,7 @@ export const TakeImage = ( {imageType, svgType} ) => {
                         3. Stand in the silhouette.
                     </Typography>
                     <Typography>
-                        4. EzraFit will automatically take a picture when the timer runs out!
+                        EzraFit will automatically take a picture when the timer runs out!
                     </Typography>
                     <Box display='flex' flexDirection='row'>
                         <Typography>Timer: </Typography>
@@ -99,7 +101,6 @@ export const TakeImage = ( {imageType, svgType} ) => {
                         <Timer time={time}/>
                     ) : (<></>)}
                 </Grid>
-                {imageTaken ? (<img src={img}></img>) : (<></>)}
             </Grid>
         </Box>
     )
