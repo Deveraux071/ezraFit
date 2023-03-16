@@ -6,8 +6,7 @@ import { Camera } from './components/camera-box2';
 function App() {
   return (
     <div className="App">
-      
-      <TakeImage/>
+      <TakeImage imageType='side' svgType='side'/>
     </div>
   );
 }

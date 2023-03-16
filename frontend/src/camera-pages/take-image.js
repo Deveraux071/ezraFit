@@ -3,34 +3,37 @@ import { useRef, useState, useEffect } from 'react';
 import { Grid, Box, Typography, Button } from "@mui/material"
 import { DropDown } from '../components/dropdown';
 import { Timer } from '../components/timer';
-
-export const TakeImage = () => {
+import { FrontSilhouette } from '../assets/front-silhouette';
+import { SideSilhouette } from '../assets/side-silhouette';
+export const TakeImage = ( {imageType, svgType} ) => {
     const webRef = useRef(null);
     const [img, setImg] = useState('')
-    const [start, setStart] = useState(false);
     const [imageTaken, setImageTaken] = useState(false);
     const [time, setTime] = useState(0);
+    const [dropdownVal, setDropdownVal] = useState('');
     const [isTimeSet, setIsTimeSet] = useState(false);    
 
     const showImage = () => {
         let img = webRef.current.getScreenshot();
-        localStorage.setItem('image1', img);
+        localStorage.setItem(imageType, img);
+        // TODO: move these to next page, not needed here since image isn't displayed here
+        setImg(img);
         setImageTaken(true);
     }
 
     const onDropdownSelect = (t) => {
-        setTime(t);
-        setIsTimeSet(true);
+        setDropdownVal(t);
     }
 
     const onStart = () => {
-        setStart(true);
+        setTime(dropdownVal);
+        setIsTimeSet(true);
     }
 
     useEffect(() => {
-        if (time === 0) {
+        if (time.isNan || time === 0) {
             showImage();
-            console.log('timer out');
+            // TODO: navigate to next page
             return;
         }
         
@@ -47,22 +50,45 @@ export const TakeImage = () => {
     return (
         <Box>
             <Grid container>
-                <Grid item xs={3}>
+                <Grid item xs={2}>
 
                 </Grid>
                 <Grid item xs={6} display='flex' flexDirection='column'>
                     <Typography>Scan to Get Your Measurements!</Typography>
-                    <Webcam ref={webRef}/>
+                    <Box position='relative'>
+                        <Webcam ref={webRef} />
+                        <div style={{position: 'absolute', width: '34%', top: 0, right: 0, bottom: 0, left: 0, margin: 'auto'}}>
+                            {svgType === 'front' ? (
+                                <FrontSilhouette width='inherit' height='inherit'/>
+                            ) : (
+                                <SideSilhouette width='inherit' height='inherit'/>
+                            )}
+                            
+                        </div>
+                        
+                    </Box>
+                    
+                    
                 </Grid>
-                <Grid item xs={3} display='flex' flexDirection='column'>
+                <Grid item xs={4} display='flex' flexDirection='column'>
                     <Typography>Instructions</Typography>
-                    <Typography >
+                    <Typography>
                         1. Set the timer to your desired length.
+                    </Typography>
+                    <Typography>
                         2. Press start button.
+                    </Typography>
+                    <Typography>
                         3. Stand in the silhouette.
+                    </Typography>
+                    <Typography>
                         4. EzraFit will automatically take a picture when the timer runs out!
                     </Typography>
-                    <DropDown data={times} onClick={onDropdownSelect}/>
+                    <Box display='flex' flexDirection='row'>
+                        <Typography>Timer: </Typography>
+                        <DropDown data={times} onClick={onDropdownSelect}/>
+                    </Box>
+                    
                     <Button onClick={() => onStart()}>
                         Start 
                     </Button>
@@ -73,10 +99,8 @@ export const TakeImage = () => {
                         <Timer time={time}/>
                     ) : (<></>)}
                 </Grid>
+                {imageTaken ? (<img src={img}></img>) : (<></>)}
             </Grid>
-            {imageTaken ? (
-                <img src={img}></img>
-            ) : (<></>)}
         </Box>
     )
 }
