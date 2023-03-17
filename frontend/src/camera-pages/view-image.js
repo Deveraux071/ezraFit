@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Grid, Box, Typography, Button } from "@mui/material"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-// next could be take-image or calculation page
-// prev is always take-image
-// TODO: send props with navigate
-export const ViewImage = ( {imageNum, imageType, next, prev} ) => {
+export const ViewImage = ( {imageNum, imageType, next} ) => {
+    const location = useLocation();
+    if (!imageNum) {
+        imageNum = location.state.imageNum
+        imageType = location.state.imageType
+        next = location.state.next
+    }
+    
     const navigate = useNavigate();
     const [img, setImg] = useState();
     
@@ -15,14 +19,17 @@ export const ViewImage = ( {imageNum, imageType, next, prev} ) => {
 
     const onNext = (e) => {
         e.preventDefault();
-        const toNav = '/' + next
-        navigate(toNav);
+        if (next === 'side') {
+            navigate('/take-image', {state: {imageType: 'side', svgType: 'side'}})
+            return;
+        }
+        navigate('/calculating');
     }
 
     const onPrev = (e) => {
         e.preventDefault();
-        const toNav = '/' + prev
-        navigate(toNav);
+        localStorage.setItem(imageType, '')
+        navigate('/take-image', {state: {imageType: imageType, svgType: imageType}})
     }
 
     let num = 'First';
@@ -35,14 +42,14 @@ export const ViewImage = ( {imageNum, imageType, next, prev} ) => {
                 <Grid item xs={2}>
 
                 </Grid>
-                <Grid item xs={6} display='flex' flexDirection='column'>
-                    <Typography>Scan to Get Your Measurements!</Typography>
+                <Grid item xs={6} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
+                    <Typography fontSize='2rem'>Scan to Get Your Measurements!</Typography>
                     <Box position='relative'>
                         <img src={img}></img>
                     </Box>
                 </Grid>
-                <Grid item xs={4} display='flex' flexDirection='column'>
-                    <Typography>Here's Your {num} Image!</Typography>
+                <Grid item xs={4} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
+                    <Typography fontSize='2rem'>Here's Your {num} Image!</Typography>
                     <Button onClick={(e) => onNext(e)}>
                         Next 
                     </Button>
