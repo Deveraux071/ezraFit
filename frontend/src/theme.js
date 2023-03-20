@@ -17,15 +17,17 @@ export const theme = createTheme(
             },
         },
         typography: {
-            
+            fontFamily: "'Montserrat', sans-serif",
         },
         button: {
             variant: 'outlined',
-            boxShadow: 3,
             borderRadius: '10px',
             borderColor: '#F888CB'
         },
         colors: {
+            pink: '#F888CB',
+            white: '#ffffff',
+            gray: '#AEAEAE'
         }
     },
     {

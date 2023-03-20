@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Grid, Box, Typography, Button } from "@mui/material"
 import { useNavigate, useLocation } from 'react-router-dom';
+import { ReturnToHome } from '../components/return';
+import { PinkFillButton } from '../components/pink-fill-button';
+import { PinkOutlineButton } from '../components/pink-outline-button';
+import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
+import { theme } from '../theme';
 
 export const ViewImage = ( {imageNum, imageType, next} ) => {
     const location = useLocation();
@@ -40,7 +45,7 @@ export const ViewImage = ( {imageNum, imageType, next} ) => {
         <Box>
             <Grid container>
                 <Grid item xs={2}>
-
+                    <ReturnToHome/>
                 </Grid>
                 <Grid item xs={6} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
                     <Typography fontSize='2rem'>Scan to Get Your Measurements!</Typography>
@@ -49,16 +54,10 @@ export const ViewImage = ( {imageNum, imageType, next} ) => {
                     </Box>
                 </Grid>
                 <Grid item xs={4} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
-                    <Typography fontSize='2rem'>Here's Your {num} Image!</Typography>
-                    <Button onClick={(e) => onNext(e)}>
-                        Next 
-                    </Button>
-                    <Button onClick={(e) => onPrev(e)}>
-                        Retake
-                    </Button>
-                    <Button>
-                        Cancel
-                    </Button>
+                    <Typography fontSize='2rem' fontWeight={900}>Here's Your {num} Image!</Typography>
+                    <PinkFillButton onClick={(e) => onNext(e)} text='Next'/>
+                    <PinkOutlineButton onClick={(e) => onPrev(e)} text='Retake' icon={<CameraAltOutlinedIcon sx={{color: theme.colors.pink}}/>}/>
+                    <PinkOutlineButton text='Cancel'/>
                 </Grid>
             </Grid>
         </Box>
