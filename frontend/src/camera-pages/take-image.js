@@ -10,8 +10,8 @@ import { ReturnToHome } from '../components/return';
 import { PinkFillButton } from '../components/pink-fill-button';
 import { PinkOutlineButton } from '../components/pink-outline-button';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
+import { ImagePlacer } from '../components/image-placer';
 import { theme } from '../theme';
-// TODO: fix timer
 
 export const TakeImage = ( {imageType, svgType} ) => {
     const location = useLocation();
@@ -22,8 +22,8 @@ export const TakeImage = ( {imageType, svgType} ) => {
 
     const navigate = useNavigate();
     const webRef = useRef(null);
-    const [time, setTime] = useState('');
-    const [dropdownVal, setDropdownVal] = useState('');
+    const [time, setTime] = useState(-1);
+    const [dropdownVal, setDropdownVal] = useState(-1);
     const [isTimeSet, setIsTimeSet] = useState(false);    
     
     let imageNum = 1;
@@ -41,12 +41,15 @@ export const TakeImage = ( {imageType, svgType} ) => {
     }
 
     const onStart = () => {
+        if (dropdownVal < 0) {
+            return;
+        }
         setTime(dropdownVal);
         setIsTimeSet(true);
     }
 
     useEffect(() => {
-        if (time.isNan) {
+        if (time < 0) {
             return;
         }
         if (time === 0) {
@@ -65,7 +68,7 @@ export const TakeImage = ( {imageType, svgType} ) => {
         }, 1000)
     
         return clearInterval(time)
-    }, [time])
+    }, [time, ])
 
     const times = [3, 5, 8, 10, 15, 20]
 
@@ -74,6 +77,12 @@ export const TakeImage = ( {imageType, svgType} ) => {
             <Grid container>
                 <Grid item xs={2}>
                     <ReturnToHome/>
+                    <Box display='flex' flexDirection='column'>
+                        {imageType === 'front' ? (
+                            <ImagePlacer view='front' height={200} width={100}/>
+                        ) : (<ImagePlacer view='front' img={localStorage.getItem('front')} height={200} width={100}/>)}
+                        <ImagePlacer view='side' height={200} width={100}/>
+                    </Box>
                 </Grid>
                 <Grid item xs={6} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
                     <Typography fontSize='2rem'>Scan to Get Your Measurements!</Typography>
@@ -112,12 +121,11 @@ export const TakeImage = ( {imageType, svgType} ) => {
                         <PinkFillButton onClick={() => onStart()} text='Start' icon={<CameraAltOutlinedIcon sx={{color: theme.colors.white}}/>}/>
                         <PinkOutlineButton text='Cancel'/>
                     </Box>
-                    <Box>
+                    <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
                         {isTimeSet ? (
                             <Timer time={time}/>
                         ) : (<></>)}
                     </Box>
-                    
                 </Grid>
             </Grid>
         </Box>
