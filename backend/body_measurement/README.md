@@ -19,12 +19,16 @@ python3 code2.py -i1 test_images/final_{YOUR NAME}1.JPG -i2 test_images/final_{Y
 
 ### How to test:
 - For the first two images, (arms spread and facing to the side), click where your waist is. (2 dots). Press esc.
-- Next two images, (arms spread and facing to the side), click where your shoulders are. (2 dots). Press esc.
+- Next two images, (arms spread and facing to the side), click where your chest is. (2 dots). Press esc.
 - Next two images, (arms spread and facing to the side), click where your hips are. (2 dots). Press esc.
 
-- When the checkboard image appears, click your left shoulder, then the left side of your neck, then the right side of your neck and then finally the right shoulder. (4 dots). Press esc. (Repeat for the next image)
+- Then click the left side of your neck, then the right side of your neck. (2 dots). Press esc. 
 
-- When the arms spread image appears, click your left wrist, then your left shoulder, then the right shoulder, and finally the right wrist. (4 dots). Press esc. (Repeat for the next image)
+- Then click the left shoulder, then the right shoulder. (2 dots). Press esc. 
+
+- Next two images, click the left shoulder, then left side of your neck, then right side of the neck and right shoulder (like the two above). (4 dots). Press esc. 
+
+- Then in the next image (arms spread image), click on the left wrist then the right wrist. (2 dots). Press esc.
 
 - Finally the standing image will appear. Click your left inseam, then left ankle, then right inseam and finally right ankle. (4 dots). Press esc. 
 
