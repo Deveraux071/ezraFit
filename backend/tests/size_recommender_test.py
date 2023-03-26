@@ -169,8 +169,8 @@ chart_lower = {
     },
 }
 
-def test_upper_size():
-    ms = {
+def test_upper_size_1():
+    ms1 = {
         'waist': 79.23,
         'chest': 92.09,
         'shoulder': 33.36,
@@ -178,10 +178,21 @@ def test_upper_size():
         'hip': 93.1,
         'leg': 78,
     }
-    assert get_size(ms, chart_upper) == '8'
+    assert get_size(ms1, chart_upper) == '8'
 
-def test_lower_size():
-    ms = {
+def test_upper_size_2():
+    ms2 = {
+        'waist': 73.01,
+        'chest': 91.43,
+        'shoulder': 32.36,
+        'arm': 48.71,
+        'hip': 92.1,
+        'leg': 78,
+    }
+    assert get_size(ms2, chart_upper) == '6'
+
+def test_lower_size_1():
+    ms1 = {
         'waist': 79.23,
         'chest': 92.09,
         'shoulder': 33.36,
@@ -189,5 +200,15 @@ def test_lower_size():
         'hip': 93.1,
         'leg': 78,
     }
-    assert get_size(ms, chart_lower) == '8'
+    assert get_size(ms1, chart_lower) == '8'
 
+def test_lower_size_2():
+    ms2 = {
+        'waist': 73.01,
+        'chest': 91.43,
+        'shoulder': 32.36,
+        'arm': 48.71,
+        'hip': 92.1,
+        'leg': 78,
+    }
+    assert get_size(ms2, chart_upper) == '6'
