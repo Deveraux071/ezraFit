@@ -6,7 +6,7 @@ import { DropDown } from '../components/dropdown';
 import { Timer } from '../components/timer';
 import { FrontSilhouette } from '../assets/front-silhouette';
 import { SideSilhouette } from '../assets/side-silhouette';
-import { ReturnToHome } from '../components/return';
+import { ReturnToHome } from '../components/return-home';
 import { PinkFillButton } from '../components/pink-fill-button';
 import { PinkOutlineButton } from '../components/pink-outline-button';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';

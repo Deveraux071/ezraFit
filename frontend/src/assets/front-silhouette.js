@@ -11,4 +11,3 @@ export const FrontSilhouette = ( {width, height }) => {
         </svg>
     )
 }
-

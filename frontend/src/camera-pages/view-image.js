@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Grid, Box, Typography, Button } from "@mui/material"
+import { Grid, Box, Typography } from "@mui/material"
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ReturnToHome } from '../components/return';
+import { ReturnToHome } from '../components/return-home';
 import { PinkFillButton } from '../components/pink-fill-button';
 import { PinkOutlineButton } from '../components/pink-outline-button';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
@@ -21,7 +21,7 @@ export const ViewImage = ( {imageNum, imageType, next} ) => {
     
     useEffect(() => {
         setImg(localStorage.getItem(imageType));
-    }, [])
+    }, [imageType,])
 
     const onNext = (e) => {
         e.preventDefault();
@@ -57,7 +57,7 @@ export const ViewImage = ( {imageNum, imageType, next} ) => {
                 <Grid item xs={6} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
                     <Typography fontSize='2rem'>Scan to Get Your Measurements!</Typography>
                     <Box position='relative'>
-                        <img src={img}></img>
+                        <img src={img} alt={imageType}></img>
                     </Box>
                 </Grid>
                 <Grid item xs={4} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
