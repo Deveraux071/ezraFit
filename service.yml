@@ -20,3 +20,6 @@ commands:
     frontend: cd frontend; npm start
     backend: cd backend; source be/bin/activate; python3 app.py
   test: cd frontend; npm test
+
+name: Code Coverage Summary
+  uses: irongut/CodeCoverageSummary@v1.3.0
