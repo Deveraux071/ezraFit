@@ -26,7 +26,9 @@ python3 code2.py -i1 test_images/final_{YOUR NAME}1.JPG -i2 test_images/final_{Y
 
 - Then click the left shoulder, then the right shoulder. (2 dots). Press esc. 
 
-- Next two images, click the left shoulder, then left side of your neck, then right side of the neck and right shoulder (like the two above). (4 dots). Press esc. 
+- Then click left side of your neck, then right side of the neck. (2 dots). Press esc. 
+
+- Then click left shoulder, then right shoulder. (2 dots). Press esc. 
 
 - Then in the next image (arms spread image), click on the left wrist then the right wrist. (2 dots). Press esc.
 
