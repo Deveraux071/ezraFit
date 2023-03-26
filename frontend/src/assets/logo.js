@@ -1,6 +1,6 @@
-export const Logo = () => {
+export const Logo = ({height, width}) => {
     return (
-        <svg width="143" height="144" viewBox="0 0 143 144" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+        <svg width={width} height={height} viewBox="0 0 143 144" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
             <path d="M71.5 144C110.988 144 143 111.765 143 72C143 32.2355 110.988 0 71.5 0C32.0116 0 0 32.2355 0 72C0 111.765 32.0116 144 71.5 144Z" fill="#F888CB"/>
             <rect x="27.7061" y="24.2998" width="87.5875" height="95.4" fill="url(#pattern0)"/>
             <defs>
