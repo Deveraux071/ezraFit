@@ -26,7 +26,7 @@ python3 code2.py -i1 test_images/final_{YOUR NAME}1.JPG -i2 test_images/final_{Y
 
 - When the arms spread image appears, click your left wrist, then your left shoulder, then the right shoulder, and finally the right wrist. (4 dots). Press esc. (Repeat for the next image)
 
-- Finally the standing image will appear. Click your left waist, then left ankle, then right waist and finally right ankle. (4 dots). Press esc. 
+- Finally the standing image will appear. Click your left inseam, then left ankle, then right inseam and finally right ankle. (4 dots). Press esc. 
 
 - Your results will be in CM. 
 
