@@ -17,9 +17,9 @@ import segment
 refPt = []
 r1=5 #for affine correction
 r2=2 #for measurement
-ref_ht=2 #measurement of checkboard
-rectangle_row=6
-rectangle_col=8
+ref_ht=2.84 #measurement of checkboard
+rectangle_row=9
+rectangle_col=6
 # square_size=int(r+1)
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 metre_pixel_x=0
@@ -86,19 +86,19 @@ def get_points(img):
     cv2.destroyAllWindows()
     return points
 
-def get_real_world_distance(points,m_x,m_y):
-	pixel_dist_y=abs(points[0][1]-points[1][1])
-	pixel_dist_x=abs(points[0][0]-points[1][0])
-	actual_y=m_y*pixel_dist_y
-	actual_x=m_x*pixel_dist_x
-	actual_dist=math.sqrt(actual_y**2 + actual_x**2)
+# def get_real_world_distance(points,m_x,m_y):
+# 	pixel_dist_y=abs(points[0][1]-points[1][1])
+# 	pixel_dist_x=abs(points[0][0]-points[1][0])
+# 	actual_y=m_y*pixel_dist_y
+# 	actual_x=m_x*pixel_dist_x
+# 	actual_dist=math.sqrt(actual_y**2 + actual_x**2)
 	
 
-def get_waist(img,m_x,m_y):
-	points=get_points(img)
-	actual_dist=get_real_world_distance(points,m_x,m_y)
-	# print actual_dist
-	return actual_dist
+# def get_waist(img,m_x,m_y):
+# 	points=get_points(img)
+# 	actual_dist=get_real_world_distance(points,m_x,m_y)
+# 	# print actual_dist
+# 	return actual_dist
 
 
 # returns 4 points at square_size of checkboard 
