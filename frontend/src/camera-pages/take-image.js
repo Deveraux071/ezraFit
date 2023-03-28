@@ -15,11 +15,15 @@ import { theme } from '../theme';
 
 export const TakeImage = ( {imageType, svgType} ) => {
     const location = useLocation();
-    if (!imageType) {
+    if (!imageType && location.state === null) {
+        console.log('yes')
+        imageType = 'front'
+        svgType = 'front'
+    }
+    else if (!imageType) {
         imageType = location.state.imageType
         svgType = location.state.svgType
     }
-
     const navigate = useNavigate();
     const webRef = useRef(null);
     const [time, setTime] = useState(-1);
