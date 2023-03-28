@@ -326,7 +326,7 @@ def measure_distance(segmented_image,segmented_arm_image,arm_spread_image,waist_
 	dist1 = dist1/2
 	dist2 = dist2/2
 	perimeter = 2 * 3.1415 * math.sqrt((dist1*dist1 + dist2*dist2)/2)
-	all_measurements['hips'] = perimeter
+	all_measurements['hip'] = perimeter
 
 	head_pt = getHeadPoint(segmented_image)
 	# segmented_image = drawCircle(segmented_image, (head_pt[0],head_pt[1]), draw_radius)
@@ -394,8 +394,8 @@ def measure_distance(segmented_image,segmented_arm_image,arm_spread_image,waist_
 	dist_tuple=dist1,dist2,dist3
 	shoulder_length = (dist+dist_ans)/2
 	sleeve_length = (dist4+dist5)/2
-	all_measurements['shoulder length'] = shoulder_length
-	all_measurements['sleeve length'] = sleeve_length
+	all_measurements['shoulder'] = shoulder_length
+	all_measurements['sleeve'] = sleeve_length
 
 	legs= get_points(segmented_leg_image)
 	if (len(legs) == 4):
@@ -411,7 +411,7 @@ def measure_distance(segmented_image,segmented_arm_image,arm_spread_image,waist_
 		dist2=pixel_to_distance(dist2,metre_pixel_x,metre_pixel_y)
 		maxDist = max(dist1,dist2) #average distance btw the two sides
 		distanceBtwWaistAndAnkle = maxDist * 2 #radius * 2= distance
-		all_measurements['inseam length'] = distanceBtwWaistAndAnkle
+		all_measurements['leg'] = distanceBtwWaistAndAnkle
 
 	return all_measurements
 
