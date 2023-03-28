@@ -7,28 +7,40 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 export const EditAccountForm = ( { name, email, changePW, onDelete, onCancel, onSave } ) => {
     return (
         <Box component="form" noValidate display='flex' flexDirection='column' justifyContent='center' width='50%' alignItems='center' sx={{m:'auto'}} >
-            <Grid container sx={{m: 1}}>
+            <Grid container sx={{m: 1}} display='flex' flexDirection='row' alignItems='center'>
                 <Grid item xs={4} display='flex' flexDirection='row' justifyContent='flex-end' sx={{pr: 2}}>
                     <Typography fontSize='1.5rem' fontWeight={650}>Name: </Typography>
                 </Grid>
                 <Grid item xs={8}>
                     <TextField
                         margin="normal"
+                        defaultValue={name}
                         required
                         fullWidth
-                        label={name}
-                        id="email"
-                        name="email"
+                        id="name"
+                        name="name"
+                        autoComplete="name"
                         autoFocus
+                        inputProps={{ style: {fontSize: '1.5rem'}}}
                     />
                 </Grid>
             </Grid>
-            <Grid container sx={{m: 1}}>
+            <Grid container sx={{m: 1}} display='flex' flexDirection='row' alignItems='center'>
                 <Grid item xs={4} display='flex' flexDirection='row' justifyContent='flex-end' sx={{pr: 2}}>
                     <Typography fontSize='1.5rem' fontWeight={650}>Email: </Typography>
                 </Grid>
                 <Grid item xs={8}>
-                    <Typography fontSize='1.5rem'>{email}</Typography>
+                    <TextField
+                        margin="normal"
+                        defaultValue={email}
+                        required
+                        fullWidth
+                        id="email"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                        inputProps={{ style: {fontSize: '1.5rem'}}}
+                    />
                 </Grid>
             </Grid>
             <Grid display='flex' flexDirection='row' container sx={{m: 1}} alignItems='center'>
@@ -36,15 +48,17 @@ export const EditAccountForm = ( { name, email, changePW, onDelete, onCancel, on
                     <Typography fontSize='1.5rem' fontWeight={650}>Password: </Typography>
                 </Grid>
                 <Grid item xs={8}>
-                    <Button variant='outlined' onClick={() => changePW()} sx={{border: 2, background: theme.colors.white, borderColor: theme.colors.dark_gray, borderRadius: '20px', m: 1}}>
-                        <Typography fontSize='1rem' color={theme.colors.dark_gray} fontWeight={600}>Change Password</Typography>
+                    <Button variant='outlined' onClick={() => changePW()} sx={{border: 2, background: theme.colors.white, borderColor: theme.colors.dark_gray, borderRadius: '20px', m: 1, textTransform: 'none'}}>
+                        <Typography fontSize='1.25rem' color={theme.colors.dark_gray} fontWeight={600}>
+                            Change Password
+                        </Typography>
                     </Button>
                 </Grid>
             </Grid>
             <Box display='flex' flexDirection='row' justifyContent='space-between' alignItems='center' sx={{mt: 5}}>
                 <DeleteForeverOutlinedIcon fontSize='large' sx={{ color: theme.colors.red, m: 1}}/>
-                <Button variant='outlined' onClick={onDelete} sx={{background: theme.colors.white, borderColor: theme.colors.red, borderRadius: '20px', m: 1}}>
-                    <Typography sx={{color: theme.colors.red}} fontSize='1.25rem' fontWeight={650}>
+                <Button variant='outlined' onClick={onDelete} sx={{background: theme.colors.white, borderColor: theme.colors.red, borderRadius: '30px', m: 1, textTransform: 'none'}}>
+                    <Typography sx={{color: theme.colors.red, m: 0.5}} fontSize='1.25rem' fontWeight={650}>
                         Delete My Account
                     </Typography>
                 </Button>
