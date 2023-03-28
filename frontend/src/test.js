@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-
+import { Navigation } from './components/navigation';
 export default function Test() {
     const nav = useNavigate();
     const onNext = () => {
@@ -7,6 +7,8 @@ export default function Test() {
     }
     
     return (
-        <button onClick={onNext}> go </button>
+        <Navigation/>
+        
     )
 }
+//<button onClick={onNext}> go </button>
