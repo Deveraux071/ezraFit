@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 import sys
-import segment
+import backend.body_measurement.segment
 
 ## AV Notes:
 # points not chosen automatically, must be pre-selected by the user, after which projection points for shoulder are seen, but they don't seem accurate
