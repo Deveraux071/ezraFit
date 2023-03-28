@@ -290,6 +290,7 @@ def detect_point_and_ask_user(disp_image,segmented_img,head_point_left,head_poin
 def measure_distance(segmented_image,segmented_arm_image,arm_spread_image,waist_chest_image,image, segmented_leg_image, metre_pixel_x,metre_pixel_y):
 	# print metre_pixel_x
 	# print metre_pixel_y
+	all_measurements = {}
 
 	## AV: similar thing for hip and chest can be done. waist modeled as an ellipse, so need to figure out if the same thing can be applied to hip and chest
 	waist_a = get_points(arm_spread_image)
@@ -301,7 +302,7 @@ def measure_distance(segmented_image,segmented_arm_image,arm_spread_image,waist_
 	dist1 = dist1/2
 	dist2 = dist2/2
 	perimeter = 2 * 3.1415 * math.sqrt((dist1*dist1 + dist2*dist2)/2)
-	print("waist",perimeter)
+	all_measurements['waist'] = perimeter
 
 	# AV: waist replicated for chest
 	chest_a = get_points(arm_spread_image)
@@ -313,7 +314,7 @@ def measure_distance(segmented_image,segmented_arm_image,arm_spread_image,waist_
 	dist1 = dist1/2
 	dist2 = dist2/2
 	perimeter = 2 * 3.1415 * math.sqrt((dist1*dist1 + dist2*dist2)/2)
-	print("chest",perimeter)
+	all_measurements['chest'] = perimeter
 
 	# AV: waist replicated for hip
 	hip_a = get_points(arm_spread_image)
@@ -325,7 +326,7 @@ def measure_distance(segmented_image,segmented_arm_image,arm_spread_image,waist_
 	dist1 = dist1/2
 	dist2 = dist2/2
 	perimeter = 2 * 3.1415 * math.sqrt((dist1*dist1 + dist2*dist2)/2)
-	print("hip",perimeter)
+	all_measurements['hips'] = perimeter
 
 	head_pt = getHeadPoint(segmented_image)
 	# segmented_image = drawCircle(segmented_image, (head_pt[0],head_pt[1]), draw_radius)
@@ -352,7 +353,6 @@ def measure_distance(segmented_image,segmented_arm_image,arm_spread_image,waist_
 	dist3=pixel_to_distance(dist3,metre_pixel_x,metre_pixel_y)
 	dist_ans=dist1+dist2+dist3
 	dist_tuple=dist1,dist2,dist3
-	# print "Shoulder Length",dist
 
 	head_pt = getHeadPoint(segmented_arm_image)
 	arm_spread_image = drawCircle(arm_spread_image, (head_pt[0],head_pt[1]), draw_radius)
@@ -392,8 +392,10 @@ def measure_distance(segmented_image,segmented_arm_image,arm_spread_image,waist_
 	dist_sleeve = (dist5+dist4)/2.0
 	dist=dist1+dist2+dist3
 	dist_tuple=dist1,dist2,dist3
-	print("Shoulder Length",(dist+dist_ans)/2)
-	print("Sleeve Length", (dist4+dist5)/2)
+	shoulder_length = (dist+dist_ans)/2
+	sleeve_length = (dist4+dist5)/2
+	all_measurements['shoulder length'] = shoulder_length
+	all_measurements['sleeve length'] = sleeve_length
 
 	legs= get_points(segmented_leg_image)
 	if (len(legs) == 4):
@@ -409,7 +411,9 @@ def measure_distance(segmented_image,segmented_arm_image,arm_spread_image,waist_
 		dist2=pixel_to_distance(dist2,metre_pixel_x,metre_pixel_y)
 		maxDist = max(dist1,dist2) #average distance btw the two sides
 		distanceBtwWaistAndAnkle = maxDist * 2 #radius * 2= distance
-		print("legs", distanceBtwWaistAndAnkle)
+		all_measurements['inseam length'] = distanceBtwWaistAndAnkle
+
+	return all_measurements
 
 
 def main():
@@ -450,7 +454,7 @@ def main():
 	cv2.imwrite("third.jpg",segmented_legs_image)
 	
 	# img_col = cv2.cvtColor(legs_image,cv2.COLOR_GRAY2RGB)
-	print('vals', metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters)
+	# print('vals', metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters)
 	print("images saved")
 	block_cut = np.zeros(segmented_image.shape)
 	block_cut[coordinate[0][1]:coordinate[1][1],coordinate[0][0]:coordinate[1][0]] = 1
@@ -463,7 +467,8 @@ def main():
 		print("Affine Corrected")
 
 	print('measuring distance')
-	measure_distance(segmented_image,segmented_arm_image,segmented_arm_image,segmented_waist_image,image, segmented_legs_image, metre_pixel_x,metre_pixel_y)
+	measurements_dict = measure_distance(segmented_image,segmented_arm_image,segmented_arm_image,segmented_waist_image,image, segmented_legs_image, metre_pixel_x,metre_pixel_y)
+	print(measurements_dict)
 	print('done')
 
 if __name__=="__main__":
