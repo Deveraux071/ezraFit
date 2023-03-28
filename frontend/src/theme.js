@@ -27,7 +27,10 @@ export const theme = createTheme(
         colors: {
             pink: '#F888CB',
             white: '#ffffff',
-            gray: '#AEAEAE'
+            gray: '#AEAEAE',
+            dark_gray: '#7B7B7B',
+            bg_pink: '#FF9E9E',
+            red: '#FF3737'
         }
     },
     {

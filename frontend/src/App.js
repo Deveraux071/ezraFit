@@ -8,6 +8,9 @@ import { ThemeProvider, CssBaseline } from '@mui/material';
 import { theme } from './theme';
 import { Login } from './auth-pages/login';
 import { Register } from './auth-pages/register';
+import { ViewAccount } from './user-pages/view-account';
+import { EditAccount } from './user-pages/edit-account';
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -20,6 +23,8 @@ function App() {
           <Route path='/calculating' element={<Calculating/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
+          <Route path='/account' element={<ViewAccount/>}/>
+          <Route path='/edit' element={<EditAccount/>}/>
         </Routes>
       </Router>
     </ThemeProvider>
