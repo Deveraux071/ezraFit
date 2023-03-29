@@ -4,24 +4,38 @@ import { WelcomeBanner } from "../components/welcome-banner";
 import { theme } from "../theme"
 import { Box, Typography, Grid, Button } from "@mui/material"
 import { EditButton } from "../components/edit-button"
+import { TabPanel } from '../components/account-page-components/tab-panel';
+import { PasswordChangePopup } from '../components/account-page-components/password-change-popup';
 
 export const ViewAccount = () => {
 
     const navigate = useNavigate();
     const [name, setName] = useState('Leslie Knope')
     const [email, setEmail] = useState('leslieknope@gmail.com')
+    const [pwChange, setPwChange] = useState(false);
 
     const changePW = () => {
         console.log('change')
+        setPwChange(true)
     }
 
     const onEdit = () => {
         navigate('/edit')
     }
 
+    const onPWCancel = () => {
+        setPwChange(false)
+    }
+
+    const onPwSave = () => {
+        console.log('password saved')
+        setPwChange(false)
+    }
+
     return (
         <Box>
             <WelcomeBanner/>
+            <TabPanel activeTab='account'/>
             <Box display='flex' flexDirection='column' justifyContent='center' width='35%' alignItems='center' sx={{m:'auto'}}>
                 <Box display='flex' flexDirection='row' justifyContent='flex-end' width='100%'>
                     <EditButton onClick={() => onEdit()} fontSize='1.25rem' fontWeight={650}/>
@@ -55,6 +69,7 @@ export const ViewAccount = () => {
                     </Grid>
                 </Grid>
             </Box>
+            <PasswordChangePopup onCancel={() => onPWCancel()} onSave={() => onPwSave()} open={pwChange}/>
         </Box>
     )
 }

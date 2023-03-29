@@ -5,15 +5,19 @@ import { theme } from "../theme"
 import { Box, Typography, Grid, Button, TextField } from "@mui/material"
 import { PinkOutlineButton } from "../components/pink-outline-button"
 import { PinkFillButton } from "../components/pink-fill-button"
+import { TabPanel } from '../components/account-page-components/tab-panel';
+import { PasswordChangePopup } from '../components/account-page-components/password-change-popup';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 
 export const EditAccount = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('Leslie Knope')
     const [email, setEmail] = useState('leslieknope@gmail.com')
+    const [pwChange, setPwChange] = useState(false);
 
     const changePW = () => {
         console.log('change')
+        setPwChange(true)
     }
 
     const onDelete = () => {
@@ -29,9 +33,18 @@ export const EditAccount = () => {
         navigate('/account')
     }
 
+    const onPWCancel = () => {
+        setPwChange(false)
+    }
+
+    const onPwSave = () => {
+        console.log('password saved')
+        setPwChange(false)
+    }
     return (
-        <Box>
+        <div>
             <WelcomeBanner/>
+            <TabPanel activeTab='account'/>
             <Box component="form" noValidate display='flex' flexDirection='column' justifyContent='center' width='50%' alignItems='center' sx={{m:'auto'}} >
                 <Grid container sx={{m: 1}} display='flex' flexDirection='row' alignItems='center'>
                     <Grid item xs={4} display='flex' flexDirection='row' justifyContent='flex-end' sx={{pr: 2}}>
@@ -84,9 +97,9 @@ export const EditAccount = () => {
                     </Grid>
                 </Grid>
                 <Box display='flex' flexDirection='row' justifyContent='space-between' alignItems='center' sx={{mt: 5}}>
-                    <DeleteForeverOutlinedIcon fontSize='large' sx={{ color: theme.colors.red, m: 1}}/>
-                    <Button variant='outlined' onClick={() => onDelete()} sx={{background: theme.colors.white, borderColor: theme.colors.red, borderRadius: '30px', m: 1, textTransform: 'none'}}>
-                        <Typography sx={{color: theme.colors.red, m: 0.5}} fontSize='1.25rem' fontWeight={650}>
+                    
+                    <Button variant='outlined' onClick={() => onDelete()} startIcon={<DeleteForeverOutlinedIcon sx={{ color: theme.colors.red}}/>} sx={{background: theme.colors.white, borderColor: theme.colors.red, borderRadius: '20px', textTransform: 'none'}}>
+                        <Typography sx={{color: theme.colors.red}} fontSize='1.25rem' fontWeight={650}>
                             Delete My Account
                         </Typography>
                     </Button>
@@ -96,6 +109,7 @@ export const EditAccount = () => {
                     <PinkFillButton text='Save Changes' onClick={() => onSave()} width='25%'/>
                 </Box>
             </Box>
-        </Box>
+            <PasswordChangePopup onCancel={() => onPWCancel()} onSave={() => onPwSave()} open={pwChange}/>
+        </div>
     )
 }
