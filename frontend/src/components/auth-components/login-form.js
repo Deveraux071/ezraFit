@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { PinkFillButton } from '../pink-fill-button';
 import { PinkOutlineButton } from '../pink-outline-button';
-import { Box, Typography, TextField, Grid, Link } from '@mui/material';
+import { Box, Typography, TextField, Grid, Link, Button } from '@mui/material';
 import { theme } from '../../theme';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,8 +11,8 @@ export default function LoginForm( {formWidth} ) {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
         console.log({
-        email: data.get('email'),
-        password: data.get('password'),
+            email: data.get('email'),
+            password: data.get('password'),
         });
         navigate('/home');
     };
@@ -41,7 +41,7 @@ export default function LoginForm( {formWidth} ) {
             <Typography fontSize='2.5rem'>
                 Log in
             </Typography>
-            <Box component="form" noValidate sx={{ mt: 1, width: '75%' }} width={formWidth} display='flex' flexDirection='column' justifyContent='center'>
+            <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 1, width: '75%' }} width={formWidth} display='flex' flexDirection='column' justifyContent='center'>
                 <Grid container alignItems='center' justifyContent='space-between'>
                     <Grid item xs={4}>
                         <Typography fontSize='1.25rem'>Email: </Typography>
@@ -73,7 +73,7 @@ export default function LoginForm( {formWidth} ) {
                     </Grid>
                 </Grid>
                 <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' sx={{marginTop: 8}}>
-                    <PinkFillButton onClick={(e) => onSubmit(e)} text='Log In' fontSize='1.5rem'/>
+                    <PinkFillButton text='Log In' fontSize='1.5rem' type='submit'/>
                     <PinkOutlineButton text='Cancel' onClick={(e) => onCancel(e)} fontSize='1.5rem'/>
                 </Box>
             </Box>

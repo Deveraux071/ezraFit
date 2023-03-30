@@ -16,7 +16,7 @@ export default function RegisterForm({formWidth}) {
             email: data.get('email'),
             password: data.get('password'),
         });
-        navigate('/home');
+        navigate('/login');
     };
 
     const onCancel = (e) => {
@@ -44,7 +44,7 @@ export default function RegisterForm({formWidth}) {
             <Typography fontSize='2.5rem'>
                 Sign Up
             </Typography>
-            <Box component="form" noValidate sx={{ mt: 1, width: '75%' }} width={formWidth} display='flex' flexDirection='column' justifyContent='center'>
+            <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1, width: '75%' }} width={formWidth} display='flex' flexDirection='column' justifyContent='center'>
                 <Grid container alignItems='center' justifyContent='space-between'>
                     <Grid item xs={4}>
                         <Typography fontSize='1.25rem'>First Name: </Typography>
@@ -106,7 +106,7 @@ export default function RegisterForm({formWidth}) {
                     </Grid>
                 </Grid>
                 <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' sx={{marginTop: 8}}>
-                    <PinkFillButton onClick={(e) => onSubmit()} text='Sign Up' fontSize='1.5rem'/>
+                    <PinkFillButton text='Sign Up' fontSize='1.5rem' type='submit'/>
                     <PinkOutlineButton text='Cancel' onClick={(e) => onCancel()} fontSize='1.5rem'/>
                 </Box>
             </Box>

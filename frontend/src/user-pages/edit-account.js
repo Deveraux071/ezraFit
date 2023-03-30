@@ -8,6 +8,7 @@ import { PinkFillButton } from "../components/pink-fill-button"
 import { TabPanel } from '../components/account-page-components/tab-panel';
 import { PasswordChangePopup } from '../components/account-page-components/password-change-popup';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import { Navigation } from "../components/navigation";
 
 export const EditAccount = () => {
     const navigate = useNavigate();
@@ -43,7 +44,8 @@ export const EditAccount = () => {
     }
     return (
         <div>
-            <WelcomeBanner/>
+            <Navigation loggedIn={true}/>
+            <WelcomeBanner text='Edit Account'/>
             <TabPanel activeTab='account'/>
             <Box component="form" noValidate display='flex' flexDirection='column' justifyContent='center' width='50%' alignItems='center' sx={{m:'auto'}} >
                 <Grid container sx={{m: 1}} display='flex' flexDirection='row' alignItems='center'>

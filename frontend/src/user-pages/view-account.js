@@ -6,6 +6,7 @@ import { Box, Typography, Grid, Button } from "@mui/material"
 import { EditButton } from "../components/edit-button"
 import { TabPanel } from '../components/account-page-components/tab-panel';
 import { PasswordChangePopup } from '../components/account-page-components/password-change-popup';
+import { Navigation } from "../components/navigation";
 
 export const ViewAccount = () => {
 
@@ -34,7 +35,8 @@ export const ViewAccount = () => {
 
     return (
         <Box>
-            <WelcomeBanner/>
+            <Navigation loggedIn={true}/>
+            <WelcomeBanner text='My Account'/>
             <TabPanel activeTab='account'/>
             <Box display='flex' flexDirection='column' justifyContent='center' width='35%' alignItems='center' sx={{m:'auto'}}>
                 <Box display='flex' flexDirection='row' justifyContent='flex-end' width='100%'>
