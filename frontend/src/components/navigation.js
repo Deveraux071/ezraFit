@@ -4,21 +4,19 @@ import { theme } from "../theme"
 import { JointButton } from "./joint-button";
 import { Grid, Link, Typography, Divider, Box } from "@mui/material";
 
-export const Navigation = () => {
+export const Navigation = ( {loggedIn} ) => {
     const navigate = useNavigate();
-    const loggedIn = false;
     
     const navigateTo = (url) => {
         navigate(url);
     }
 
-    const logOut = (e) => {
-        e.preventDefault();
+    const logOut = () => {
         // delete credentials from local storage/cookies
         navigate('/login')
     }
     return (
-        <Box>
+        <Box sx={{backgroundColor: theme.colors.white}}>
             <Grid container alignItems='center' display='flex' flexDirection='row'>
                 <Grid item xs={2} display='flex' flexDirection='row' sx={{p: 2}} justifyContent='flex-end'>
                     <Logo width='18%'/>
