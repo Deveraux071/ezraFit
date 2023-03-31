@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 import sys
-import segment
+import body_measurement.segment
 
 ## AV Notes:
 # points not chosen automatically, must be pre-selected by the user, after which projection points for shoulder are seen, but they don't seem accurate
@@ -289,6 +289,7 @@ def detect_point_and_ask_user(disp_image,segmented_img,head_point_left,head_poin
 
 def measure_distance(checkboardImage, armsSpreadImage, sidewaysImage, fullBodyImage, affineFlag='True'):
 		# load the image, clone it, and setup the mouse callback function
+	print('checkboard image', checkboardImage)
 	image = cv2.imread(checkboardImage)
 	arm_spread_image=cv2.imread(armsSpreadImage)
 	#waist_image = cv2.imread(args["image3"])
