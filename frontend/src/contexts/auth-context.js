@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from '../firebase'
 const AuthContext = createContext()
 
@@ -21,17 +21,21 @@ export function AuthProvider( {children} ) {
     }
 
     function updateEmail(email) {
-        user.updateEmail(email)
+        return user.updateEmail(email)
     }
 
     function updatePassword(password) {
-        user.updatePassword(password)
+        return user.updatePassword(password)
     }
 
     function updateName(name) {
-        user.updateProfile({
+        return user.updateProfile({
             displayName: name
         })
+    }
+
+    function deleteAccount() {
+        return user.delete()
     }
 
     useEffect(() => {
@@ -49,11 +53,12 @@ export function AuthProvider( {children} ) {
         logout,
         updateEmail,
         updatePassword,
-        updateName
+        updateName,
+        deleteAccount
     }
 
     return (
-        <AuthContext.Provider>
+        <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
     )
