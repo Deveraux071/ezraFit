@@ -2,14 +2,14 @@ import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 
 const app = firebase.initializeApp({
-    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-    databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_FIREBASE_APP_ID,
-    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
+    apiKey: "AIzaSyAjCdDCnmWx2NWwSLDFeHcD1jLem4jV1fU",
+    authDomain: "ezrafit-e157e.firebaseapp.com",
+    databaseURL: "https://ezrafit-e157e-default-rtdb.firebaseio.com",
+    projectId: "ezrafit-e157e",
+    storageBucket: "ezrafit-e157e.appspot.com",
+    messagingSenderId: "940654216053",
+    appId: "1:940654216053:web:b0d874482b3d3a186bc93c",
+    measurementId: "G-YSXP4J9PSW"
 })
 
 export const auth = app.auth()
