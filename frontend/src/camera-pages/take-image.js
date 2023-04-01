@@ -16,7 +16,6 @@ import { theme } from '../theme';
 export const TakeImage = ( {imageType, svgType} ) => {
     const location = useLocation();
     if (!imageType && location.state === null) {
-        console.log('yes')
         imageType = 'front'
         svgType = 'front'
     }
@@ -81,7 +80,6 @@ export const TakeImage = ( {imageType, svgType} ) => {
         <Box>
             <Grid container>
                 <Grid item xs={2}>
-                    <ReturnToHome/>
                     <Box display='flex' flexDirection='column'>
                         {imageType === 'front' ? (
                             <ImagePlacer view='front' height={200} width={100}/>
