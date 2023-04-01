@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 import sys
-import body_measurement.segment
+import body_measurement.segment as segment
 
 ## AV Notes:
 # points not chosen automatically, must be pre-selected by the user, after which projection points for shoulder are seen, but they don't seem accurate
@@ -438,7 +438,7 @@ def measure_distance(checkboardImage, armsSpreadImage, sidewaysImage, fullBodyIm
 	all_measurements['shoulder'] = shoulder_length
 	all_measurements['sleeve'] = sleeve_length
 
-	legs= get_points(segmented_leg_image)
+	legs= get_points(segmented_legs_image)
 	if (len(legs) == 4):
 		left_waist = legs[0]
 		right_waist = legs[2]

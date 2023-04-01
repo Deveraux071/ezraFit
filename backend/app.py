@@ -42,13 +42,12 @@ def trigger_error():
 
 
 @app.route('/get-measurements')
-def get_measurements(userID=None, img1=None, img2=None, img3=None, img4=None, affline_flag='True', company_name="zara"):
+def get_measurements(userID=None, img1=None, img2=None, img3=None, img4=None, affline_flag='False', company_name="zara"):
   userID = 1234
-  img_1 = "test_images/final_saket1.jpg"
-  img_2 = "test_images/final_saket2.jpg"
-  img_3 = "test_images/final_saket3.jpg"
-  img_4 = "test_images/final_saket1.jpg"
-
+  img_1 = "body_measurement/test_images/final_saket1.jpg"
+  img_2 = "body_measurement/test_images/final_saket2.jpg"
+  img_3 = "body_measurement/test_images/final_saket3.jpg"
+  img_4 = "body_measurement/test_images/final_saket1.jpg"
   measurements = measure_distance(img_1, img_2, img_3, img_4, affline_flag)
 
   # measurements = {
