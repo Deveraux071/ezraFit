@@ -35,6 +35,7 @@ export const ViewImage = ( {imageNum, imageType, next} ) => {
             navigate('/take-image', {state: {imageType: 'side', svgType: 'side'}})
             return;
         }
+        console.log('going next1')
         navigate('/calculating');
     }
 
@@ -55,7 +56,6 @@ export const ViewImage = ( {imageNum, imageType, next} ) => {
         <Box>
             <Grid container>
                 <Grid item xs={2}>
-                    <ReturnToHome/>
                     <Box display='flex' flexDirection='column'>
                         <ImagePlacer view='front' img={localStorage.getItem('front')} height={200} width={100}/>
                         {imageType === 'side' ? (    
