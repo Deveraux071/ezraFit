@@ -6,6 +6,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 afterEach(() => cleanup())
 
+// view image, calculating, return to home
+
 // test if image on the side and front
 test('test image placeholders on the side and middle', () => {
     render(
