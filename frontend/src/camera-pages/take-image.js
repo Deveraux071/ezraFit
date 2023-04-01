@@ -32,6 +32,7 @@ export const TakeImage = ( {imageType, svgType} ) => {
     
     let imageNum = 1;
     if (imageType === 'side') {
+        console.log('arrived')
         imageNum = 2;
     }
 
@@ -91,7 +92,7 @@ export const TakeImage = ( {imageType, svgType} ) => {
                 <Grid item xs={6} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
                     <Typography fontSize='2rem'>Scan to Get Your Measurements!</Typography>
                     <Box position='relative'>
-                        <Webcam ref={webRef} height='100%'/>
+                        <Webcam ref={webRef} height='100%' data-testid='webcam'/>
                         <div style={{position: 'absolute', width: '34%', top: 0, right: 0, bottom: 0, left: 0, margin: 'auto'}}>
                             {svgType === 'front' ? (
                                 <FrontSilhouette width='inherit' height='inherit'/>

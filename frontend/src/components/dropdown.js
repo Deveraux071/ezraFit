@@ -21,7 +21,7 @@ export const DropDown = ( { data, width=300, onClick } ) => {
     };
 
     return (
-        <Box>
+        <Box data-testid='dropdown'>
             <FormControl sx={{ m: 1, width: width}}>
                 <Select
                     displayEmpty
@@ -33,7 +33,7 @@ export const DropDown = ( { data, width=300, onClick } ) => {
                         Select Time
                     </MenuItem>
                     {data.map((d) => (
-                        <MenuItem value={d} key={d}>
+                        <MenuItem value={d} key={d} data-testid='selection'>
                             {d}
                         </MenuItem>
                     ))}
