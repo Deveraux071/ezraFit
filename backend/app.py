@@ -14,6 +14,10 @@ import json
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
 
+import sys
+sys.path.append('./style_recommender')
+import search_keywords
+
 cred_obj = firebase_admin.credentials.Certificate('ezrafit-e157e-firebase-adminsdk-cen4y-5f13f60f88.json')
 default_app = firebase_admin.initialize_app(cred_obj, {
 	'databaseURL':'https://ezrafit-e157e-default-rtdb.firebaseio.com/'
@@ -209,6 +213,18 @@ def get_measurements():
       "upper": recommanded_upper_size, 
       "lower": recommanded_lower_size
     })
-  
+
+# TODO: add parameters to make the style preferences dynamic
+@app.route('/get-keywords')
+def get_search_keywords():
+  response = search_keywords.generate({
+      "gender": "female", 
+      "color": "blue", 
+      "fit": "loose", 
+      "occasion": "formal"
+    })
+  return response, 200
+
+
 if __name__ == "__main__":
   app.run(threaded=False, debug=True, use_reloader=False)
