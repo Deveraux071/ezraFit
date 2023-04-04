@@ -6,7 +6,7 @@ import { useState } from "react";
 import { theme } from "../../theme";
 
 export const PasswordChangePopup = ( {onCancel, open}) => {
-    const { updatePassword } = useAuth()
+    const { updatePW } = useAuth()
     const [err, setErr] = useState('')
 
     const onSave = async (e) => {
@@ -27,7 +27,7 @@ export const PasswordChangePopup = ( {onCancel, open}) => {
         }
         else {
             try {
-                await updatePassword(new_pw)
+                await updatePW(new_pw)
                 localStorage.setItem('password', new_pw)
                 onCancel()
             } catch (e) {

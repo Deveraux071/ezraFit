@@ -12,12 +12,14 @@ import { Navigation } from "../components/navigation";
 import { useAuth } from '../contexts/auth-context';
 
 export const EditAccount = () => {
-    const { user, updateEmail, updateName, deleteAccount } = useAuth()
+    const { user, updateEm, updateName, deleteAccount } = useAuth()
     const navigate = useNavigate();
     const [name, setName] = useState(user.displayName)
     const [email, setEmail] = useState(user.email)
     const [pwChange, setPwChange] = useState(false);
-    
+    const [err, setErr] = useState(false)
+    const [errMsg, setErrMsg] = useState('')
+
     const changePW = () => {
         setPwChange(true)
     }
@@ -42,22 +44,24 @@ export const EditAccount = () => {
         const email = data.get('email')
 
         if (email !== user.email) {
-            try {
-                await updateEmail(email)
-            } catch (e) {
+            await updateEm(email).catch((e) => {
                 console.log(e)
-            }
+                setErr(true)
+                setErrMsg('Failed to update your email. Please try again.')
+            })
         }
 
-        if (name !== user.name) {
-            try {
-                await updateName(name)
-            } catch (e) {
+        if (name !== user.name && !err) {
+            await updateName(name).catch((e) => {
                 console.log(e)
-            }
+                setErr(true)
+                setErrMsg('Failed to update your name. Please try again.')
+            })
+        }
+        if (!err) {
+            navigate('/account')
         }
         
-        navigate('/account')
     }
 
     const onPWCancel = () => {
@@ -70,6 +74,7 @@ export const EditAccount = () => {
             <WelcomeBanner text='Edit Account'/>
             <TabPanel activeTab='account'/>
             <Box component="form" onSubmit={onSave} noValidate display='flex' flexDirection='column' justifyContent='center' width='50%' alignItems='center' sx={{m:'auto'}} >
+                {err && <Typography fontSize='1rem' color={theme.colors.red}>{errMsg}</Typography>}
                 <Grid container sx={{m: 1}} display='flex' flexDirection='row' alignItems='center'>
                     <Grid item xs={4} display='flex' flexDirection='row' justifyContent='flex-end' sx={{pr: 2}}>
                         <Typography fontSize='1.5rem' fontWeight={650}>Name: </Typography>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { PinkFillButton } from '../pink-fill-button';
 import { PinkOutlineButton } from '../pink-outline-button';
-import { Box, Typography, TextField, Grid, Link, Button } from '@mui/material';
+import { Box, Typography, TextField, Grid, Link } from '@mui/material';
 import { theme } from '../../theme';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../contexts/auth-context";
@@ -18,16 +18,16 @@ export default function LoginForm( {formWidth} ) {
         const email = data.get('email')
         const password = data.get('password')
         
-        try {
-            setErr('')
-            setLoading(true)
-            await auth.login(email, password)
+        setErr('')
+        setLoading(true)
+        await auth.login(email, password).then(() => {
             localStorage.setItem('password', password)
             navigate('/account');
-        } catch {
+            setLoading(false)
+        }).catch((err) => {
+            console.log(err)
             setErr('Incorrect username or password.')
-        }
-        setLoading(false)
+        })
     };
 
     const onCancel = (e) => {

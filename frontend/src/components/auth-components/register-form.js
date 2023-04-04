@@ -6,7 +6,8 @@ import { theme } from '../../theme';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth-context';
 import { useState } from 'react';
-import firebase from 'firebase/compat/app'
+import { updateProfile } from 'firebase/auth'
+import { getAuth } from 'firebase/auth';
 
 export default function RegisterForm({formWidth}) {
     const auth = useAuth()
@@ -22,17 +23,19 @@ export default function RegisterForm({formWidth}) {
         const email = data.get('email')
         const password = data.get('password')
 
-        await auth.register(email, password).then(function() {
-            let currUser = firebase.auth().currentUser;
-            return currUser.updateProfile({
-                displayName: name
+        await auth.register(email, password).then(() => {
+            updateProfile(getAuth().currentUser, { displayName: name }).then(() => {
+                navigate('/login');
+                }
+            ).catch((err) => {
+                console.log(err)
+                setErr('Failed to set name.')
             })
-        }).catch((e) => {
-            console.log(e)
+            }
+        ).catch((err) => {
+            console.log(err)
             setErr('Failed to create account. Try again.')
         })
-        
-        navigate('/login');
     };
 
     const onCancel = (e) => {
