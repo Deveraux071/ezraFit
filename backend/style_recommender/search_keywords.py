@@ -9,8 +9,10 @@ import config
 openai.api_key = config.OPENAI_API_KEY
 
 
-def generate_search_keywords(preferences):
+def generate(preferences):
     '''
+    Generates search keywords based on the given style preferences. 
+
     preferences: dictionary with the style preferences 
         key - preference name, value - the value of the prefence
 
