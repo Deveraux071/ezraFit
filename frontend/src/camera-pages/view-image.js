@@ -24,19 +24,33 @@ export const ViewImage = ( {imageNum, imageType, next} ) => {
     const navigate = useNavigate();
     const [img, setImg] = useState();
     
+    let nextImgType;
+    let nextSvgType = 'side';
+
+    if (imageType === 'check') {
+        nextImgType = 'spread'
+    }
+    else if (imageType === 'spread') {
+        nextImgType = 'side'
+    }
+    else if (imageType === 'side') {
+        nextImgType = 'leg'
+    }
+    else {
+        nextImgType = 'fin'
+    }
     useEffect(() => {
         setImg(localStorage.getItem(imageType));
     }, [imageType,])
 
     const onNext = (e) => {
         e.preventDefault();
-        if (next === 'side') {
-            console.log('going next')
-            navigate('/take-image', {state: {imageType: 'side', svgType: 'side'}})
-            return;
+        if (nextImgType === 'fin') {
+            navigate('/select', {state: {img: 'spread', type: 'waist', dict: {}}})
         }
-        console.log('going next1')
-        navigate('/calculating');
+        else {
+            navigate('/take-image', {state: {imageType: nextImgType, svgType: nextSvgType}})
+        }
     }
 
     const onPrev = (e) => {

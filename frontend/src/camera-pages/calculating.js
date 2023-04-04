@@ -1,7 +1,8 @@
 import { Typography, Box } from "@mui/material"
 import { theme } from "../theme"
 
-export default function Calculating() {
+export default function Calculating( {points} ) {
+    console.log(points)
     return (
         <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' sx={{height: '100vh'}}>
             <Typography fontSize='2rem' fontWeight={800}>
