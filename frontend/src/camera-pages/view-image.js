@@ -19,17 +19,33 @@ export const ViewImage = ( {imageNum, imageType, next} ) => {
     const navigate = useNavigate();
     const [img, setImg] = useState();
     
+    let nextImgType;
+    let nextSvgType = 'side';
+
+    if (imageType === 'check') {
+        nextImgType = 'spread'
+    }
+    else if (imageType === 'spread') {
+        nextImgType = 'side'
+    }
+    else if (imageType === 'side') {
+        nextImgType = 'leg'
+    }
+    else {
+        nextImgType = 'fin'
+    }
     useEffect(() => {
         setImg(localStorage.getItem(imageType));
     }, [imageType,])
 
     const onNext = (e) => {
         e.preventDefault();
-        if (next === 'side') {
-            navigate('/take-image', {state: {imageType: 'side', svgType: 'side'}})
-            return;
+        if (nextImgType === 'fin') {
+            navigate('/select', {state: {img: 'spread', type: 'waist', dict: {}}})
         }
-        navigate('/calculating');
+        else {
+            navigate('/take-image', {state: {imageType: nextImgType, svgType: nextSvgType}})
+        }
     }
 
     const onPrev = (e) => {
@@ -46,7 +62,6 @@ export const ViewImage = ( {imageNum, imageType, next} ) => {
         <Box>
             <Grid container>
                 <Grid item xs={2}>
-                    <ReturnToHome/>
                     <Box display='flex' flexDirection='column'>
                         <ImagePlacer view='front' img={localStorage.getItem('front')} height={200} width={100}/>
                         {imageType === 'side' ? (    

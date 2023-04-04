@@ -10,6 +10,7 @@ import { Login } from './auth-pages/login';
 import { Register } from './auth-pages/register';
 import { ViewAccount } from './user-pages/view-account';
 import { EditAccount } from './user-pages/edit-account';
+import { SelectPoint } from './select-points-pages/select-point';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path='/register' element={<Register/>}/>
           <Route path='/account' element={<ViewAccount/>}/>
           <Route path='/edit' element={<EditAccount/>}/>
+          <Route path='/select' element={<SelectPoint/>}/>
         </Routes>
       </Router>
     </ThemeProvider>
