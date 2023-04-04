@@ -37,8 +37,24 @@ print(apparel_df)
 # apparel_df = master_df[(master_df["baseColour"].notna())]
 # print(apparel_df)
 
+# Aparrel Fit
 df = apparel_df.iloc[:3000,:]
 test_df = apparel_df.iloc[2500:,:]
+
+# Base Colour Fit
+# df = apparel_df.iloc[:4000,:]
+# test_df = apparel_df.iloc[4000:,:]
+
+# Season Fit
+# df = apparel_df.iloc[:4000,:]
+# test_df = apparel_df.iloc[4000:,:]
+
+# Usage split
+# df = apparel_df.iloc[:4000,:]
+# test_df = apparel_df.iloc[4000:,:]
+
+# df = apparel_df.iloc[:6000,:]
+# test_df = apparel_df.iloc[6000:,:]
 
 print(df)
 print(test_df)
@@ -127,7 +143,7 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 
 model.fit(
     train_gen,
-    epochs=3,
+    epochs=1,
     verbose=1,
     steps_per_epoch=train_gen.samples // 32,
     validation_data=val_gen,
@@ -141,21 +157,21 @@ model.fit(
 # print(predictions)
 # print(test_gen.classes)
 
-# predictions = model.predict(test_gen)
-# # print(predictions)
-# prediction_class_indices = np.argmax(predictions, axis=1)
-# print(prediction_class_indices)
-# # predicition_classes = []
-# # rev_class_indices = {value: key for key, value in train_gen.class_indices.items()}
-# # print(rev_class_indices)
-# # for i in prediction_class_indices:
-# #     predicition_classes.append(rev_class_indices[i])
-# # print(predicition_classes)
-# accuracy = 0
-# for i in range(0, len(prediction_class_indices)):
-#     if prediction_class_indices[i] == test_gen.classes[i]:
-#         accuracy += 1
-# print(accuracy/len(prediction_class_indices))
+predictions = model.predict(test_gen)
+# print(predictions)
+prediction_class_indices = np.argmax(predictions, axis=1)
+print(prediction_class_indices)
+# predicition_classes = []
+# rev_class_indices = {value: key for key, value in train_gen.class_indices.items()}
+# print(rev_class_indices)
+# for i in prediction_class_indices:
+#     predicition_classes.append(rev_class_indices[i])
+# print(predicition_classes)
+accuracy = 0
+for i in range(0, len(prediction_class_indices)):
+    if prediction_class_indices[i] == test_gen.classes[i]:
+        accuracy += 1
+print(accuracy/len(prediction_class_indices))
 
 results = model.evaluate(test_gen)
 print("Test Accuracy is" + str(results[1]))
