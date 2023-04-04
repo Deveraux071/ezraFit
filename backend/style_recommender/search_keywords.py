@@ -18,8 +18,8 @@ def generate_search_keywords(preferences):
     '''
     prompt = "Given the following clothing style preferences, give me some keywords that I can use to search for clothing on a website." 
     prompt += "Ensure that the keywords are given as a comma-separated list, with no period at the end.\n\n"
-    for parameter in parameters:
-        prompt += "{0}: {1}\n".format(parameter, parameters[parameter])
+    for preference in preferences:
+        prompt += "{0}: {1}\n".format(preference, preferences[preference])
     
     response = openai.Completion.create(
         model="text-davinci-003",
@@ -34,9 +34,9 @@ def generate_search_keywords(preferences):
     return response.choices[0].text.strip().split(", ")
 
 
-if __name__=='__main__':
+# for testing (remove this later)
 
-    # for testing (remove this later)
+# if __name__=='__main__':
 
     # print(generate_search_keywords({
     #     "gender": "female", 
