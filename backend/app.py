@@ -94,4 +94,4 @@ def get_measurements(userID=None, img1=None, img2=None, img3=None, img4=None, af
   return('measurement_complete')
 
 if __name__ == "__main__":
-  app.run()
+  app.run(threaded=False, debug=True, use_reloader=False)
