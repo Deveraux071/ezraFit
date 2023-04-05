@@ -131,3 +131,4 @@ wordcloud==1.8.2.2
 wsproto==1.2.0
 python-firebase
 firebase_admin
+coverage
