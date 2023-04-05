@@ -7,16 +7,17 @@ import { EditButton } from "../components/edit-button"
 import { TabPanel } from '../components/account-page-components/tab-panel';
 import { PasswordChangePopup } from '../components/account-page-components/password-change-popup';
 import { Navigation } from "../components/navigation";
+import { useAuth } from '../contexts/auth-context';
 
 export const ViewAccount = () => {
-
+    const { user, updatePassword } = useAuth()
     const navigate = useNavigate();
-    const [name, setName] = useState('Leslie Knope')
-    const [email, setEmail] = useState('leslieknope@gmail.com')
+    const [name, setName] = useState(user !== undefined ? user.displayName : '')
+    const [email, setEmail] = useState(user !== undefined ? user.email : '')
     const [pwChange, setPwChange] = useState(false);
+    const [err, setErr] = useState('');
 
     const changePW = () => {
-        console.log('change')
         setPwChange(true)
     }
 
@@ -28,9 +29,28 @@ export const ViewAccount = () => {
         setPwChange(false)
     }
 
-    const onPwSave = () => {
-        console.log('password saved')
-        setPwChange(false)
+    const onPwSave = async (e) => {
+        e.preventDefault()
+        const data = new FormData(e.currentTarget)
+        const old_pw = data.get('current_pw')
+        const new_pw = data.get('new_pw')
+        const new_pw_rep = data.get('con_new_pw')
+        
+        if (old_pw !== localStorage.getItem('password')) {
+            setErr('Current password incorrect')
+        }
+        else if (new_pw === '' || new_pw_rep === '' || new_pw !== new_pw_rep) {
+            setErr('New passwords do not match')
+        }
+        else {
+            try {
+                await updatePassword(new_pw)
+                setPwChange(false)
+                localStorage.setItem('password')
+            } catch (e) {
+                console.log(e)
+            }
+        }
     }
 
     return (
@@ -71,7 +91,7 @@ export const ViewAccount = () => {
                     </Grid>
                 </Grid>
             </Box>
-            <PasswordChangePopup onCancel={() => onPWCancel()} onSave={() => onPwSave()} open={pwChange}/>
+            <PasswordChangePopup onCancel={() => onPWCancel()} open={pwChange}/>
         </Box>
     )
 }

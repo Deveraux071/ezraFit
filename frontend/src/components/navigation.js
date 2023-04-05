@@ -3,16 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { theme } from "../theme"
 import { JointButton } from "./joint-button";
 import { Grid, Link, Typography, Divider, Box } from "@mui/material";
+import { useAuth } from "../contexts/auth-context";
 
 export const Navigation = ( {loggedIn} ) => {
     const navigate = useNavigate();
-    
+    const { logout } = useAuth(); 
     const navigateTo = (url) => {
         navigate(url);
     }
 
-    const logOut = () => {
-        // delete credentials from local storage/cookies
+    const logOut = async () => {
+        await logout();
         navigate('/login')
     }
     return (

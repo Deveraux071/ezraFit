@@ -9,45 +9,72 @@ import { TabPanel } from '../components/account-page-components/tab-panel';
 import { PasswordChangePopup } from '../components/account-page-components/password-change-popup';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Navigation } from "../components/navigation";
+import { useAuth } from '../contexts/auth-context';
 
 export const EditAccount = () => {
+    const { user, updateEm, updateName, deleteAccount } = useAuth()
     const navigate = useNavigate();
-    const [name, setName] = useState('Leslie Knope')
-    const [email, setEmail] = useState('leslieknope@gmail.com')
+    const [name, setName] = useState(user.displayName)
+    const [email, setEmail] = useState(user.email)
     const [pwChange, setPwChange] = useState(false);
+    const [err, setErr] = useState(false)
+    const [errMsg, setErrMsg] = useState('')
 
     const changePW = () => {
-        console.log('change')
         setPwChange(true)
     }
 
-    const onDelete = () => {
-        console.log('delete')
+    const onDelete = async () => {
+        try {
+            await deleteAccount()
+            navigate('/register')
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     const onCancel = () => {
         navigate('/account')
     }
 
-    const onSave = () => {
-        console.log('save')
-        navigate('/account')
+    const onSave = async (e) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        const name = data.get('name')
+        const email = data.get('email')
+
+        if (email !== user.email) {
+            await updateEm(email).catch((e) => {
+                console.log(e)
+                setErr(true)
+                setErrMsg('Failed to update your email. Please try again.')
+            })
+        }
+
+        if (name !== user.name && !err) {
+            await updateName(name).catch((e) => {
+                console.log(e)
+                setErr(true)
+                setErrMsg('Failed to update your name. Please try again.')
+            })
+        }
+        if (!err) {
+            navigate('/account')
+        }
+        
     }
 
     const onPWCancel = () => {
         setPwChange(false)
     }
 
-    const onPwSave = () => {
-        console.log('password saved')
-        setPwChange(false)
-    }
     return (
         <div>
             <Navigation loggedIn={true}/>
             <WelcomeBanner text='Edit Account'/>
             <TabPanel activeTab='account'/>
-            <Box component="form" noValidate display='flex' flexDirection='column' justifyContent='center' width='50%' alignItems='center' sx={{m:'auto'}} >
+            <Box component="form" onSubmit={onSave} noValidate display='flex' flexDirection='column' justifyContent='center' width='50%' alignItems='center' sx={{m:'auto'}} >
+                {err && <Typography fontSize='1rem' color={theme.colors.red}>{errMsg}</Typography>}
                 <Grid container sx={{m: 1}} display='flex' flexDirection='row' alignItems='center'>
                     <Grid item xs={4} display='flex' flexDirection='row' justifyContent='flex-end' sx={{pr: 2}}>
                         <Typography fontSize='1.5rem' fontWeight={650}>Name: </Typography>
@@ -99,7 +126,6 @@ export const EditAccount = () => {
                     </Grid>
                 </Grid>
                 <Box display='flex' flexDirection='row' justifyContent='space-between' alignItems='center' sx={{mt: 5}}>
-                    
                     <Button variant='outlined' onClick={() => onDelete()} startIcon={<DeleteForeverOutlinedIcon sx={{ color: theme.colors.red}}/>} sx={{background: theme.colors.white, borderColor: theme.colors.red, borderRadius: '20px', textTransform: 'none'}}>
                         <Typography sx={{color: theme.colors.red}} fontSize='1.25rem' fontWeight={650}>
                             Delete My Account
@@ -108,10 +134,10 @@ export const EditAccount = () => {
                 </Box>
                 <Box width='100%' display='flex' flexDirection='row' justifyContent='flex-end' sx={{mt: 10}}>
                     <PinkOutlineButton text='Cancel' onClick={() => onCancel()} width='15%'/>
-                    <PinkFillButton text='Save Changes' onClick={() => onSave()} width='25%'/>
+                    <PinkFillButton text='Save Changes' width='25%' type='submit'/>
                 </Box>
             </Box>
-            <PasswordChangePopup onCancel={() => onPWCancel()} onSave={() => onPwSave()} open={pwChange}/>
+            <PasswordChangePopup onCancel={() => onPWCancel()} open={pwChange}/>
         </div>
     )
 }

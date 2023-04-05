@@ -1,20 +1,33 @@
 import * as React from 'react';
 import { PinkFillButton } from '../pink-fill-button';
 import { PinkOutlineButton } from '../pink-outline-button';
-import { Box, Typography, TextField, Grid, Link, Button } from '@mui/material';
+import { Box, Typography, TextField, Grid, Link } from '@mui/material';
 import { theme } from '../../theme';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../../contexts/auth-context";
+import { useState } from 'react';
 
 export default function LoginForm( {formWidth} ) {
+    const auth = useAuth()
     const navigate = useNavigate();
-    const onSubmit = (e) => {
+    const [err, setErr] = useState('')
+    const [loading, setLoading] = useState(false)
+    const onSubmit = async (e) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-        navigate('/home');
+        const email = data.get('email')
+        const password = data.get('password')
+        
+        setErr('')
+        setLoading(true)
+        await auth.login(email, password).then(() => {
+            localStorage.setItem('password', password)
+            navigate('/account');
+            setLoading(false)
+        }).catch((err) => {
+            console.log(err)
+            setErr('Incorrect username or password.')
+        })
     };
 
     const onCancel = (e) => {
@@ -41,6 +54,7 @@ export default function LoginForm( {formWidth} ) {
             <Typography fontSize='2.5rem'>
                 Log in
             </Typography>
+            {err !== '' && <Typography fontSize='1rem' color={theme.colors.red}>{err}</Typography>}
             <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 1, width: '75%' }} width={formWidth} display='flex' flexDirection='column' justifyContent='center'>
                 <Grid container alignItems='center' justifyContent='space-between'>
                     <Grid item xs={4}>
@@ -73,7 +87,7 @@ export default function LoginForm( {formWidth} ) {
                     </Grid>
                 </Grid>
                 <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' sx={{marginTop: 8}}>
-                    <PinkFillButton text='Log In' fontSize='1.5rem' type='submit'/>
+                    <PinkFillButton text='Log In' fontSize='1.5rem' type='submit' disabled={loading}/>
                     <PinkOutlineButton text='Cancel' onClick={(e) => onCancel(e)} fontSize='1.5rem'/>
                 </Box>
             </Box>

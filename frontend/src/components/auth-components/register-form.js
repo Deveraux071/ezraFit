@@ -4,19 +4,38 @@ import { PinkOutlineButton } from '../pink-outline-button';
 import { Box, Typography, TextField, Grid, Link } from '@mui/material';
 import { theme } from '../../theme';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/auth-context';
+import { useState } from 'react';
+import { updateProfile } from 'firebase/auth'
+import { getAuth } from 'firebase/auth';
 
 export default function RegisterForm({formWidth}) {
+    const auth = useAuth()
     const navigate = useNavigate();
-    const onSubmit = (e) => {
+    const [err, setErr] = useState('')
+    
+    const onSubmit = async (e) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
-        console.log({
-            first_name: data.get('first_name'),
-            last_name: data.get('last_name'),
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-        navigate('/login');
+        const first_name = data.get('first_name')
+        const last_name = data.get('last_name')
+        const name = first_name + ' ' + last_name
+        const email = data.get('email')
+        const password = data.get('password')
+
+        await auth.register(email, password).then(() => {
+            updateProfile(getAuth().currentUser, { displayName: name }).then(() => {
+                navigate('/login');
+                }
+            ).catch((err) => {
+                console.log(err)
+                setErr('Failed to set name.')
+            })
+            }
+        ).catch((err) => {
+            console.log(err)
+            setErr('Failed to create account. Try again.')
+        })
     };
 
     const onCancel = (e) => {
@@ -44,6 +63,7 @@ export default function RegisterForm({formWidth}) {
             <Typography fontSize='2.5rem'>
                 Sign Up
             </Typography>
+            {err !== '' && <Typography fontSize='1rem' color={theme.colors.red}>{err}</Typography>}
             <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1, width: '75%' }} width={formWidth} display='flex' flexDirection='column' justifyContent='center'>
                 <Grid container alignItems='center' justifyContent='space-between'>
                     <Grid item xs={4}>
