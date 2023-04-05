@@ -1,6 +1,6 @@
 import sys, os
 sys.path.append(os.path.abspath(os.path.join('..', '')))
-from backend.size_recommender import get_size
+from size_recommender import get_size
 import unittest
 
 chart_upper = {
