@@ -46,7 +46,6 @@ django-social-share==2.2.1
 django-storages==1.12.3
 djangorestframework==3.13.1
 djangorestframework-simplejwt==5.1.0
-dotenv==0.19.2
 entrypoints==0.4
 exceptiongroup==1.1.1
 executing==1.1.1
