@@ -6,7 +6,7 @@ export const SelectPoint = ( {img, type, dict} ) => {
     const [pos, setPos] = useState('left')
     const navigate = useNavigate()
     const location = useLocation();
-
+    
     if (!img) {
         img = location.state.img
         type = location.state.type
@@ -113,7 +113,7 @@ export const SelectPoint = ( {img, type, dict} ) => {
     return (
         <Box>
             <Typography>Click the {pos} point of the {currType}</Typography>
-            <img src={img === 'front' ? localStorage.getItem('front') : localStorage.getItem('side')} onClick={(e) => getPos(e)}></img>
+            <img src={localStorage.getItem(currImg)} onClick={(e) => getPos(e)}></img>
         </Box>
         
     )

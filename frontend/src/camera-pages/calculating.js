@@ -15,7 +15,7 @@ export default function Calculating( {points} ) {
             body: JSON.stringify({points: points, checkImg: localStorage.getItem('check')})
         };
 
-        fetch('localhost:5000/get-measurements', requestOptions)
+        fetch('https://localhost:5000/get-measurements', requestOptions)
             .then(response => response.json())
             .then(data => {
                 setLoading(false)

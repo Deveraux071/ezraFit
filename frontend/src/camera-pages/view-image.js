@@ -66,6 +66,13 @@ export const ViewImage = ( {imageNum, imageType, next} ) => {
     if (imageNum === 2) {
         num = 'Second';
     }
+    else if (imageNum == 3) {
+        num = 'Third'
+    }
+    else if (imageNum == 4) {
+        num = 'Fourth'
+    }
+    
     return (
         <Box>
             <Grid container>

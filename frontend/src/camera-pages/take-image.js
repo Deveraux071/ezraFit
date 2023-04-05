@@ -37,7 +37,7 @@ export const TakeImage = ( {imageType, svgType} ) => {
     else if (imageType === 'side') {
         imageNum = 3;
     }
-    else {
+    else if (imageType === 'leg') {
         imageNum = 4;
     }
 
