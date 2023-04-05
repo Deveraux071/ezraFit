@@ -214,15 +214,9 @@ def get_measurements():
       "lower": recommanded_lower_size
     })
 
-# TODO: add parameters to make the style preferences dynamic
 @app.route('/get-keywords')
 def get_search_keywords():
-  response = search_keywords.generate({
-      "gender": "female", 
-      "color": "blue", 
-      "fit": "loose", 
-      "occasion": "formal"
-    })
+  response = search_keywords.generate(request.args.to_dict())
   return response, 200
 
 
