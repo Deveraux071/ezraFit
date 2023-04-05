@@ -10,6 +10,8 @@ import { Register } from './auth-pages/register';
 import { ViewAccount } from './user-pages/view-account';
 import { EditAccount } from './user-pages/edit-account';
 import { AuthProvider } from './contexts/auth-context';
+import { ViewMeasurements } from './user-pages/view-measurements';
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -24,6 +26,7 @@ function App() {
           <Route path='/register' element={<Register/>}/>
           <Route path='/account' element={<ViewAccount/>}/>
           <Route path='/edit' element={<EditAccount/>}/>
+          <Route path='/measurements' element={<ViewMeasurements/>}/>
         </Routes>
         </AuthProvider>
       </Router>
