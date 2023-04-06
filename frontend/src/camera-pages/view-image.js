@@ -56,9 +56,7 @@ export const ViewImage = ( {imageNum, imageType, next} ) => {
     const onPrev = (e) => {
         e.preventDefault();
         localStorage.setItem(imageType, '')
-        console.log('going back')
         navigate('/take-image', {state: {imageType: imageType, svgType: imageType}})
-        console.log('gone back')
         return;
     }
 
@@ -78,10 +76,10 @@ export const ViewImage = ( {imageNum, imageType, next} ) => {
             <Grid container>
                 <Grid item xs={2}>
                     <Box display='flex' flexDirection='column'>
-                        <ImagePlacer view='front' img={localStorage.getItem('front')} height={200} width={100}/>
-                        {imageType === 'side' ? (    
-                            <ImagePlacer view='side' img={localStorage.getItem('side')} height={200} width={100}/>
-                        ) : (<ImagePlacer view='side' height={200} width={100}/>)}
+                        <ImagePlacer view='Check View' img={localStorage.getItem('check')} height={200} width={100}/>
+                        <ImagePlacer view='Arms Spread' img={localStorage.getItem('spread') || null} height={200} width={100}/>
+                        <ImagePlacer view='Side View' img={localStorage.getItem('side') || null} height={200} width={100}/>
+                        <ImagePlacer view='Full Body' img={localStorage.getItem('leg') || null} height={200} width={100}/>
                     </Box>
                 </Grid>
                 <Grid item xs={6} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>

@@ -79,10 +79,6 @@ export const TakeImage = ( {imageType, svgType} ) => {
         }
         if (time === 0) {
             showImage();
-            /*let next = 'side';
-            if (imageNum === 2) {
-                next = 'fin'
-            }*/
             navigate('/view-image', {state: {imageNum: imageNum, imageType: imageType, next: getNext()}})
             return;
         }
@@ -102,10 +98,10 @@ export const TakeImage = ( {imageType, svgType} ) => {
             <Grid container>
                 <Grid item xs={2}>
                     <Box display='flex' flexDirection='column'>
-                        {imageType === 'front' ? (
-                            <ImagePlacer view='front' height={200} width={100}/>
-                        ) : (<ImagePlacer view='front' img={localStorage.getItem('front')} height={200} width={100}/>)}
-                        <ImagePlacer view='side' height={200} width={100}/>
+                        <ImagePlacer view='Check View' img={localStorage.getItem('check')} height={200} width={100}/>
+                        <ImagePlacer view='Arms Spread' img={localStorage.getItem('spread') || null} height={200} width={100}/>
+                        <ImagePlacer view='Side View' img={localStorage.getItem('side') || null} height={200} width={100}/>
+                        <ImagePlacer view='Full Body' img={localStorage.getItem('leg') || null} height={200} width={100}/>
                     </Box>
                 </Grid>
                 <Grid item xs={6} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>

@@ -274,7 +274,6 @@ def save_img(txt):
 def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	cb = save_img(checkboardImage)
 	image = cv2.imread('check.jpg')
-	#legs_image = cv2.imread(legsImage)
 
 	affine_correct_flag= (affineFlag)
 	metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters=analyze_chessboard(image,affine_correct_flag)
@@ -373,14 +372,11 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	all_measurements['shoulder'] = shoulder_length
 	all_measurements['sleeve'] = sleeve_length
 
-	#metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters=analyze_chessboard(legs_image,affine_correct_flag)
-
 	left_waist = points['waist']['leg']['left']
 	right_waist = points['waist']['leg']['right']
 
 	left_bottom = points['leg']['leg']['left']
 	right_bottom = points['leg']['leg']['right']
-
 	
 	dist1=getDistance(left_waist, left_bottom)
 	dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
@@ -430,8 +426,6 @@ def measure_distance(checkboardImage, armsSpreadImage, sidewaysImage, fullBodyIm
 		segmented_image=affine_correct(segmented_image,affine_correct_parameters)
 		print("Affine Corrected")
 
-	# print metre_pixel_x
-	# print metre_pixel_y
 	all_measurements = {}
 
 	waist_a = get_points(arm_spread_image)
@@ -474,7 +468,6 @@ def measure_distance(checkboardImage, armsSpreadImage, sidewaysImage, fullBodyIm
 	all_measurements['hip'] = perimeter
 
 	head_pt = getHeadPoint(segmented_image)
-	# segmented_image = drawCircle(segmented_image, (head_pt[0],head_pt[1]), draw_radius)
 	image = drawCircle(image, (head_pt[0],head_pt[1]), draw_radius)
 	cv2.imwrite('detected2.jpg', segmented_image)
 
@@ -535,7 +528,6 @@ def measure_distance(checkboardImage, armsSpreadImage, sidewaysImage, fullBodyIm
 	all_measurements['shoulder'] = shoulder_length
 	all_measurements['sleeve'] = sleeve_length
 
-	#metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters=analyze_chessboard(legs_image,affine_correct_flag)
 	legs= get_points(segmented_legs_image)
 	
 	if (len(legs) == 4):
@@ -554,63 +546,3 @@ def measure_distance(checkboardImage, armsSpreadImage, sidewaysImage, fullBodyIm
 		all_measurements['leg'] = distanceBtwWaistAndAnkle
 	
 	return all_measurements
-
-
-# def store_measurements(checkboardImage, armsSpreadImage, sidewaysImage, fullBodyImage, affineFlag='True'):
-
-	# ap = argparse.ArgumentParser()
-	# ap.add_argument("-i1", "--image1", required=True, help="Path to the checkboard_image")
-	# ap.add_argument("-i2", "--image2", required=True, help="Path to the arm_spread_image")
-	# ap.add_argument("-i3", "--image3", required=True, help="Path to the waist_image")
-	# ap.add_argument("-i4", "--image4", required=True, help="Path to the leg_image")
-	# ap.add_argument("-a", "--affine_mode", required=True, help="To perform Affine Corrections")
-	# args = vars(ap.parse_args())
-	 
-	# # load the image, clone it, and setup the mouse callback function
-	# image = cv2.imread(checkboardImage)
-	# arm_spread_image=cv2.imread(armsSpreadImage)
-	# #waist_image = cv2.imread(args["image3"])
-	# waist_chest_image = cv2.imread(sidewaysImage) #loads image 
-
-	# legs_image = cv2.imread(fullBodyImage)
-	# affine_correct_flag= (affineFlag)
-
-	# metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters=analyze_chessboard(image,affine_correct_flag)
-	
-	# segmented_image=segment.segmenter(image)
-	# print("Segmentation Completed 1")
-
-	# segmented_arm_image=segment.segmenter(arm_spread_image)
-	# print("Segmentation Completed 2")
-
-	# segmented_legs_image=segment.segmenter(legs_image)
-	# print("Segmentation Completed 3")
-
-	# segmented_waist_image=segment.segmenter(waist_chest_image)
-	# print("Segmentation Completed 3")
-
-	# cv2.imwrite("first.jpg",segmented_image) #image to be saved, returns true if done correctly
-	# cv2.imwrite("second.jpg",segmented_arm_image)
-	# cv2.imwrite("third.jpg",segmented_legs_image)
-	
-	# # img_col = cv2.cvtColor(legs_image,cv2.COLOR_GRAY2RGB)
-	# # print('vals', metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters)
-	# print("images saved")
-	# block_cut = np.zeros(segmented_image.shape)
-	# block_cut[coordinate[0][1]:coordinate[1][1],coordinate[0][0]:coordinate[1][0]] = 1
-	# # segmented_image=segmented_image*block_cut
-
-	# if(affine_correct_flag=='True'):
-	# 	arm_spread_image=affine_correct(arm_spread_image,affine_correct_parameters)
-	# 	waist_chest_image=affine_correct(waist_chest_image,affine_correct_parameters)
-	# 	segmented_image=affine_correct(segmented_image,affine_correct_parameters)
-	# 	print("Affine Corrected")
-
-	# print('measuring distance')
-	# # measurements_dict = measure_distance(segmented_image,segmented_arm_image,segmented_arm_image,segmented_waist_image,image, segmented_legs_image, metre_pixel_x,metre_pixel_y)
-	# print(measurements_dict)
-	# print('done')
-
-
-# if __name__=="__main__":
-# 	main()
