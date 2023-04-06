@@ -111,8 +111,8 @@ export const SelectPoint = ( {img, type, dict} ) => {
     }
 
     return (
-        <Box>
-            <Typography>Click the {pos} point of the {currType}</Typography>
+        <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
+            <Typography fontSize='2rem'>Click the {pos} point of the {currType}</Typography>
             <img src={localStorage.getItem(currImg)} onClick={(e) => getPos(e)}></img>
         </Box>
         

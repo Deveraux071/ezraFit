@@ -1,30 +1,30 @@
 import { Typography, Box } from "@mui/material"
 import { theme } from "../theme"
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/auth-context';
 
 export default function Calculating( {points} ) {
+    const { user } = useAuth()
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true)
     const [size, setSize] = useState([])
 
-    // TODO: fix cors issue, remove prefix from checkImg - send only the base64 string
     useEffect(() => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': 'http://localhost:3000'
-            },
-            body: JSON.stringify({checkImg: localStorage.getItem('check')})
-        };
-
+        const check = localStorage.getItem('check').split(',')[1]
+        const bodyParams = {
+            checkboardImg: check, 
+            points: points, 
+            company: 'zara', 
+            user: user ? user.uid : ''
+        }
         fetch('http://localhost:5000/get-measurements1', {
             method: 'POST',
             headers: { 
-                'Content-Type': 'application/json'
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({checkImg: localStorage.getItem('check')})
+            body: JSON.stringify(bodyParams)
         }).then(response => response.json())
             .then(data => {
                 setLoading(false)
