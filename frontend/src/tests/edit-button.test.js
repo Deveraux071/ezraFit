@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { EditButton } from '../src/components/edit-button';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { EditButton } from '../components/edit-button';
 
 test('edit button renders and is clickable', async () => {
     const mock = jest.fn()

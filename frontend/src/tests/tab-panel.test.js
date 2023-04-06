@@ -1,8 +1,10 @@
 import { render, screen, fireEvent, within, waitFor, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import { BrowserRouter as Router } from 'react-router-dom';
-import { TabPanel } from '../src/components/account-page-components/tab-panel';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { TabPanel } from '../components/account-page-components/tab-panel';
+import { ViewAccount } from '../user-pages/view-account';
+import { AuthProvider } from '../contexts/auth-context';
 
 test('tab panel renders', () => {
     render(
@@ -17,12 +19,16 @@ test('tab panel renders', () => {
 test('tab panel options clickable', async () => {
     render(
         <Router>
-            <TabPanel activeTab='style'/>
+            <AuthProvider>
+            <Routes>
+                <Route index element={<TabPanel/>} />
+                <Route path={"/account"} element={<ViewAccount/>} />
+            </Routes>
+            </AuthProvider>
         </Router>
     )
     const accountLink = screen.getByText('Account')
     expect(accountLink).toBeInTheDocument()
-    fireEvent.onClick(accountLink)
-    await waitFor(() => screen.getByText('Welcome'))
+    fireEvent.click(accountLink)
     await waitFor(() => screen.getByText(/Name:/i))
 })
