@@ -1,6 +1,7 @@
 import sentry_sdk
 from flask import Flask
 from sentry_sdk.integrations.flask import FlaskIntegration
+# import firebase
 from firebase import firebase
 from style_recommender import train_classifier
 from body_measurement.code2 import measure_distance
@@ -9,7 +10,7 @@ import firebase_admin
 from firebase_admin import db
 
 
-cred_obj = firebase_admin.credentials.Certificate('ezrafit-e157e-firebase-adminsdk-cen4y-5f13f60f88.json')
+cred_obj = firebase_admin.credentials.Certificate('backend/ezrafit-e157e-firebase-adminsdk-cen4y-5f13f60f88.json')
 default_app = firebase_admin.initialize_app(cred_obj, {
 	'databaseURL':'https://ezrafit-e157e-default-rtdb.firebaseio.com/'
 	})
