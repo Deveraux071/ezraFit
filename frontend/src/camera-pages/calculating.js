@@ -8,15 +8,24 @@ export default function Calculating( {points} ) {
     const [loading, setLoading] = useState(true)
     const [size, setSize] = useState([])
 
+    // TODO: fix cors issue, remove prefix from checkImg - send only the base64 string
     useEffect(() => {
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({points: points, checkImg: localStorage.getItem('check')})
+            headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'http://localhost:3000'
+            },
+            body: JSON.stringify({checkImg: localStorage.getItem('check')})
         };
 
-        fetch('https://localhost:5000/get-measurements', requestOptions)
-            .then(response => response.json())
+        fetch('http://localhost:5000/get-measurements1', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({checkImg: localStorage.getItem('check')})
+        }).then(response => response.json())
             .then(data => {
                 setLoading(false)
                 setSize(data)
