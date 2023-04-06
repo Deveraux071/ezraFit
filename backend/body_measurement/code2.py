@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import math
 import sys
 import body_measurement.segment as segment
+import base64
+import os 
 
 # initialize the list of reference points and boolean indicating
 # whether cropping is being performed or not
@@ -80,21 +82,6 @@ def get_points(img):
     cv2.destroyAllWindows()
     return points
 
-# def get_real_world_distance(points,m_x,m_y):
-# 	pixel_dist_y=abs(points[0][1]-points[1][1])
-# 	pixel_dist_x=abs(points[0][0]-points[1][0])
-# 	actual_y=m_y*pixel_dist_y
-# 	actual_x=m_x*pixel_dist_x
-# 	actual_dist=math.sqrt(actual_y**2 + actual_x**2)
-	
-
-# def get_waist(img,m_x,m_y):
-# 	points=get_points(img)
-# 	actual_dist=get_real_world_distance(points,m_x,m_y)
-# 	# print actual_dist
-# 	return actual_dist
-
-
 # returns 4 points at square_size of checkboard 
 def chess_board_corners(image,gray,r):
 	square_size=int(r+1)
@@ -111,7 +98,6 @@ def chess_board_corners(image,gray,r):
 	coordinates.append((corners2[rectangle_row*(square_size-1),0,0],corners2[rectangle_row*(square_size-1),0,1]))
 	coordinates.append((corners2[rectangle_row*(square_size-1)+square_size-1,0,0],corners2[rectangle_row*(square_size-1)+square_size-1,0,1]))
 	return coordinates
-	# print coordinates
 
 # receives an image and performs affine transform using chess_board_corners
 def affine_correct_params(image):
@@ -279,19 +265,18 @@ def detect_point_and_ask_user(disp_image,segmented_img,head_point_left,head_poin
 		disp_image = drawCircle(disp_image, (left[0], left[1]), draw_radius)
 	return disp_image,left,right
 
-def data_uri_to_cv2_img(uri):
-    encoded_data = uri.split(',')[1]
-    nparr = np.fromstring(encoded_data.decode('base64'), np.uint8)
-    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    return img
+def save_img(txt):
+	jpg_recovered = base64.b64decode(txt)
+	filename = 'check.jpg'
+	with open(filename, 'wb') as f:
+		f.write(jpg_recovered)
 
-def measure_distance_new(checkboardImage, legsImage, points, affineFlag='False'):
-	print('checkboard image', checkboardImage)
-	image = cv2.imread(checkboardImage)
-	legs_image = cv2.imread(legsImage)
+def measure_distance_new(checkboardImage, points, affineFlag='False'):
+	cb = save_img(checkboardImage)
+	image = cv2.imread('check.jpg')
+	#legs_image = cv2.imread(legsImage)
 
 	affine_correct_flag= (affineFlag)
-
 	metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters=analyze_chessboard(image,affine_correct_flag)
 	
 	segmented_image=segment.segmenter(image)
@@ -388,7 +373,7 @@ def measure_distance_new(checkboardImage, legsImage, points, affineFlag='False')
 	all_measurements['shoulder'] = shoulder_length
 	all_measurements['sleeve'] = sleeve_length
 
-	metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters=analyze_chessboard(legs_image,affine_correct_flag)
+	#metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters=analyze_chessboard(legs_image,affine_correct_flag)
 
 	left_waist = points['waist']['leg']['left']
 	right_waist = points['waist']['leg']['right']
@@ -404,15 +389,14 @@ def measure_distance_new(checkboardImage, legsImage, points, affineFlag='False')
 	maxDist = max(dist1,dist2) #average distance btw the two sides
 	distanceBtwWaistAndAnkle = maxDist * 2 #radius * 2= distance
 	all_measurements['leg'] = distanceBtwWaistAndAnkle
-	
+	if os.path.exists("check.jpg"):
+		os.remove("check.jpg")
 	return all_measurements
 
 def measure_distance(checkboardImage, armsSpreadImage, sidewaysImage, fullBodyImage, affineFlag='False'):
-	# load the image, clone it, and setup the mouse callback function
 	print('checkboard image', checkboardImage)
 	image = cv2.imread(checkboardImage)
 	arm_spread_image=cv2.imread(armsSpreadImage)
-	#waist_image = cv2.imread(args["image3"])
 	waist_chest_image = cv2.imread(sidewaysImage) #loads image 
 
 	legs_image = cv2.imread(fullBodyImage)
@@ -436,12 +420,9 @@ def measure_distance(checkboardImage, armsSpreadImage, sidewaysImage, fullBodyIm
 	cv2.imwrite("second.jpg",segmented_arm_image)
 	cv2.imwrite("third.jpg",segmented_legs_image)
 	
-	# img_col = cv2.cvtColor(legs_image,cv2.COLOR_GRAY2RGB)
-	# print('vals', metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters)
 	print("images saved")
 	block_cut = np.zeros(segmented_image.shape)
 	block_cut[coordinate[0][1]:coordinate[1][1],coordinate[0][0]:coordinate[1][0]] = 1
-	# segmented_image=segmented_image*block_cut
 
 	if(affine_correct_flag=='True'):
 		arm_spread_image=affine_correct(arm_spread_image,affine_correct_parameters)
@@ -517,7 +498,7 @@ def measure_distance(checkboardImage, armsSpreadImage, sidewaysImage, fullBodyIm
 	head_pt = getHeadPoint(segmented_arm_image)
 	arm_spread_image = drawCircle(arm_spread_image, (head_pt[0],head_pt[1]), draw_radius)
 	cv2.imwrite('detected2.jpg', segmented_arm_image)
-	# segmented_arm_image = drawCircle(segmented_arm_image, (head_pt[0],head_pt[1]), draw_radius)
+
 	arm_spread_image,left_fall,right_fall=detect_point_and_ask_user(arm_spread_image,segmented_arm_image,head_pt,head_pt,left_fall_lambda,right_fall_lambda)
 	arm_spread_image,left_shoulder,right_shoulder=detect_point_and_ask_user(arm_spread_image,segmented_arm_image,left_fall,right_fall,left_shoulder_lambda,right_shoulder_lambda)	
 
@@ -542,7 +523,6 @@ def measure_distance(checkboardImage, armsSpreadImage, sidewaysImage, fullBodyIm
 	dist3=getDistance(left_fall,right_fall)
 	dist3=pixel_to_distance(dist3,metre_pixel_x,metre_pixel_y)
 
-	# based on the points selected, get their distance in terms of pixels, then convert to m
 	dist4=getDistance(left_wrist,left_shoulder)
 	dist4=pixel_to_distance(dist4,metre_pixel_x,metre_pixel_y)
 	dist5=getDistance(right_wrist,right_shoulder)
@@ -555,8 +535,7 @@ def measure_distance(checkboardImage, armsSpreadImage, sidewaysImage, fullBodyIm
 	all_measurements['shoulder'] = shoulder_length
 	all_measurements['sleeve'] = sleeve_length
 
-	# DISCUSS: should run analyze_checkboard again
-	metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters=analyze_chessboard(legs_image,affine_correct_flag)
+	#metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters=analyze_chessboard(legs_image,affine_correct_flag)
 	legs= get_points(segmented_legs_image)
 	
 	if (len(legs) == 4):
