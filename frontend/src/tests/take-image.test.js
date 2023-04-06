@@ -63,5 +63,5 @@ test('navigates to /view-image', async () => {
     
     fireEvent.click(options[1]);
     fireEvent.click(screen.getByText('Start'))
-    await waitFor(() => screen.getByText('Front View'), {timeout: 4000})
+    await waitFor(() => screen.getByText('Check View'), {timeout: 4000})
 })
