@@ -11,7 +11,7 @@ export default function Calculating( {points} ) {
     const [size, setSize] = useState([])
 
     useEffect(() => {
-        const check = localStorage.getItem('check').split(',')[1]
+        const check = localStorage.getItem('check') !== null ? localStorage.getItem('check').split(',')[1] : ''
         const bodyParams = {
             checkboardImg: check, 
             points: points, 
