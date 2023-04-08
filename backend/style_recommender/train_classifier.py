@@ -11,9 +11,9 @@ import scipy
 # import tensorflow as tf
 import os
 
-PATH = "backend/training_data/"
-DEMO_PATH = "backend/demo_data/1163.jpg"
-DEMO_PATH_2 = "backend/demo_data/1855.jpg"
+PATH = "training_data/"
+DEMO_PATH = "demo_data/1163.jpg"
+DEMO_PATH_2 = "demo_data/1855.jpg"
 
 def load_data(category, df_endpoint, test_df_startpoint):
     """

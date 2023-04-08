@@ -13,11 +13,11 @@ from werkzeug.utils import secure_filename
 from flask_cors import CORS
 
 
-cred_obj = firebase_admin.credentials.Certificate('backend/ezrafit-e157e-firebase-adminsdk-cen4y-5f13f60f88.json')
+cred_obj = firebase_admin.credentials.Certificate('ezrafit-e157e-firebase-adminsdk-cen4y-5f13f60f88.json')
 default_app = firebase_admin.initialize_app(cred_obj, {
 	'databaseURL':'https://ezrafit-e157e-default-rtdb.firebaseio.com/'
 	})
-UPLOAD_FOLDER = 'backend/demo_data'
+UPLOAD_FOLDER = 'demo_data'
 
 
 # fb = firebase.FirebaseApplication('https://ezrafit-e157e-default-rtdb.firebaseio.com/', None)
@@ -108,7 +108,7 @@ def predict_usage():
     filename = secure_filename(img.filename)
     img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     # return "ok"
-    return train_classifier.predict(usage_model, usage_classes, "backend/demo_data/uploaded_img.jpg")
+    return train_classifier.predict(usage_model, usage_classes, "demo_data/uploaded_img.jpg")
 
 @app.get('/predict_all')
 def predict_all():
