@@ -44,7 +44,7 @@ def generate(preferences):
 
 # if __name__=='__main__':
 
-    # print(generate_search_keywords({
+    # print(generate({
     #     "gender": "female", 
     #     "color": "blue", 
     #     "fit": "loose", 
