@@ -32,8 +32,12 @@ def generate(preferences):
         frequency_penalty=0,
         presence_penalty=0
     )
+
+    keywords = response.choices[0].text.strip().split(",")
+    for i in range(len(keywords)): 
+        keywords[i] = keywords[i].strip()
     
-    return response.choices[0].text.strip().split(", ")
+    return keywords
 
 
 # for testing (remove this later)
