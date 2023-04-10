@@ -12,6 +12,7 @@ import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import { theme } from '../theme';
 import { AllImagePlacers } from '../components/all-image-placers';
 
+import { ArmsSpread } from '../assets/arms-spread';
 export const TakeImage = ( {imageType, svgType} ) => {
     const location = useLocation();
     if (!imageType) {
@@ -24,6 +25,17 @@ export const TakeImage = ( {imageType, svgType} ) => {
     const [time, setTime] = useState(-1);
     const [dropdownVal, setDropdownVal] = useState(-1);
     const [isTimeSet, setIsTimeSet] = useState(false);    
+    
+    let svg;
+    if (svgType === 'spread') {
+        svg = <ArmsSpread/>
+    }
+    else if (svgType === 'side') {
+        svg = <SideSilhouette/>
+    }
+    else if (svgType === 'leg') {
+        svg = <FrontSilhouette/>
+    }
     
     let imageNum = 1;
     if (imageType === 'spread') {
@@ -98,12 +110,8 @@ export const TakeImage = ( {imageType, svgType} ) => {
                     <Typography fontSize='2rem'>Scan to Get Your Measurements!</Typography>
                     <Box position='relative'>
                         <Webcam ref={webRef} height='100%' data-testid='webcam'/>
-                        <div style={{position: 'absolute', width: '34%', top: 0, right: 0, bottom: 0, left: 0, margin: 'auto'}}>
-                            {svgType === 'front' ? (
-                                <FrontSilhouette width='inherit' height='inherit'/>
-                            ) : (
-                                <SideSilhouette width='inherit' height='inherit'/>
-                            )}
+                        <div style={{position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center', top: 0, right: 0, bottom: 0, left: 0, margin: 'auto'}}>
+                            {svg}
                         </div>
                     </Box>
                 </Grid>

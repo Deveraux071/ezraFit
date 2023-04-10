@@ -1,7 +1,7 @@
-export const FrontSilhouette = ( {width, height }) => {
+export const FrontSilhouette = () => {
     return (
-        <svg width={width} height={height} viewBox="0 0 535 1196" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-            <rect width="534.312" height="1196" fill="url(#pattern0)"/>
+        <svg width='100%' height='100%' viewBox="0 0 535 1196" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+            <rect width='100%' height='100%' fill="url(#pattern0)"/>
             <defs>
                 <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
                     <use xlinkHref="#image0_55_359" transform="matrix(0.00431703 0 0 0.00195312 -0.631944 0)"/>
