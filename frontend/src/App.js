@@ -11,6 +11,8 @@ import { ViewAccount } from './user-pages/view-account';
 import { EditAccount } from './user-pages/edit-account';
 import { AuthProvider } from './contexts/auth-context';
 import { InitialStylePage } from './style_pages/initial_style';
+import { ViewMeasurements } from './user-pages/view-measurements';
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -26,6 +28,7 @@ function App() {
           <Route path='/account' element={<ViewAccount/>}/>
           <Route path='/edit' element={<EditAccount/>}/>
           <Route path="/style" element={<InitialStylePage/>}/>
+          <Route path='/measurements' element={<ViewMeasurements/>}/>
         </Routes>
         </AuthProvider>
       </Router>

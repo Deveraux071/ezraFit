@@ -28,9 +28,9 @@ export const TabPanel = ( {activeTab} ) => {
                     <Typography sx={{ml: 1}} fontSize='1.5rem' fontWeight={800}>Style Recommendations</Typography>
                 </Box>
             </Link>
-            <Link fontSize='1.5rem' fontWeight={800} color={activeTab === 'measure' ? theme.colors.pink : theme.colors.gray} onClick={(e) => navigateTo(e, '/measure')}>
+            <Link fontSize='1.5rem' fontWeight={800} color={activeTab === 'measurements' ? theme.colors.pink : theme.colors.gray} onClick={(e) => navigateTo(e, '/measurements')}>
                 <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
-                    <MeasuringTape width='5%' color={activeTab === 'measure' ? theme.colors.pink : theme.colors.gray}/>
+                    <MeasuringTape width='5%' color={activeTab === 'measurements' ? theme.colors.pink : theme.colors.gray}/>
                     <Typography sx={{ml: 1}} fontSize='1.5rem' fontWeight={800}>Measurements</Typography>
                 </Box>
             </Link>
