@@ -11,6 +11,7 @@ import { ViewAccount } from './user-pages/view-account';
 import { EditAccount } from './user-pages/edit-account';
 import { AuthProvider } from './contexts/auth-context';
 import { ViewMeasurements } from './user-pages/view-measurements';
+import Calculated from './camera-pages/calculated';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path='/account' element={<ViewAccount/>}/>
           <Route path='/edit' element={<EditAccount/>}/>
           <Route path='/measurements' element={<ViewMeasurements/>}/>
+          <Route path='/calculated' element={<Calculated/>}/>
         </Routes>
         </AuthProvider>
       </Router>
