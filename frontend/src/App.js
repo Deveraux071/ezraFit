@@ -10,6 +10,7 @@ import { Register } from './auth-pages/register';
 import { ViewAccount } from './user-pages/view-account';
 import { EditAccount } from './user-pages/edit-account';
 import { AuthProvider } from './contexts/auth-context';
+import { InitialStylePage } from './style_pages/initial_style';
 import { ViewMeasurements } from './user-pages/view-measurements';
 import { SelectPoint } from './select-points-pages/select-point';
 
@@ -27,6 +28,7 @@ function App() {
           <Route path='/register' element={<Register/>}/>
           <Route path='/account' element={<ViewAccount/>}/>
           <Route path='/edit' element={<EditAccount/>}/>
+          <Route path="/style" element={<InitialStylePage/>}/>
           <Route path='/measurements' element={<ViewMeasurements/>}/>
           <Route path='/select' element={<SelectPoint/>}/>
         </Routes>
