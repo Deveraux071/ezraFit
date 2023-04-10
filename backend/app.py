@@ -34,8 +34,38 @@ sentry_sdk.init(
     traces_sample_rate=0.1,
     environment="production",
 )
-app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def create_app():
+  app = Flask(__name__)
+  app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+  global usage_model
+  global usage_classes
+  global article_model
+  global article_classes
+  global season_model
+  global season_classes
+  global bc_model
+  global bc_classes
+  
+  usage_res = train_classifier.train_usage_model()
+  usage_model = usage_res[0]
+  usage_classes = usage_res[1]
+
+  article_res = train_classifier.train_article_model()
+  article_model = article_res[0]
+  article_classes = article_res[1]
+
+  season_res = train_classifier.train_season_model()
+  season_model = season_res[0]
+  season_classes = season_res[1]
+
+  bc_res = train_classifier.train_bc_model()
+  bc_model = bc_res[0]
+  bc_classes = bc_res[1]
+
+  return app
+
+app = create_app()
 CORS(app, origins=['http://localhost:3000'])
 
 @app.route("/")
@@ -110,15 +140,22 @@ def predict_usage():
     # return "ok"
     return train_classifier.predict(usage_model, usage_classes, "demo_data/uploaded_img.jpg")
 
-@app.get('/predict_all')
+@app.post('/predict_all')
 def predict_all():
-  usage = train_classifier.predict(usage_model, usage_classes, "backend/demo_data/1855.jpg")
-  article = train_classifier.predict(article_model, article_classes, "backend/demo_data/1855.jpg")
-  season = train_classifier.predict(season_model, season_classes, "backend/demo_data/1855.jpg")
-  bc = train_classifier.predict(bc_model, bc_classes, "backend/demo_data/1855.jpg")
+  img = request.files['file']
+  if img.filename == '':
+    return redirect(request.url)
+  else:
+    img.filename = "uploaded_img.jpg"
+    filename = secure_filename(img.filename)
+    img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    usage = train_classifier.predict(usage_model, usage_classes, "demo_data/uploaded_img.jpg")
+    article = train_classifier.predict(article_model, article_classes, "demo_data/uploaded_img.jpg")
+    season = train_classifier.predict(season_model, season_classes, "demo_data/uploaded_img.jpg")
+    bc = train_classifier.predict(bc_model, bc_classes, "demo_data/uploaded_img.jpg")
 
-  to_return = [article, usage, season, bc]
-  return to_return
+    to_return = [article, usage, season, bc]
+    return to_return
 
 @app.route('/get-measurements')
 def get_measurements(userID=None, img1=None, img2=None, img3=None, img4=None, affline_flag='False', company_name="zara"):
