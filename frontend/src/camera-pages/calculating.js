@@ -1,10 +1,12 @@
 import { Typography, Box } from "@mui/material"
 import { theme } from "../theme"
 import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/auth-context';
 
-export default function Calculating( {points} ) {
+export default function Calculating() {
+    const location = useLocation()
+    let points = location.state.points
     const { user } = useAuth()
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true)
@@ -12,24 +14,19 @@ export default function Calculating( {points} ) {
 
     useEffect(() => {
         const check = localStorage.getItem('check') !== null ? localStorage.getItem('check').split(',')[1] : ''
-        const bodyParams = {
-            checkboardImg: check, 
-            points: points, 
-            company: 'zara', 
-            user: user ? user.uid : ''
-        }
-        fetch('http://localhost:5000/get-measurements1', {
+        fetch('http://localhost:5000/get-measurements', {
             method: 'POST',
             headers: { 
                 'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(bodyParams)
+            body: JSON.stringify({checkboardImg: check, points: points, company: 'zara', user: user ? user.uid : ''})
         }).then(response => response.json())
             .then(data => {
                 setLoading(false)
                 setSize(data)
-                navigate('/view-size', {state: {size: size}})
+                console.log(data)
+                //navigate('/view-size', {state: {size: size}})
             }).catch(err => {
                 console.log(err)
         })
