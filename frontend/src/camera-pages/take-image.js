@@ -18,7 +18,7 @@ export const TakeImage = ( {imageType, svgType} ) => {
         imageType = location.state !== null ? location.state.imageType : 'check'
         svgType = location.state !== null ? location.state.svgType : 'front'
     }
-    
+
     const navigate = useNavigate();
     const webRef = useRef(null);
     const [time, setTime] = useState(-1);
@@ -37,13 +37,13 @@ export const TakeImage = ( {imageType, svgType} ) => {
     }
 
     const getNext = () => {
-        if (imageNum == 1) {
+        if (imageNum === 1) {
             return 'spread'
         }
-        else if (imageNum == 2) {
+        else if (imageNum === 2) {
             return 'side'
         }
-        else if (imageNum == 3) {
+        else if (imageNum === 3) {
             return 'leg'
         }
         else {

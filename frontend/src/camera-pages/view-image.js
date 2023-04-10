@@ -57,10 +57,10 @@ export const ViewImage = ( {imageNum, imageType} ) => {
     if (imageNum === 2) {
         num = 'Second';
     }
-    else if (imageNum == 3) {
+    else if (imageNum === 3) {
         num = 'Third'
     }
-    else if (imageNum == 4) {
+    else if (imageNum === 4) {
         num = 'Fourth'
     }
     
