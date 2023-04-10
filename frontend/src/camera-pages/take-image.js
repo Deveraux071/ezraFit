@@ -6,24 +6,19 @@ import { DropDown } from '../components/dropdown';
 import { Timer } from '../components/timer';
 import { FrontSilhouette } from '../assets/front-silhouette';
 import { SideSilhouette } from '../assets/side-silhouette';
-import { ReturnToHome } from '../components/return-home';
 import { PinkFillButton } from '../components/pink-fill-button';
 import { PinkOutlineButton } from '../components/pink-outline-button';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
-import { ImagePlacer } from '../components/image-placer';
 import { theme } from '../theme';
+import { AllImagePlacers } from '../components/all-image-placers';
 
 export const TakeImage = ( {imageType, svgType} ) => {
-    //check, spread, side, leg
     const location = useLocation();
-    if (!imageType && location.state === null) {
-        imageType = 'check'
-        svgType = 'front'
+    if (!imageType) {
+        imageType = location.state !== null ? location.state.imageType : 'check'
+        svgType = location.state !== null ? location.state.svgType : 'front'
     }
-    else if (!imageType) {
-        imageType = location.state.imageType
-        svgType = location.state.svgType
-    }
+    
     const navigate = useNavigate();
     const webRef = useRef(null);
     const [time, setTime] = useState(-1);
@@ -97,12 +92,7 @@ export const TakeImage = ( {imageType, svgType} ) => {
         <Box>
             <Grid container>
                 <Grid item xs={2}>
-                    <Box display='flex' flexDirection='column'>
-                        <ImagePlacer view='Check View' img={localStorage.getItem('check')} height={200} width={100}/>
-                        <ImagePlacer view='Arms Spread' img={localStorage.getItem('spread') || null} height={200} width={100}/>
-                        <ImagePlacer view='Side View' img={localStorage.getItem('side') || null} height={200} width={100}/>
-                        <ImagePlacer view='Full Body' img={localStorage.getItem('leg') || null} height={200} width={100}/>
-                    </Box>
+                    <AllImagePlacers/>
                 </Grid>
                 <Grid item xs={6} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
                     <Typography fontSize='2rem'>Scan to Get Your Measurements!</Typography>

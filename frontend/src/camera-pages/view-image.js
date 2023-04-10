@@ -1,24 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Grid, Box, Typography } from "@mui/material"
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ReturnToHome } from '../components/return-home';
 import { PinkFillButton } from '../components/pink-fill-button';
 import { PinkOutlineButton } from '../components/pink-outline-button';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
-import { ImagePlacer } from '../components/image-placer';
 import { theme } from '../theme';
+import { AllImagePlacers } from '../components/all-image-placers';
 
-export const ViewImage = ( {imageNum, imageType, next} ) => {
+export const ViewImage = ( {imageNum, imageType} ) => {
     const location = useLocation();
-    if (!imageNum && location.state === null) {
-        imageNum = 1
-        imageType = 'front'
-        next = 'side'
-    }
-    else if (!imageNum) {
-        imageNum = location.state.imageNum
-        imageType = location.state.imageType
-        next = location.state.next
+    if (!imageNum) {
+        imageNum = location.state !== null ? location.state.imageNum : 1
+        imageType = location.state !== null ? location.state.imageType : 'front'
     }
     
     const navigate = useNavigate();
@@ -75,12 +68,7 @@ export const ViewImage = ( {imageNum, imageType, next} ) => {
         <Box>
             <Grid container>
                 <Grid item xs={2}>
-                    <Box display='flex' flexDirection='column'>
-                        <ImagePlacer view='Check View' img={localStorage.getItem('check')} height={200} width={100}/>
-                        <ImagePlacer view='Arms Spread' img={localStorage.getItem('spread') || null} height={200} width={100}/>
-                        <ImagePlacer view='Side View' img={localStorage.getItem('side') || null} height={200} width={100}/>
-                        <ImagePlacer view='Full Body' img={localStorage.getItem('leg') || null} height={200} width={100}/>
-                    </Box>
+                    <AllImagePlacers/>
                 </Grid>
                 <Grid item xs={6} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
                     <Typography fontSize='2rem'>Scan to Get Your Measurements!</Typography>
