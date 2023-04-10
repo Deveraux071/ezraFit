@@ -10,7 +10,7 @@ test('test image placeholders on the side and middle', () => {
             <ViewImage/>
         </Router>
     )
-    expect(screen.getByText('Front View')).toBeInTheDocument();
+    expect(screen.getByText('Check View')).toBeInTheDocument();
     expect(screen.getByText('Side View')).toBeInTheDocument();
     expect(screen.getByTestId('img-position')).toBeInTheDocument(); 
 })
