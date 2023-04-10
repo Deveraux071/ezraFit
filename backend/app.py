@@ -46,10 +46,11 @@ def trigger_error():
 def get_measurements():
   if request.method == 'POST':
     data = request.get_json()
+    print(data)
     company_name = data['company']
     userID = data['user']
     checkboardImage = data['checkboardImg']
-    points = json.loads(data['points'])
+    points = data['points']
     measurements = measure_distance_new(checkboardImage, points)
   
     #get company size charts using the name
