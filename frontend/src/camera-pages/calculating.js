@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/auth-context';
 
 export default function Calculating() {
     const location = useLocation()
-    let points = location.state.points
+    let points = location.state !== null ? location.state.points : {};
     const { user } = useAuth()
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true)
