@@ -9,7 +9,6 @@ import { useState } from 'react';
 import { updateProfile } from 'firebase/auth'
 import { getAuth } from 'firebase/auth';
 import { ref, set} from "firebase/database";
-import { v4 as uuidv4 } from 'uuid';
 
 export default function RegisterForm({formWidth}) {
     const db = useDatabase();
@@ -28,6 +27,13 @@ export default function RegisterForm({formWidth}) {
 
         await auth.register(email, password).then(() => {
             updateProfile(getAuth().currentUser, { displayName: name }).then(() => {
+                const userId = getAuth().currentUser.uid;
+                set(ref(db, '/users/' + userId), {
+                    username: name,
+                    email: email,
+                    password : password
+                });
+                console.log('Registered new user.')
                 navigate('/login');
                 }
             ).catch((err) => {
@@ -40,14 +46,6 @@ export default function RegisterForm({formWidth}) {
             setErr('Failed to create account. Try again.')
         })
 
-        const userId = uuidv4();
-        console.log('uuid', userId)
-        set(ref(db, '/users/' + userId), {
-            username: name,
-            email: email,
-            password : password
-        });
-        console.log('Registered new user.')
     };
 
     
