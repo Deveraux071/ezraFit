@@ -11,13 +11,13 @@ import { PinkOutlineButton } from '../components/pink-outline-button';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import { theme } from '../theme';
 import { AllImagePlacers } from '../components/all-image-placers';
-
 import { ArmsSpread } from '../assets/arms-spread';
-export const TakeImage = ( {imageType, svgType} ) => {
+import { Instructions } from '../components/instructions';
+
+export const TakeImage = ( {imageType} ) => {
     const location = useLocation();
     if (!imageType) {
         imageType = location.state !== null ? location.state.imageType : 'check'
-        svgType = location.state !== null ? location.state.svgType : 'front'
     }
 
     const navigate = useNavigate();
@@ -25,42 +25,19 @@ export const TakeImage = ( {imageType, svgType} ) => {
     const [time, setTime] = useState(-1);
     const [dropdownVal, setDropdownVal] = useState(-1);
     const [isTimeSet, setIsTimeSet] = useState(false);    
-    
     let svg;
-    if (svgType === 'spread') {
-        svg = <ArmsSpread/>
-    }
-    else if (svgType === 'side') {
-        svg = <SideSilhouette/>
-    }
-    else if (svgType === 'leg') {
-        svg = <FrontSilhouette/>
-    }
-    
-    let imageNum = 1;
+    let nxt = 'spread';
     if (imageType === 'spread') {
-        imageNum = 2;
+        svg = <ArmsSpread/>
+        nxt = 'side'
     }
     else if (imageType === 'side') {
-        imageNum = 3;
+        svg = <SideSilhouette/>
+        nxt = 'leg'
     }
     else if (imageType === 'leg') {
-        imageNum = 4;
-    }
-
-    const getNext = () => {
-        if (imageNum === 1) {
-            return 'spread'
-        }
-        else if (imageNum === 2) {
-            return 'side'
-        }
-        else if (imageNum === 3) {
-            return 'leg'
-        }
-        else {
-            return 'fin'
-        }
+        svg = <FrontSilhouette/>
+        nxt = 'fin'
     }
 
     const showImage = () => {
@@ -86,7 +63,7 @@ export const TakeImage = ( {imageType, svgType} ) => {
         }
         if (time === 0) {
             showImage();
-            navigate('/view-image', {state: {imageNum: imageNum, imageType: imageType, next: getNext()}})
+            navigate('/view-image', {state: {imageType: imageType, next: nxt}})
             return;
         }
         
@@ -115,22 +92,8 @@ export const TakeImage = ( {imageType, svgType} ) => {
                         </div>
                     </Box>
                 </Grid>
-                <Grid item xs={4} display='flex' flexDirection='column'>
-                    <Typography fontSize='2rem' sx={{marginTop: 5, marginBottom: 5}}>Instructions</Typography>
-                    <Box sx={{m: 1}}>
-                        <Typography fontSize='1.2rem'>
-                            1. Set the timer to your desired length.
-                        </Typography>
-                        <Typography fontSize='1.2rem'>
-                            2. Press start button.
-                        </Typography>
-                        <Typography fontSize='1.2rem'>
-                            3. Stand in the silhouette.
-                        </Typography>
-                        <Typography fontSize='1.2rem'>
-                            EzraFit will automatically take a picture when the timer runs out!
-                        </Typography>
-                    </Box>
+                <Grid item xs={4} display='flex' flexDirection='column' justifyContent='center'>
+                    <Instructions imageType={imageType}/>
                     <Box display='flex' flexDirection='row' justifyContent='space-evenly' alignItems='center'>
                         <Typography sx={{fontSize: '1.35rem', fontWeight: 900}}>Timer: </Typography>
                         <DropDown data={times} onClick={onDropdownSelect}/>
@@ -140,9 +103,7 @@ export const TakeImage = ( {imageType, svgType} ) => {
                         <PinkOutlineButton text='Cancel'/>
                     </Box>
                     <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
-                        {isTimeSet ? (
-                            <Timer time={time}/>
-                        ) : (<></>)}
+                        {isTimeSet ? ( <Timer time={time}/> ) : (<></>)}
                     </Box>
                 </Grid>
             </Grid>
