@@ -4,12 +4,15 @@ import { PinkOutlineButton } from '../pink-outline-button';
 import { Box, Typography, TextField, Grid, Link } from '@mui/material';
 import { theme } from '../../theme';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/auth-context';
+import { useAuth, useDatabase } from '../../contexts/auth-context';
 import { useState } from 'react';
 import { updateProfile } from 'firebase/auth'
 import { getAuth } from 'firebase/auth';
+import { ref, set} from "firebase/database";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function RegisterForm({formWidth}) {
+    const db = useDatabase();
     const auth = useAuth()
     const navigate = useNavigate();
     const [err, setErr] = useState('')
@@ -36,7 +39,18 @@ export default function RegisterForm({formWidth}) {
             console.log(err)
             setErr('Failed to create account. Try again.')
         })
+
+        const userId = uuidv4();
+        console.log('uuid', userId)
+        set(ref(db, '/users/' + userId), {
+            username: name,
+            email: email,
+            password : password
+        });
+        console.log('Registered new user.')
     };
+
+    
 
     const onCancel = (e) => {
         e.preventDefault();
