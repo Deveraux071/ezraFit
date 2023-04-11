@@ -12,8 +12,8 @@ import { useAuth } from '../contexts/auth-context';
 export const ViewAccount = () => {
     const { user, updatePassword } = useAuth()
     const navigate = useNavigate();
-    const [name, setName] = useState(user !== undefined ? user.displayName : '')
-    const [email, setEmail] = useState(user !== undefined ? user.email : '')
+    const [name, setName] = useState(user ? user.displayName : '')
+    const [email, setEmail] = useState(user ? user.email : '')
     const [pwChange, setPwChange] = useState(false);
     const [err, setErr] = useState('');
 
