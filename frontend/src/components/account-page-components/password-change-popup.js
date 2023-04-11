@@ -1,11 +1,14 @@
 import { Box, Grid, TextField, Typography, Dialog } from "@mui/material"
 import { PinkOutlineButton } from "../pink-outline-button"
 import { PinkFillButton } from "../pink-fill-button"
-import { useAuth } from "../../contexts/auth-context";
+import { useAuth, useDatabase} from "../../contexts/auth-context";
+import { getAuth } from 'firebase/auth';
 import { useState } from "react";
 import { theme } from "../../theme";
+import { ref, update } from "firebase/database";
 
 export const PasswordChangePopup = ( {onCancel, open}) => {
+    const db = useDatabase();
     const { updatePW } = useAuth()
     const [err, setErr] = useState('')
 
@@ -29,6 +32,10 @@ export const PasswordChangePopup = ( {onCancel, open}) => {
             try {
                 await updatePW(new_pw)
                 localStorage.setItem('password', new_pw)
+                const userId = getAuth().currentUser.uid;
+                update(ref(db, '/users/' + userId), {
+                    password : new_pw
+                });
                 onCancel()
             } catch (e) {
                 console.log(e)

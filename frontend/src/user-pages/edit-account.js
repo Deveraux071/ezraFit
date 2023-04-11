@@ -9,16 +9,22 @@ import { TabPanel } from '../components/account-page-components/tab-panel';
 import { PasswordChangePopup } from '../components/account-page-components/password-change-popup';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Navigation } from "../components/navigation";
-import { useAuth } from '../contexts/auth-context';
+import { useAuth, useDatabase } from '../contexts/auth-context';
+import { ref, update } from "firebase/database";
+import { getAuth } from 'firebase/auth';
 
 export const EditAccount = () => {
     const { user, updateEm, updateName, deleteAccount } = useAuth()
+    const db = useDatabase();
     const navigate = useNavigate();
     const [name, setName] = useState(user.displayName)
     const [email, setEmail] = useState(user.email)
     const [pwChange, setPwChange] = useState(false);
     const [err, setErr] = useState(false)
-    const [errMsg, setErrMsg] = useState('')
+    const [errMsg, setErrMsg] = useState('');
+    const userId = getAuth().currentUser.uid;
+    const currName = getAuth().currentUser.reloadUserInfo.displayName;
+    const currEmail = getAuth().currentUser.reloadUserInfo.email;;
 
     const changePW = () => {
         setPwChange(true)
@@ -42,8 +48,13 @@ export const EditAccount = () => {
         const data = new FormData(e.currentTarget);
         const name = data.get('name')
         const email = data.get('email')
+        console.log('Updating DB', email, name, currName, currEmail)
 
-        if (email !== user.email) {
+        if (email !== currEmail) {
+            console.log('Updating email in DB')
+            update(ref(db, '/users/' + userId), {
+                email: email
+            });
             await updateEm(email).catch((e) => {
                 console.log(e)
                 setErr(true)
@@ -51,7 +62,11 @@ export const EditAccount = () => {
             })
         }
 
-        if (name !== user.name && !err) {
+        if (name !== currName && !err) {
+            console.log('Updating username in DB')
+            update(ref(db, '/users/' + userId), {
+                username: name
+            });
             await updateName(name).catch((e) => {
                 console.log(e)
                 setErr(true)
