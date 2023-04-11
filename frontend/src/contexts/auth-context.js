@@ -1,10 +1,15 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { auth } from '../firebase.js'
+import { auth } from '../firebase.js';
+import { database } from '../firebase.js';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, deleteUser, updatePassword, updateEmail } from 'firebase/auth'
 const AuthContext = createContext()
 
 export function useAuth() {
     return useContext(AuthContext)
+}
+
+export function useDatabase() {
+    return database;
 }
 export function AuthProvider( {children} ) {
     const [user, setUser] = useState()
