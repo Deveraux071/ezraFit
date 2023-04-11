@@ -30,8 +30,7 @@ export default function RegisterForm({formWidth}) {
                 const userId = getAuth().currentUser.uid;
                 set(ref(db, '/users/' + userId), {
                     username: name,
-                    email: email,
-                    password : password
+                    email: email
                 });
                 console.log('Registered new user.')
                 navigate('/login');
