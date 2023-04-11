@@ -2,6 +2,65 @@ import { Typography, Box } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 
+const nexts = {
+    'spread': {
+        'waist': {
+            'img': 'side',
+            'type': 'waist'
+        }, 
+        'hip': {
+            'img': 'side',
+            'type': 'hip'
+        }, 
+        'chest': {
+            'img': 'side',
+            'type': 'chest'
+        }, 
+        'neck': {
+            'img': 'spread',
+            'type': 'shoulder'
+        }, 
+        'shoulder': {
+            'img': 'spread',
+            'type': 'wrist'
+        }, 
+        'wrist': {
+            'img': 'check',
+            'type': 'neck'
+        }, 
+    },
+    'side': {
+        'waist': {
+            'img': 'spread',
+            'type': 'chest'
+        },
+        'chest': {
+            'img': 'spread',
+            'type': 'hip'
+        },
+        'hip': {
+            'img': 'spread',
+            'type': 'neck'
+        }
+    },
+    'check': {
+        'neck': {
+            'img': 'check',
+            'type': 'shoulder'
+        },
+        'shoulder': {
+            'img': 'leg',
+            'type': 'waist'
+        },
+    },
+    'leg': {
+        'waist': {
+            'img': 'leg',
+            'type': 'leg'
+        }
+    }
+}
+
 export const SelectPoint = ( {img, type, dict} ) => {
     const [pos, setPos] = useState('left')
     const navigate = useNavigate()
@@ -27,50 +86,21 @@ export const SelectPoint = ( {img, type, dict} ) => {
 
     useEffect(() => {
         if (pos === 'done' && currType !== 'leg') {
-            if (currImg === 'spread') {
-                if (currType === 'waist' || currType === 'hip' || currType === 'chest') {
-                    setCurrImg('side')
+            let found = false;
+            for (const img in nexts) {
+                for (const type in nexts[img]) {
+                    if (img !== currImg) {
+                        break;
+                    }
+                    else if (type === currType) {
+                        setCurrImg(nexts[img][type]['img'])
+                        setCurrType(nexts[img][type]['type'])
+                        found = true;
+                        break;
+                    }
                 }
-                else if (currType === 'neck') {
-                    setCurrImg('spread')
-                    setCurrType('shoulder')
-                }
-                else if (currType === 'shoulder') {
-                    setCurrImg('spread')
-                    setCurrType('wrist')
-                }
-                else if (currType === 'wrist') {
-                    setCurrImg('check')
-                    setCurrType('neck')
-                }
-            }
-            else if (currImg === 'side') {
-                if (currType === 'waist') {
-                    setCurrImg('spread')
-                    setCurrType('chest')
-                }
-                else if (currType === 'chest') {
-                    setCurrImg('spread')
-                    setCurrType('hip')
-                }
-                else if (currType === 'hip') {
-                    setCurrImg('spread')
-                    setCurrType('neck')
-                }
-            }
-            else if (currImg === 'check') {
-                if (currType === 'neck') {
-                    setCurrImg('check')
-                    setCurrType('shoulder')
-                }
-                else if (currType === 'shoulder') {
-                    setCurrImg('leg')
-                    setCurrType('waist')
-                }
-            }
-            else if (currImg === 'leg') {
-                if (currType === 'waist') {
-                    setCurrType('leg')
+                if (found) {
+                    break;
                 }
             }
             setPos('left')
@@ -82,12 +112,9 @@ export const SelectPoint = ( {img, type, dict} ) => {
 
     
     const getPos = (e) => {
-        console.log(currType)
-        console.log(currImg)
         var rect = e.target.getBoundingClientRect();
         var x = e.clientX - rect.left;
         var y = e.clientY - rect.top;
-        console.log(dict)
         if (currType in dict) {
             if (currImg in dict[currType]) {
                 dict[currType][currImg][pos] = [x, y]
@@ -113,7 +140,7 @@ export const SelectPoint = ( {img, type, dict} ) => {
     return (
         <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
             <Typography fontSize='2rem'>Click the {pos} point of the {currType === 'leg' ? 'ankle' : currType}</Typography>
-            <img src={localStorage.getItem(currImg)} onClick={(e) => getPos(e)}></img>
+            <img src={localStorage.getItem(currImg)} alt={currImg} onClick={(e) => getPos(e)}></img>
         </Box>
         
     )
