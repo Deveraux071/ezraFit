@@ -1,6 +1,14 @@
 import { Box, Typography } from "@mui/material"
 
 export const Instructions = ( {imageType} ) => {
+    let info = 'with your arms spread out.';
+    if (imageType === 'side') {
+        info = 'looking towards the left.'
+    }
+    else if (imageType === 'leg') {
+        info = 'showing your full body.'
+    }
+
     return (
         <Box display='flex' flexDirection='column'>
             <Typography fontSize='2rem' sx={{marginTop: 5, marginBottom: 3}} justifyContent='center'>Instructions</Typography>
@@ -12,7 +20,7 @@ export const Instructions = ( {imageType} ) => {
                     2. Press start button.
                 </Typography>
                 <Typography fontSize='1.2rem'>
-                    {imageType === 'check' ? '3. Hold up the checkboard to your chest.' : '3. Stand in the silhouette.'}
+                    {imageType === 'check' ? '3. Hold up the checkboard to your chest.' : '3. Stand in the silhouette ' + info}
                 </Typography>
                 <Typography fontSize='1.2rem'>
                     EzraFit will automatically take a picture when the timer runs out!

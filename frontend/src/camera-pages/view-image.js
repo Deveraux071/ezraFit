@@ -28,8 +28,9 @@ const imgCharacteristics = {
 
 export const ViewImage = ( {imageType} ) => {
     const location = useLocation();
+    imageType = imageType || location.state?.imageType 
     if (!imageType) {
-        imageType = location.state !== null ? location.state.imageType : 'front'
+        imageType = 'check'
     }
     const navigate = useNavigate();
     const [img, setImg] = useState();

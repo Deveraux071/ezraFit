@@ -14,10 +14,27 @@ import { AllImagePlacers } from '../components/all-image-placers';
 import { ArmsSpread } from '../assets/arms-spread';
 import { Instructions } from '../components/instructions';
 
+const times = [3, 5, 8, 10, 15, 20]
+const imgInfo = {
+    'spread': {
+        'svg': <ArmsSpread/>,
+        'nxt': 'side',
+    }, 
+    'side': {
+        'svg': <SideSilhouette/>,
+        'nxt': 'leg',
+    }, 
+    'leg': {
+        'svg': <FrontSilhouette/>,
+        'nxt': 'fin',
+    }, 
+}
+
 export const TakeImage = ( {imageType} ) => {
     const location = useLocation();
+    imageType = imageType || location.state?.imageType 
     if (!imageType) {
-        imageType = location.state !== null ? location.state.imageType : 'check'
+        imageType = 'check'
     }
 
     const navigate = useNavigate();
@@ -27,17 +44,12 @@ export const TakeImage = ( {imageType} ) => {
     const [isTimeSet, setIsTimeSet] = useState(false);    
     let svg;
     let nxt = 'spread';
-    if (imageType === 'spread') {
-        svg = <ArmsSpread/>
-        nxt = 'side'
-    }
-    else if (imageType === 'side') {
-        svg = <SideSilhouette/>
-        nxt = 'leg'
-    }
-    else if (imageType === 'leg') {
-        svg = <FrontSilhouette/>
-        nxt = 'fin'
+    for (const image in imgInfo) {
+        if (image === imageType) {
+            svg = imgInfo[image]['svg']
+            nxt = imgInfo[image]['nxtsvg']
+            break;
+        }
     }
 
     const showImage = () => {
@@ -74,8 +86,6 @@ export const TakeImage = ( {imageType} ) => {
     
         return clearInterval(time)
     }, [time, ])
-
-    const times = [3, 5, 8, 10, 15, 20]
 
     return (
         <Box>
