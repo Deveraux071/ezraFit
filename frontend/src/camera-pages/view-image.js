@@ -7,31 +7,44 @@ import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import { theme } from '../theme';
 import { AllImagePlacers } from '../components/all-image-placers';
 
-export const ViewImage = ( {imageNum, imageType} ) => {
-    const location = useLocation();
-    if (!imageNum) {
-        imageNum = location.state !== null ? location.state.imageNum : 1
-        imageType = location.state !== null ? location.state.imageType : 'front'
+const imgCharacteristics = {
+    'check': {
+        'next': 'spread',
+        'num': 'First'
+    },
+    'spread': {
+        'next': 'side',
+        'num': 'Second',
+    },
+    'side': {
+        'next': 'leg',
+        'num': 'Third',
+    },
+    'leg': {
+        'next': 'fin',
+        'num': 'Fourth',
     }
-    
+}
+
+export const ViewImage = ( {imageType} ) => {
+    const location = useLocation();
+    imageType = imageType || location.state?.imageType 
+    if (!imageType) {
+        imageType = 'check'
+    }
     const navigate = useNavigate();
     const [img, setImg] = useState();
     
     let nextImgType;
-    let nextSvgType = 'side';
+    let num;
+    for (const image in imgCharacteristics) {
+        if (image === imageType) {
+            nextImgType = imgCharacteristics[image]['next']
+            num = imgCharacteristics[image]['num']
+            break;
+        }
+    }
 
-    if (imageType === 'check') {
-        nextImgType = 'spread'
-    }
-    else if (imageType === 'spread') {
-        nextImgType = 'side'
-    }
-    else if (imageType === 'side') {
-        nextImgType = 'leg'
-    }
-    else {
-        nextImgType = 'fin'
-    }
     useEffect(() => {
         setImg(localStorage.getItem(imageType));
     }, [imageType,])
@@ -42,26 +55,15 @@ export const ViewImage = ( {imageNum, imageType} ) => {
             navigate('/select', {state: {img: 'spread', type: 'waist', dict: {}}})
         }
         else {
-            navigate('/take-image', {state: {imageType: nextImgType, svgType: nextSvgType}})
+            navigate('/take-image', {state: {imageType: nextImgType}})
         }
     }
 
     const onPrev = (e) => {
         e.preventDefault();
         localStorage.setItem(imageType, '')
-        navigate('/take-image', {state: {imageType: imageType, svgType: imageType}})
+        navigate('/take-image', {state: {imageType: imageType}})
         return;
-    }
-
-    let num = 'First';
-    if (imageNum === 2) {
-        num = 'Second';
-    }
-    else if (imageNum === 3) {
-        num = 'Third'
-    }
-    else if (imageNum === 4) {
-        num = 'Fourth'
     }
     
     return (
