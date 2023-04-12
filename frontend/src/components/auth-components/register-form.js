@@ -50,7 +50,7 @@ export default function RegisterForm( {formWidth} ) {
                 <GridFormItem title='First Name:' titleSize='1.25rem' textSize='1rem' id='first_name' onChange={(e) => {setFirst(e.target.value)}}/>
                 <GridFormItem title='First Name:' titleSize='1.25rem' textSize='1rem' id='last_name' onChange={(e) => {setLast(e.target.value)}}/>
                 <GridFormItem title='Email:' titleSize='1.25rem' textSize='1rem' id='email' onChange={(e) => {setEmail(e.target.value)}}/>
-                <GridFormItem title='Password:' titleSize='1.25rem' textSize='1rem' id='password' onChange={(e) => {setPw(e.target.value)}}/>
+                <GridFormItem title='Password:' titleSize='1.25rem' textSize='1rem' id='password' onChange={(e) => {setPw(e.target.value)}} type="password"/>
                 <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' sx={{marginTop: 8}}>
                     <PinkFillButton text='Sign Up' fontSize='1.5rem' onClick={(e) => onSubmit(e)}/>
                     <PinkOutlineButton text='Cancel' onClick={() => navigate('/landing')} fontSize='1.5rem'/>
