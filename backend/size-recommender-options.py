@@ -44,19 +44,19 @@ Output:
 #   is euclidean distance better than majority vote? yes - Procedure 3 should be used
 
 # uses Procedure 3
-def upper_body_size_3(measurements, sizes):
-    item_to_size = {}
-    ref = [0, 0, 0]
-    for items in sizes:
-        ms_to_size = {}
-        item = sizes[items]
-        for size in item:
-            curr_size = item[size]
-            euc = euclidean_dist(measurements, curr_size, ref)
-            ms_to_size[size] = euc
-        item_to_size[items] = min(ms_to_size.items(), key=lambda x: x[1])[0]
+# def upper_body_size_3(measurements, sizes):
+#     item_to_size = {}
+#     ref = [0, 0, 0]
+#     for items in sizes:
+#         ms_to_size = {}
+#         item = sizes[items]
+#         for size in item:
+#             curr_size = item[size]
+#             euc = euclidean_dist(measurements, curr_size, ref)
+#             ms_to_size[size] = euc
+#         item_to_size[items] = min(ms_to_size.items(), key=lambda x: x[1])[0]
 
-    return item_to_size
+#     return item_to_size
 
 def euclidean_dist(ms, size, ref):
     diff = [ms['waist'] - size['waist'], ms['chest'] - size['chest'], ms['arm'] - size['arm']]
