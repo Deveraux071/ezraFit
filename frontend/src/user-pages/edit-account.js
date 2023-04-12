@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { theme } from "../theme"
-import { Box, Typography, Grid, Button } from "@mui/material"
+import { Box, Typography, Button } from "@mui/material"
 import { PinkOutlineButton } from "../components/pink-outline-button"
 import { PinkFillButton } from "../components/pink-fill-button"
 import { PasswordChangePopup } from '../components/account-page-components/password-change-popup';

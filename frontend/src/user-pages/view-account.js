@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { theme } from "../theme"
-import { Box, Typography, Grid, Button } from "@mui/material"
+import { Box } from "@mui/material"
 import { EditButton } from "../components/edit-button"
 import { PasswordChangePopup } from '../components/account-page-components/password-change-popup';
 import { useAuth } from '../contexts/auth-context';
