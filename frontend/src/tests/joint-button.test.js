@@ -3,10 +3,17 @@ import '@testing-library/jest-dom'
 import { BrowserRouter as Router } from 'react-router-dom';
 import { JointButton } from '../components/joint-button';
 
+const mock1 = jest.fn()
+const mock2 = jest.fn()
+const info = [
+    {'text': 'left', 'click': mock1}, 
+    {'text': 'right', 'click': mock2}
+]
+
 test('renders joint button', () => {
     render(
         <Router>
-            <JointButton text1='left' text2='right'/>
+            <JointButton info={info}/>
         </Router>
     )
     expect(screen.getByText('left')).toBeInTheDocument()
@@ -14,11 +21,9 @@ test('renders joint button', () => {
 })
 
 test('tests if buttons are clickable', async () => {
-    const mock1 = jest.fn()
-    const mock2 = jest.fn()
     render(
         <Router>
-            <JointButton onClick1={mock1} onClick2={mock2} text1='left' text2='right'/>
+            <JointButton info={info}/>
         </Router>
     )
     fireEvent.click(screen.getByText('left'))
