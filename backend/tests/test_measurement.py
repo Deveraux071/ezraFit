@@ -1,8 +1,8 @@
 import sys, os
 sys.path.append(os.path.abspath(os.path.join('..', '')))
-os.chdir('..') #allows us to go back up one folder to body_measurement_folder
+#os.chdir#('..') #allows us to go back up one folder to body_measurement_folder
 import unittest
-from code2 import analyze_chessboard, getDistance, pixel_to_distance, getHeadPoint, get_wrist, affine_correct, chess_board_corners, first_sharp_fall
+from backend.body_measurement.code2 import analyze_chessboard, getDistance, pixel_to_distance, getHeadPoint, get_wrist, affine_correct, chess_board_corners, first_sharp_fall
 import cv2
 import numpy as np
 
@@ -10,7 +10,7 @@ affine_correct_parameters_act_true = np.array([[9.40904323e-01, -2.06049356e-02,
 
 class TestUtils(unittest.TestCase):
     def test_first_sharp_fall(self):
-        image1 = cv2.imread('./body_measurement/test_images/first.jpg')
+        image1 = cv2.imread('./backend/tests/test_images/first.jpg')
         left_fall_out = first_sharp_fall(image1, 2056, 374,-2,6.5)
         right_fall_out = first_sharp_fall(image1,1923, 191,2,7)
         left_fall_act = (1942, 417)
@@ -20,7 +20,7 @@ class TestUtils(unittest.TestCase):
 
 
     def test_getHeadPoint(self):
-        image1 = cv2.imread('./body_measurement/test_images/first.jpg')
+        image1 = cv2.imread('./backend/tests/test_images/first.jpg')
         head_pt_out = getHeadPoint(image1)
         head_pt_act = (1923, 191)
         
@@ -40,7 +40,7 @@ class TestUtils(unittest.TestCase):
     
     def test_analyze_chessboard_affline_false(self):
         # takes in image 1 , affline flag
-        image1 = cv2.imread('./body_measurement/test_images/final_saket1.jpg')
+        image1 = cv2.imread('./backend/tests/test_images/final_saket1.jpg')
         metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters = analyze_chessboard(image1, 'False')
         metre_pixel_x_act = 0.04431528330296793 
         metre_pixel_y_act = 0.04419255298436231 
@@ -54,7 +54,7 @@ class TestUtils(unittest.TestCase):
 
     def test_analyze_chessboard_affline_True(self):
         # takes in image 1 , affline flag
-        image1 = cv2.imread('./body_measurement/test_images/final_saket1.jpg')
+        image1 = cv2.imread('./backend/tests/test_images/final_saket1.jpg')
         metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters = analyze_chessboard(image1, 'True')
         metre_pixel_x_act = 0.04431528330296793 
         metre_pixel_y_act = 0.04419255298436231 
@@ -68,7 +68,7 @@ class TestUtils(unittest.TestCase):
     # test affline_correct and also affine_correct_params
     def test_affine_correct_M_None(self):
         # takes in image 1 , affline flag
-        image1 = cv2.imread('./body_measurement/test_images/final_saket1.jpg')
+        image1 = cv2.imread('./backend/tests/test_images/final_saket1.jpg')
         dst_out = affine_correct(image1)
         dst_act_shape = (2268, 4032, 3)
         self.assertEqual(dst_out.shape, dst_act_shape)
@@ -76,14 +76,14 @@ class TestUtils(unittest.TestCase):
 
     # test affline_correct and also affine_correct_params
     def test_affine_correct_M_not_None(self):
-        image1 = cv2.imread('./body_measurement/test_images/final_saket2.jpg')
+        image1 = cv2.imread('./backend/tests/test_images/final_saket2.jpg')
         dst_out = affine_correct(image1, affine_correct_parameters_act_true)
         dst_act_shape = (2268, 4032, 3)
         self.assertEqual(dst_out.shape, dst_act_shape)
         self.assertTrue(isinstance(dst_out, (np.ndarray, np.generic) ))
 
     def test_get_wrist(self):
-        image2 = cv2.imread('./body_measurement/test_images/second.jpg')
+        image2 = cv2.imread('./backend/tests/test_images/second.jpg')
         left_wrist_out ,right_wrist_out = get_wrist(image2)
         left_wrist_act = (457, 3300) 
         right_wrist_act = (3459, 3180)
@@ -92,7 +92,7 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(right_wrist_out, right_wrist_act)
 
     def test_chess_board(self):
-        image1 = cv2.imread('./body_measurement/test_images/final_saket1.jpg')
+        image1 = cv2.imread('./backend/tests/test_images/final_saket1.jpg')
         gray=np.copy(image1)
         gray=cv2.cvtColor(gray,cv2.COLOR_BGR2GRAY)
         coordinates_out = chess_board_corners(image1, gray, 5)
