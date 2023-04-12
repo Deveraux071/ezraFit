@@ -7,6 +7,7 @@ import { PasswordChangePopup } from '../components/account-page-components/passw
 import { useAuth } from '../contexts/auth-context';
 import { PrimaryLayout } from '../components/layout-components/primary-layout';
 import { GridViewItem } from '../components/styled-grids/grid-view-item';
+import { PasswordChangeComp } from '../components/account-page-components/password-change-comp';
 
 export const ViewAccount = () => {
     const { user } = useAuth()
@@ -20,16 +21,7 @@ export const ViewAccount = () => {
                 </Box>
                 <GridViewItem title='Name:' text={user?.displayName}/>
                 <GridViewItem title='Email:' text={user?.email}/>
-                <Grid display='flex' flexDirection='row' container sx={{m: 1}} alignItems='center'>
-                    <Grid item xs={4} display='flex' flexDirection='row' justifyContent='flex-end' sx={{pr: 2}}>
-                        <Typography fontSize='1.5rem' fontWeight={650}>Password: </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                        <Button variant='outlined' onClick={() => setPwChange(true)} sx={{border: 2, background: theme.colors.white, borderColor: theme.colors.dark_gray, borderRadius: '20px', m: 1, textTransform: 'none'}}>
-                            <Typography fontSize='1.25rem' color={theme.colors.dark_gray} fontWeight={600}>Change Password</Typography>
-                        </Button>
-                    </Grid>
-                </Grid>
+                <PasswordChangeComp onClick={() => setPwChange(true)}/>
             </Box>
             <PasswordChangePopup onCancel={() => setPwChange(false)} open={pwChange}/>
         </PrimaryLayout>

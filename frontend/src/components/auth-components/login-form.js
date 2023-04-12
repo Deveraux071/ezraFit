@@ -31,10 +31,10 @@ export default function LoginForm( {formWidth} ) {
     return (
         <Box sx={{ paddingTop: 8, paddingBottom: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: theme.colors.white, width: '35%'}}>
             <Typography fontSize='2.5rem'>Log in</Typography>
-            {err !== '' && <Typography fontSize='1rem' color={theme.colors.red}>{err}</Typography>}
+            <Typography fontSize='1rem' color={theme.colors.red}>{err}</Typography>
             <Box sx={{ mt: 1, width: '75%' }} width={formWidth} display='flex' flexDirection='column' justifyContent='center'>
                 <GridFormItem title='Email:' titleSize='1.25rem' textSize='1rem' id='email' onChange={(e) => {setEmail(e.target.value)}}/>
-                <GridFormItem title='Password:' titleSize='1.25rem' textSize='1rem' id='password' onChange={(e) => {setPw(e.target.value)}}/>
+                <GridFormItem title='Password:' titleSize='1.25rem' textSize='1rem' id="password" onChange={(e) => {setPw(e.target.value)}}/>
                 <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' sx={{marginTop: 8}}>
                     <PinkFillButton text='Log In' fontSize='1.5rem' onClick={(e) => onSubmit(e)} disabled={loading}/>
                     <PinkOutlineButton text='Cancel' onClick={() => navigate('/landing')} fontSize='1.5rem'/>
