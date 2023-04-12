@@ -12,6 +12,8 @@ import { EditAccount } from './user-pages/edit-account';
 import { AuthProvider } from './contexts/auth-context';
 import { InitialStylePage } from './style_pages/initial_style';
 import { ViewMeasurements } from './user-pages/view-measurements';
+import { SelectPoint } from './select-points-pages/select-point';
+import Calculated from './camera-pages/calculated';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           <Route path='/edit' element={<EditAccount/>}/>
           <Route path="/style" element={<InitialStylePage/>}/>
           <Route path='/measurements' element={<ViewMeasurements/>}/>
+          <Route path='/select' element={<SelectPoint/>}/>
+          <Route path='/calculated' element={<Calculated/>}/>
         </Routes>
         </AuthProvider>
       </Router>
