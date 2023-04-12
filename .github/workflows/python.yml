@@ -37,6 +37,9 @@ jobs:
         pip install coverage
         pip install numpy
         pip install opencv-python
+        pip install math
+        pip install matplotlib
+        pip install argparse
     - name: Test with pytest
       run: |
         python -m pytest
