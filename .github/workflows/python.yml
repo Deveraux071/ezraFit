@@ -37,7 +37,7 @@ jobs:
         pip install coverage
     - name: Test with pytest
       run: |
-        pytest
+        python -m pytest tests/
     - name: "Upload to CodeClimate"
       env:
         CC_TEST_REPORTER_ID: 1b6106874f51e674209d8804a115173e144ec375da5489ec4867f0a9dac41eed
