@@ -1,7 +1,7 @@
 import { Box, Grid, TextField, Typography, Dialog } from "@mui/material"
 import { PinkOutlineButton } from "../pink-outline-button"
 import { PinkFillButton } from "../pink-fill-button"
-import { useAuth } from "../../contexts/auth-context";
+import { useAuth, useDatabase} from "../../contexts/auth-context";
 import { useState } from "react";
 import { theme } from "../../theme";
 

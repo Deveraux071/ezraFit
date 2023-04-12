@@ -9,7 +9,7 @@ export const ImagePlacer = ( {img, width, height, view} ) => {
             ) : (
                 <></>
             )}
-            <Typography> {view === 'front' ? ('Front View') : ('Side View')} </Typography>
+            <Typography> {view} </Typography>
         </Box>
     )
 }

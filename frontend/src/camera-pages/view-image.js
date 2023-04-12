@@ -1,67 +1,76 @@
 import { useState, useEffect } from 'react';
 import { Grid, Box, Typography } from "@mui/material"
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ReturnToHome } from '../components/return-home';
 import { PinkFillButton } from '../components/pink-fill-button';
 import { PinkOutlineButton } from '../components/pink-outline-button';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
-import { ImagePlacer } from '../components/image-placer';
 import { theme } from '../theme';
+import { AllImagePlacers } from '../components/all-image-placers';
 
-export const ViewImage = ( {imageNum, imageType, next} ) => {
+const imgCharacteristics = {
+    'check': {
+        'next': 'spread',
+        'num': 'First'
+    },
+    'spread': {
+        'next': 'side',
+        'num': 'Second',
+    },
+    'side': {
+        'next': 'leg',
+        'num': 'Third',
+    },
+    'leg': {
+        'next': 'fin',
+        'num': 'Fourth',
+    }
+}
+
+export const ViewImage = ( {imageType} ) => {
     const location = useLocation();
-    if (!imageNum && location.state === null) {
-        imageNum = 1
-        imageType = 'front'
-        next = 'side'
+    imageType = imageType || location.state?.imageType 
+    if (!imageType) {
+        imageType = 'check'
     }
-    else if (!imageNum) {
-        imageNum = location.state.imageNum
-        imageType = location.state.imageType
-        next = location.state.next
-    }
-    
     const navigate = useNavigate();
     const [img, setImg] = useState();
     
+    let nextImgType;
+    let num;
+    for (const image in imgCharacteristics) {
+        if (image === imageType) {
+            nextImgType = imgCharacteristics[image]['next']
+            num = imgCharacteristics[image]['num']
+            break;
+        }
+    }
+
     useEffect(() => {
         setImg(localStorage.getItem(imageType));
     }, [imageType,])
 
     const onNext = (e) => {
         e.preventDefault();
-        if (next === 'side') {
-            console.log('going next')
-            navigate('/take-image', {state: {imageType: 'side', svgType: 'side'}})
-            return;
+        if (nextImgType === 'fin') {
+            navigate('/select', {state: {img: 'spread', type: 'waist', dict: {}}})
         }
-        console.log('going next1')
-        navigate('/calculating');
+        else {
+            navigate('/take-image', {state: {imageType: nextImgType}})
+        }
     }
 
     const onPrev = (e) => {
         e.preventDefault();
         localStorage.setItem(imageType, '')
-        console.log('going back')
-        navigate('/take-image', {state: {imageType: imageType, svgType: imageType}})
-        console.log('gone back')
+        navigate('/take-image', {state: {imageType: imageType}})
         return;
     }
-
-    let num = 'First';
-    if (imageNum === 2) {
-        num = 'Second';
-    }
+    
     return (
         <Box>
             <Grid container>
                 <Grid item xs={2}>
-                    <Box display='flex' flexDirection='column'>
-                        <ImagePlacer view='front' img={localStorage.getItem('front')} height={200} width={100}/>
-                        {imageType === 'side' ? (    
-                            <ImagePlacer view='side' img={localStorage.getItem('side')} height={200} width={100}/>
-                        ) : (<ImagePlacer view='side' height={200} width={100}/>)}
-                    </Box>
+                    <AllImagePlacers/>
                 </Grid>
                 <Grid item xs={6} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
                     <Typography fontSize='2rem'>Scan to Get Your Measurements!</Typography>
