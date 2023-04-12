@@ -1,7 +1,7 @@
 __pycache__/
 
 # the virtual environment
-/be
+be/
 
 # for security purposes
 .env
