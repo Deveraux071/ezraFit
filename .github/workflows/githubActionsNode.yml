@@ -25,40 +25,12 @@ jobs:
         working-directory: ./frontend
         run: |
             npm ci
-            npm test
+            npm run coverage
+
+      - name: publish code coverage to code-climate
+        if: ${{ github.event_name == 'push' && matrix.os.index == 1 }} # Push coverage only once inside the matrix.
+        uses: paambaati/codeclimate-action@v3.2.0
+        env:
+          CC_TEST_REPORTER_ID: 1b6106874f51e674209d8804a115173e144ec375da5489ec4867f0a9dac41eed
+
   
-  tests:
-    name: "Tests (${{ matrix.os.os-label }})"
-    strategy:
-      matrix:
-        os:
-          - { index: 1, os-name: 'ubuntu-latest', os-label: 'Linux' }
-          - { index: 2, os-name: 'macos-latest', os-label: 'macOS' }
-    runs-on: ${{ matrix.os.os-name }}
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
-    steps:
-    - name: checkout code
-      uses: actions/checkout@v3
-
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: install dependencies
-      working-directory: ./frontend
-      run: npm ci
-
-    - name: run tests and instrument coverage
-      working-directory: ./frontend
-      run: npm run coverage
-
-    - name: publish code coverage to code-climate (duh)
-      if: ${{ github.event_name == 'push' && matrix.os.index == 1 }} # Push coverage only once inside the matrix.
-      uses: paambaati/codeclimate-action@v3.2.0
-      env:
-        CC_TEST_REPORTER_ID: 1b6106874f51e674209d8804a115173e144ec375da5489ec4867f0a9dac41eed
-      with:
-        debug: true
