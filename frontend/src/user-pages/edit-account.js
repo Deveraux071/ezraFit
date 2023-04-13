@@ -4,13 +4,13 @@ import { theme } from "../theme"
 import { Box, Typography, Button } from "@mui/material"
 import { PinkOutlineButton } from "../components/pink-outline-button"
 import { PinkFillButton } from "../components/pink-fill-button"
-import { PasswordChangePopup } from '../components/account-page-components/password-change-popup';
+import { PasswordChangePopup } from '../account-page-components/password-change-popup';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { useAuth, useDatabase } from '../contexts/auth-context';
 import { ref, update } from "firebase/database";
-import { GridFormItem } from '../components/styled-grids/grid-form-item';
-import { PrimaryLayout } from '../components/layout-components/primary-layout';
-import { PasswordChangeComp } from '../components/account-page-components/password-change-comp';
+import { GridFormItem } from '../styled-grids/grid-form-item';
+import { PrimaryLayout } from '../layout-components/primary-layout';
+import { PasswordChangeComp } from '../account-page-components/password-change-comp';
 
 export const EditAccount = () => {
     const { user, updateEm, updateName, deleteAccount } = useAuth()

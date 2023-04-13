@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box } from "@mui/material"
 import { EditButton } from "../components/edit-button"
-import { PasswordChangePopup } from '../components/account-page-components/password-change-popup';
+import { PasswordChangePopup } from '../account-page-components/password-change-popup';
 import { useAuth } from '../contexts/auth-context';
-import { PrimaryLayout } from '../components/layout-components/primary-layout';
-import { GridViewItem } from '../components/styled-grids/grid-view-item';
-import { PasswordChangeComp } from '../components/account-page-components/password-change-comp';
+import { PrimaryLayout } from '../layout-components/primary-layout';
+import { GridViewItem } from '../styled-grids/grid-view-item';
+import { PasswordChangeComp } from '../account-page-components/password-change-comp';
 
 export const ViewAccount = () => {
     const { user } = useAuth()

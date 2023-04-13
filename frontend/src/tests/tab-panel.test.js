@@ -1,8 +1,7 @@
-import { render, screen, fireEvent, within, waitFor, cleanup } from '@testing-library/react'
+import { render, screen, fireEvent, within, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import userEvent from '@testing-library/user-event'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { TabPanel } from '../components/account-page-components/tab-panel';
+import { TabPanel } from '../account-page-components/tab-panel';
 import { ViewAccount } from '../user-pages/view-account';
 import { AuthProvider } from '../contexts/auth-context';
 

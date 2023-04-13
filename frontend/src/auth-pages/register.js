@@ -1,5 +1,5 @@
 import { Box } from "@mui/material"
-import RegisterForm from "../components/auth-components/register-form"
+import RegisterForm from "../auth-components/register-form"
 import image from "../assets/background_combined.jpg"
 import { Navigation } from "../components/navigation";
 

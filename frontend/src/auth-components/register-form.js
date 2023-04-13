@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { PinkFillButton } from '../pink-fill-button';
-import { PinkOutlineButton } from '../pink-outline-button';
+import { PinkFillButton } from '../components/pink-fill-button';
+import { PinkOutlineButton } from '../components/pink-outline-button';
 import { Box, Typography, Link } from '@mui/material';
-import { theme } from '../../theme';
+import { theme } from '../theme';
 import { useNavigate } from 'react-router-dom';
-import { useAuth, useDatabase } from '../../contexts/auth-context';
+import { useAuth, useDatabase } from '../contexts/auth-context';
 import { useState } from 'react';
 import { updateProfile } from 'firebase/auth'
 import { getAuth } from 'firebase/auth';

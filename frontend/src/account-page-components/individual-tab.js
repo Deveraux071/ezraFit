@@ -1,5 +1,5 @@
 import { Link, Box, Typography } from "@mui/material"
-import { theme } from "../../theme"
+import { theme } from "../theme"
 
 export const IndividualTab = ({onClick, text, icon, isActive}) => {
     return (
