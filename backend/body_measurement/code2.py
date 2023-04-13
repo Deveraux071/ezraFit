@@ -205,6 +205,12 @@ def get_distance_between_fall(points_arr, metre_pixel_x, metre_pixel_y):
 	dist3 = get_pixel_distance(points_arr[1], points_arr[3], metre_pixel_x, metre_pixel_y)
 	return dist1+dist2+dist3
 
+def get_points_from_measurements(points_arr, body_part):
+	arr_1 = [points[body_part]['spread']['left'], points[body_part]['spread']['right']]
+	arr_2 = [points[body_part]['side']['left'], points[body_part]['side']['right']]
+	return arr_1, arr_2
+
+
 def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	cb = save_img(checkboardImage)
 	image = cv2.imread('check.jpg')
@@ -232,8 +238,9 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 
 	all_measurements = {}
 	
-	waist_a = [points['waist']['spread']['left'], points['waist']['spread']['right']]
-	waist_b = [points['waist']['side']['left'], points['waist']['side']['right']]
+	# waist_a = [points['waist']['spread']['left'], points['waist']['spread']['right']]
+	# waist_b = [points['waist']['side']['left'], points['waist']['side']['right']]
+	waist_a, waist_b = get_points_from_measurements(points, 'waist')
 	# dist1=getDistance(waist_a[0],waist_a[1])
 	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
 	# dist2=getDistance(waist_b[0],waist_b[1])
@@ -243,8 +250,9 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	# perimeter = 2 * 3.1415 * math.sqrt((dist1*dist1 + dist2*dist2)/2)
 	all_measurements['waist'] = get_perimeter(waist_a, waist_b, metre_pixel_x, metre_pixel_y)
 
-	chest_a = [points['chest']['spread']['left'], points['chest']['spread']['right']]
-	chest_b = [points['chest']['side']['left'], points['chest']['side']['right']]
+	# chest_a = [points['chest']['spread']['left'], points['chest']['spread']['right']]
+	# chest_b = [points['chest']['side']['left'], points['chest']['side']['right']]
+	chest_a, chest_b = get_points_from_measurements(points, 'chest')
 	# dist1=getDistance(chest_a[0],chest_a[1])
 	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
 	# dist2=getDistance(chest_b[0],chest_b[1])
@@ -254,8 +262,9 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	# perimeter = 2 * 3.1415 * math.sqrt((dist1*dist1 + dist2*dist2)/2)
 	all_measurements['chest'] = get_perimeter(chest_a, chest_b, metre_pixel_x, metre_pixel_y)
 
-	hip_a = [points['hip']['spread']['left'], points['hip']['spread']['right']]
-	hip_b = [points['hip']['side']['left'], points['hip']['side']['right']]
+	# hip_a = [points['hip']['spread']['left'], points['hip']['spread']['right']]
+	# hip_b = [points['hip']['side']['left'], points['hip']['side']['right']]
+	hip_a, hip_b = get_points_from_measurements(points, 'hip')
 	# dist1=getDistance(hip_a[0],hip_a[1])
 	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
 	# dist2=getDistance(hip_b[0],hip_b[1])
