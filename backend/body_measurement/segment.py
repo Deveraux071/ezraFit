@@ -29,13 +29,16 @@ def get_region(img):
     cv2.destroyAllWindows()
     return r
 
-
+def get_region(array, region):
+    return array[int(region[1]):int(region[1] + region[3]), int(region[0]):int(region[0] + region[2])]
+    
 def get_params_ycrcb(img, region):
     ycrcb_img = cv2.cvtColor(img, cv2.COLOR_BGR2YCR_CB).astype(np.float32)
     cv2.destroyAllWindows()
     r = [int(x) for x in region]
-    region = ycrcb_img[int(region[1]):int(
-        region[1] + region[3]), int(region[0]):int(region[0] + region[2])]
+    region = get_region(ycrcb_img, region)
+    ''' region = ycrcb_img[int(region[1]):int(region[1] + region[3]), int(region[0]):int(region[0] + region[2])]'''
+
     y_mean, Cr_mean, Cb_mean = np.mean(region, axis=(0, 1))
     y_std, Cr_std, Cb_std = np.std(region, axis=(0, 1))
     return [Cb_mean, Cr_mean]
@@ -44,19 +47,20 @@ def get_params_ycrcb(img, region):
 def get_params_hls(img, region):
     hls_img = cv2.cvtColor(img, cv2.COLOR_BGR2HLS).astype(np.float32)
     r = [int(x) for x in region]
-    region = hls_img[int(region[1]):int(region[1] + region[3]),
-                     int(region[0]):int(region[0] + region[2])]
+    region = get_region(hls_img, region)
+    '''region = hls_img[int(region[1]):int(region[1] + region[3]),
+                     int(region[0]):int(region[0] + region[2])]'''
     h_mean, l_mean, s_mean = np.mean(region, axis=(0, 1))
     h_std, l_std, s_std = np.std(region, axis=(0, 1))
     return [h_mean, h_std, l_mean, l_std, s_mean, s_std]
 
 
-def brighten(img, alpha, beta, gamma):
-    cor_img = img.astype(np.float32)
-    bright_img = alpha * cor_img + beta
-    gam_cor = np.power(bright_img / 255, gamma) * 255
-    bright_img = gam_cor.clip(0, 255).astype(np.uint8)
-    return bright_img
+#def brighten(img, alpha, beta, gamma):
+#    cor_img = img.astype(np.float32)
+#    bright_img = alpha * cor_img + beta
+#    gam_cor = np.power(bright_img / 255, gamma) * 255
+#    bright_img = gam_cor.clip(0, 255).astype(np.uint8)
+#    return bright_img
 
 
 def mod_mask(mask, low, high):
@@ -65,13 +69,15 @@ def mod_mask(mask, low, high):
     mask[mask < low] = 0.0
     return mask
 
-
-# def get_mask(img, bg, param_ycrcb, param_hls, tola=16, tolb=50, low_thresh=0.05, high_thresh=0.25, alpha=1.0, beta=0.0, gamma=1.0, sz=5, space=200, erode_sz=3):
-def get_mask(img,param_ycrcb, tola=16, tolb=50, low_thresh=0.05, high_thresh=0.25, sz=5, space=200,erode_sz=2):
-    ##ENSURE THAT param_ycrcb and param_hls correspond to brigthened img
-
-    #     brimg = brighten(img,alpha,beta,gamma)
+def get_mask(img, param_ycrcb, tol=[16, 50], thresh=[0.05, 0.25], opts={'sz': 5, 'space': 200, 'erode_sz':2}):
     brimg = img
+    tola = tol[0]
+    tolb = tol[1]
+    low_thresh = thresh[0]
+    high_thresh = thresh[1]
+    sz = opts['sz']
+    space = opts['space']
+    erode_sz = opts['erode_sz']
 
     if not (sz<=0 or space<=1):
         brimg = cv2.bilateralFilter(brimg, sz, space, space)
@@ -83,28 +89,29 @@ def get_mask(img,param_ycrcb, tola=16, tolb=50, low_thresh=0.05, high_thresh=0.2
         kernel = np.ones((erode_sz,erode_sz),np.uint8)
         mask = cv2.erode(mask,kernel,iterations = 1)
     return mask
+
 def get_bgra(img,mask):
     assert (len(mask.shape) == 2)  # (x,y)
     assert (len(img.shape) == 3)  # (x,y,3)
     alpha = (mask * 255).astype(np.uint8)
     alpha = np.expand_dims(alpha,-1) ##(x,y,1)
     return np.concatenate((img,alpha),axis=2) ##(x,y,4)
+
 def write_alpha_img(img, mask, path):
     r_channel, g_channel, b_channel = cv2.split(img)
     alpha = (mask * 255).astype(np.uint8)
     img_RGBA = cv2.merge((r_channel, g_channel, b_channel, alpha))
     cv2.imwrite(path, img_RGBA)
     return img_RGBA
+
 def get_key_param(img):
     key_region = get_region(img)
     ycrcb = get_params_ycrcb(img, key_region)
     hls = get_params_hls(img, key_region)
     return (ycrcb, hls)
+
 def segmenter(img):
-    # green_img_path = sys.argv[1]
-    # img = cv2.imread(green_img_path)
     print(img.shape)
-    # exit(1)
     key_param = get_key_param(img)
     cv2.namedWindow('controls')
     def nothing(gyxfdd):
@@ -121,10 +128,7 @@ def segmenter(img):
     cv2.createTrackbar('Sat mul high', 'controls', 7, 100, nothing)
     cv2.createTrackbar('Light mask strength', 'controls', 20, 100, nothing)
     cv2.createTrackbar('Light mask size', 'controls', 3, 20, nothing)
-    # cv2.imshow("nn",img)
-    # cv2.waitKey(0)
-
-    # while True:
+    
     tola = cv2.getTrackbarPos('Keying tol low', 'controls')
     tolb = cv2.getTrackbarPos('Keying tol high', 'controls')
     low_thresh = cv2.getTrackbarPos('Mask low Thresh (x100)', 'controls')/100
@@ -137,9 +141,8 @@ def segmenter(img):
     scale_blur  = cv2.getTrackbarPos('Light mask strength', 'controls')
     blur_size  = cv2.getTrackbarPos('Light mask size', 'controls')
 
-    key_mask = get_mask( img, key_param[0], tola, tolb, low_thresh, high_thresh, sz, space, erode_sz)
-        # cv2.imshow("image",key_mask*255)
-        # cv2.waitKey(300)
+    opts = {'sz': sz, 'space': space, 'erode_sz': erode_sz}
+    key_mask = get_mask( img, key_param[0], [tola, tolb], [low_thresh, high_thresh], opts)
     cv2.imwrite('lolu.jpg',key_mask*255)
     return key_mask*255
 
