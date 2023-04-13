@@ -118,13 +118,13 @@ def drawCircle(img, pt,state):
 	else:
 		return cv2.cvtColor(img_col,cv2.COLOR_BGR2GRAY)
 
-def getHeadPoint(mask):
+# def getHeadPoint(mask):
 
-	shape=mask.shape
-	y_head=(np.nonzero(np.sum(mask,axis=1)))[0][0]
-	# print y_head
-	x_head=np.argmax(mask[y_head])
-	return (x_head,y_head)
+# 	shape=mask.shape
+# 	y_head=(np.nonzero(np.sum(mask,axis=1)))[0][0]
+# 	# print y_head
+# 	x_head=np.argmax(mask[y_head])
+# 	return (x_head,y_head)
 
 def analyze_chessboard(image,affine_correct_flag):
 	clone = image.copy()
@@ -206,7 +206,7 @@ def get_distance_between_fall(points_arr, metre_pixel_x, metre_pixel_y):
 	return dist1+dist2+dist3
 
 def get_points_from_measurements(points_arr, body_part, position):
-	return = [points[body_part][position]['left'], points[body_part][position]['right']]
+	return [points[body_part][position]['left'], points[body_part][position]['right']]
 
 
 def measure_distance_new(checkboardImage, points, affineFlag='False'):
