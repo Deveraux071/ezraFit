@@ -18,7 +18,7 @@ import base64
 refPt = []
 r1=5 #for affine correction
 r2=2 #for measurement
-ref_ht=1.9 #measurement of checkboard
+ref_ht=2.84 #measurement of checkboard
 rectangle_row=9
 rectangle_col=6
 # square_size=int(r+1)
