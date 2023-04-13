@@ -6,8 +6,8 @@ from backend.body_measurement.code2 import analyze_chessboard, getDistance, pixe
 import cv2
 import numpy as np
 
-image1 = cv2.imread('./backend/tests/test_images/final_saket1_compressed.jpg')
-image2 = cv2.imread('./backend/tests/test_images/final_saket2_compressed.jpg')
+image1 = cv2.imread('./backend/tests/test_images/final_saket1.jpg')
+image2 = cv2.imread('./backend/tests/test_images/final_saket2.jpg')
 
 class TestUtils(unittest.TestCase):
     
