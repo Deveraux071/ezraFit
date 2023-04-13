@@ -33,8 +33,8 @@ class TestUtils(unittest.TestCase):
         # takes in image 1 , affline flag
         image1 = cv2.imread('./body_measurement/test_images/final_saket1.jpg')
         metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters = analyze_chessboard(image1, 'False')
-        metre_pixel_x_act = 0.029647548688605307 
-        metre_pixel_y_act = 0.02956544037686211
+        metre_pixel_x_act = 0.04431528330296793 
+        metre_pixel_y_act = 0.04419255298436231
         coordinate_act = [(1370, 0), (2556, 2268)]
         affine_correct_parameters_act = None
 
@@ -47,8 +47,8 @@ class TestUtils(unittest.TestCase):
         # takes in image 1 , affline flag
         image1 = cv2.imread('./body_measurement/test_images/final_saket1.jpg')
         metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters = analyze_chessboard(image1, 'True')
-        metre_pixel_x_act = 0.029647548688605307
-        metre_pixel_y_act = 0.02956544037686211
+        metre_pixel_x_act = 0.04431528330296793
+        metre_pixel_y_act = 0.04419255298436231
         coordinate_act = [(1370, 0), (2556, 2268)]
 
         self.assertEqual(metre_pixel_x, metre_pixel_x_act)

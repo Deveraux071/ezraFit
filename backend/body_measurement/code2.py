@@ -13,7 +13,7 @@ import os
 refPt = []
 r1=5 #for affine correction
 r2=2 #for measurement
-ref_ht=1.9 #measurement of checkboard
+ref_ht=2.84 #measurement of checkboard
 rectangle_row=9
 rectangle_col=6
 # square_size=int(r+1)
@@ -192,19 +192,18 @@ def get_perimeter(points1, points2, metre_pixel_x, metre_pixel_y):
 	perimeter = 2 * 3.1415 * math.sqrt((dist1*dist1 + dist2*dist2)/2)
 	return perimeter
 
-def get_distance_between_fall(left_shoulder, left_fall, right_shoulder, right_fall, metre_pixel_x, metre_pixel_y):
+def get_distance_between_fall(points_arr, metre_pixel_x, metre_pixel_y):
 
 	# dist1=getDistance(left_shoulder,left_fall)
 	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
-	dist1 = get_pixel_distance(left_shoulder, left_fall, metre_pixel_x, metre_pixel_y)
+	dist1 = get_pixel_distance(points_arr[0], points_arr[1], metre_pixel_x, metre_pixel_y)
 	# dist2=getDistance(right_shoulder,right_fall)
 	# dist2=pixel_to_distance(dist2,metre_pixel_x,metre_pixel_y)
-	dist2 = get_pixel_distance(right_shoulder, right_fall, metre_pixel_x, metre_pixel_y)
+	dist2 = get_pixel_distance(points_arr[2], points_arr[3], metre_pixel_x, metre_pixel_y)
 	# dist3=getDistance(left_fall,right_fall)
 	# dist3=pixel_to_distance(dist3,metre_pixel_x,metre_pixel_y)
-	dist3 = get_pixel_distance(left_fall, right_fall, metre_pixel_x, metre_pixel_y)
+	dist3 = get_pixel_distance(points_arr[1], points_arr[3], metre_pixel_x, metre_pixel_y)
 	return dist1+dist2+dist3
-
 
 def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	cb = save_img(checkboardImage)
@@ -279,8 +278,8 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	# dist2=pixel_to_distance(dist2,metre_pixel_x,metre_pixel_y)
 	# dist3=getDistance(left_fall,right_fall)
 	# dist3=pixel_to_distance(dist3,metre_pixel_x,metre_pixel_y)
-	
-	dist_ans= get_distance_between_fall(left_shoulder, left_fall, right_shoulder, right_fall, metre_pixel_x, metre_pixel_y)
+	points_arr = [left_shoulder, left_fall, right_shoulder, right_fall]
+	dist_ans= get_distance_between_fall(points_arr, metre_pixel_x, metre_pixel_y)
 
 	left_fall = points['neck']['spread']['left']
 	left_shoulder = points['shoulder']['spread']['left']
@@ -295,7 +294,8 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	# dist2=pixel_to_distance(dist2,metre_pixel_x,metre_pixel_y)
 	# dist3=getDistance(left_fall,right_fall)
 	# dist3=pixel_to_distance(dist3,metre_pixel_x,metre_pixel_y)
-	dist= get_distance_between_fall(left_shoulder, left_fall, right_shoulder, right_fall, metre_pixel_x, metre_pixel_y)
+	points_arr = [left_shoulder, left_fall, right_shoulder, right_fall]
+	dist= get_distance_between_fall(points_arr, metre_pixel_x, metre_pixel_y)
 
 	# dist4=getDistance(left_wrist,left_shoulder)
 	# dist4=pixel_to_distance(dist4,metre_pixel_x,metre_pixel_y)
@@ -304,7 +304,7 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	dist4 = get_pixel_distance(left_wrist, left_shoulder, metre_pixel_x, metre_pixel_y)
 	dist5 = get_pixel_distance(right_wrist, right_shoulder, metre_pixel_x, metre_pixel_y)
 
-	dist_sleeve = (dist5+dist4)/2.0
+	# dist_sleeve = (dist5+dist4)/2.0
 	
 	# dist_tuple=dist1,dist2,dist3
 	shoulder_length = (dist+dist_ans)/2
@@ -322,8 +322,8 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
 	# dist2=getDistance(right_waist, right_bottom)
 	# dist2=pixel_to_distance(dist2,metre_pixel_x,metre_pixel_y)
-	dist4 = get_pixel_distance(left_waist, left_bottom, metre_pixel_x, metre_pixel_y)
-	dist5 = get_pixel_distance(right_waist, right_bottom, metre_pixel_x, metre_pixel_y)
+	dist1 = get_pixel_distance(left_waist, left_bottom, metre_pixel_x, metre_pixel_y)
+	dist2 = get_pixel_distance(right_waist, right_bottom, metre_pixel_x, metre_pixel_y)
 
 	maxDist = max(dist1,dist2) #average distance btw the two sides
 	distanceBtwWaistAndAnkle = maxDist * 2 #radius * 2= distance
