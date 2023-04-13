@@ -1,9 +1,9 @@
 import { Box, Typography, Dialog } from "@mui/material"
-import { PinkOutlineButton } from "../pink-outline-button"
-import { PinkFillButton } from "../pink-fill-button"
-import { useAuth } from "../../contexts/auth-context";
+import { PinkOutlineButton } from "../components/pink-outline-button"
+import { PinkFillButton } from "../components/pink-fill-button"
+import { useAuth } from "../contexts/auth-context";
 import { useState } from "react";
-import { theme } from "../../theme";
+import { theme } from "../theme";
 import { GridFormItem } from "../styled-grids/grid-form-item";
 
 export const PasswordChangePopup = ( {onCancel, open} ) => {

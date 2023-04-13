@@ -1,8 +1,7 @@
-import { render, screen, fireEvent, within, waitFor, cleanup } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import userEvent from '@testing-library/user-event'
 import { BrowserRouter as Router } from 'react-router-dom';
-import { PasswordChangePopup } from '../components/account-page-components/password-change-popup';
+import { PasswordChangePopup } from '../account-page-components/password-change-popup';
 import { AuthProvider } from '../contexts/auth-context';
 test('renders popup', () => {
     render(
