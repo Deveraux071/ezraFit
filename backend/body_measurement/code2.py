@@ -16,7 +16,6 @@ r2=2 #for measurement
 ref_ht=2.84 #measurement of checkboard
 rectangle_row=9
 rectangle_col=6
-# square_size=int(r+1)
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 metre_pixel_x=0
 metre_pixel_y=0
@@ -24,7 +23,6 @@ window_name1="image"
 draw_radius=10
 
 def click_and_crop(event, x, y, flags, param):
-	# grab references to the global variables
 	global refPt, cropping
 	if event == cv2.EVENT_LBUTTONDOWN:
 		pass
@@ -53,11 +51,8 @@ def get_points(img):
 def chess_board_corners(image,gray,r):
 	square_size=int(r+1)
 	ret, corners = cv2.findChessboardCorners(image, (rectangle_row,rectangle_col),None)
-	# corners2 = cv2.cornerSubPix(gray,corners,(11,11),(-1,-1),criteria)
-	# Uncomment for old opencv version
 
 	cv2.cornerSubPix(gray,corners,(11,11),(-1,-1),criteria)
-	# New version does inplace
 	corners2=corners
 	coordinates=[]
 	coordinates.append((corners2[0,0,0],corners2[0,0,1]))
@@ -68,7 +63,6 @@ def chess_board_corners(image,gray,r):
 
 # receives an image and performs affine transform using chess_board_corners
 def affine_correct_params(image):
-
 	gray=np.copy(image)
 
 	if(len(image.shape)>2):
@@ -83,9 +77,7 @@ def affine_correct_params(image):
 	M=cv2.getPerspectiveTransform(pt1,pt2)
 	return M
 
-
 def affine_correct(image,M=None):
-
 	if M is None:
 		M=affine_correct_params(image)
 
@@ -95,7 +87,6 @@ def affine_correct(image,M=None):
 		image2=cv2.cvtColor(image2,cv2.COLOR_GRAY2RGB)
 	
 	dst=cv2.warpPerspective(image2,M,(image.shape[1],image.shape[0]))
-	# dst=cv2.cvtColor(dst,cv2.COLOR_BGR2GRAY)
 	return dst
 
 def analyze_chessboard(image,affine_correct_flag):
@@ -115,10 +106,6 @@ def analyze_chessboard(image,affine_correct_flag):
 
 	ret, corners = cv2.findChessboardCorners(dst, (rectangle_row,rectangle_col),None)
 
-	# corners2 = cv2.cornerSubPix(gray2,corners,(11,11),(-1,-1),criteria)
-	# dst = cv2.drawChessboardCorners(dst, (9,6), corners2, ret)
-	# Uncomment this for old version and comment next 2
-
 	cv2.cornerSubPix(gray2,corners,(11,11),(-1,-1),criteria)
 	cv2.drawChessboardCorners(dst, (9,6), corners, ret)
 
@@ -126,7 +113,6 @@ def analyze_chessboard(image,affine_correct_flag):
 	metre_pixel_y=(r2*ref_ht)/(abs(temp[0][1]-temp[2][1]))
 
 	coordinate=[temp[0],temp[1]]
-	# 6X6 square co-ord
 	sep=((coordinate[1][0]-coordinate[0][0])/6.0)*9.0
 
 	coordinate[0]=(max(0,int(coordinate[0][0]-2*sep)),0)
@@ -146,13 +132,11 @@ def save_img(txt):
 		f.write(jpg_recovered)
 
 def get_pixel_distance(loc1, loc2, metre_pixel_x, metre_pixel_y):
-
 	dist1=getDistance(loc1, loc2)
 	dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
 	return dist1
 
 def get_perimeter(points1, points2, metre_pixel_x, metre_pixel_y):
-	
 	dist1 = get_pixel_distance(points1[0], points1[1], metre_pixel_x, metre_pixel_y)
 	dist2 = get_pixel_distance(points2[0], points2[1], metre_pixel_x, metre_pixel_y)
 	dist1 = dist1/2
@@ -161,28 +145,21 @@ def get_perimeter(points1, points2, metre_pixel_x, metre_pixel_y):
 	return perimeter
 
 def get_distance_between_fall(points_arr, metre_pixel_x, metre_pixel_y):
-
 	dist1 = get_pixel_distance(points_arr[0], points_arr[1], metre_pixel_x, metre_pixel_y)
-
 	dist2 = get_pixel_distance(points_arr[2], points_arr[3], metre_pixel_x, metre_pixel_y)
-
 	dist3 = get_pixel_distance(points_arr[1], points_arr[3], metre_pixel_x, metre_pixel_y)
 	return dist1+dist2+dist3
 
 def get_points_from_measurements(points_arr, body_part, position):
 	return [points_arr[body_part][position]['left'], points_arr[body_part][position]['right']]
 
-
 def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	cb = save_img(checkboardImage)
 	image = cv2.imread('check.jpg')
-
 	affine_correct_flag= (affineFlag)
 	metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters=analyze_chessboard(image,affine_correct_flag)
-	
 	segmented_image=segment.segmenter(image)
 	cv2.imwrite("first.jpg",segmented_image)
-	
 	block_cut = np.zeros(segmented_image.shape)
 	block_cut[coordinate[0][1]:coordinate[1][1],coordinate[0][0]:coordinate[1][0]] = 1
 
@@ -190,17 +167,12 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	
 	waist_a = get_points_from_measurements(points, 'waist', 'spread')
 	waist_b = get_points_from_measurements(points, 'waist', 'side')
-	
 	all_measurements['waist'] = get_perimeter(waist_a, waist_b, metre_pixel_x, metre_pixel_y)
-
 	chest_a = get_points_from_measurements(points, 'chest', 'spread')
 	chest_b = get_points_from_measurements(points, 'chest', 'side')
-	
 	all_measurements['chest'] = get_perimeter(chest_a, chest_b, metre_pixel_x, metre_pixel_y)
-
 	hip_a = get_points_from_measurements(points, 'hip', 'spread')
 	hip_b = get_points_from_measurements(points, 'hip', 'side')
-	
 	all_measurements['hip'] = get_perimeter(hip_a, hip_b, metre_pixel_x, metre_pixel_y)
 
 	cv2.imwrite('detected2.jpg', segmented_image)	
@@ -210,7 +182,6 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	right_fall = points['neck']['check']['right']
 	right_shoulder = points['shoulder']['check']['right']
 	
-	#points_arr = [left_shoulder, left_fall, right_shoulder, right_fall]
 	dist_ans= get_distance_between_fall([left_shoulder, left_fall, right_shoulder, right_fall], metre_pixel_x, metre_pixel_y)
 
 	left_fall = points['neck']['spread']['left']
@@ -220,28 +191,20 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	left_wrist = points['wrist']['spread']['left']
 	right_wrist = points['wrist']['spread']['right']
 
-	#points_arr = [left_shoulder, left_fall, right_shoulder, right_fall]
 	dist= get_distance_between_fall([left_shoulder, left_fall, right_shoulder, right_fall], metre_pixel_x, metre_pixel_y)
-
 	dist4 = get_pixel_distance(left_wrist, left_shoulder, metre_pixel_x, metre_pixel_y)
 	dist5 = get_pixel_distance(right_wrist, right_shoulder, metre_pixel_x, metre_pixel_y)
 
-	#shoulder_length = (dist+dist_ans)/2
-	#sleeve_length = (dist4+dist5)/2
 	all_measurements['shoulder'] = (dist+dist_ans)/2
 	all_measurements['sleeve'] = (dist4+dist5)/2
 
 	left_waist, right_waist = points['waist']['leg']['left'], points['waist']['leg']['right']
-	#right_waist = points['waist']['leg']['right']
-
 	left_bottom, right_bottom = points['leg']['leg']['left'], points['leg']['leg']['right']
-	#right_bottom = points['leg']['leg']['right']
 	
 	dist1 = get_pixel_distance(left_waist, left_bottom, metre_pixel_x, metre_pixel_y)
 	dist2 = get_pixel_distance(right_waist, right_bottom, metre_pixel_x, metre_pixel_y)
 
-	distanceBtwWaistAndAnkle = max(dist1,dist2) * 2
-	all_measurements['leg'] = distanceBtwWaistAndAnkle
+	all_measurements['leg'] = max(dist1,dist2) * 2
 	if os.path.exists("check.jpg"):
 		os.remove("check.jpg")
 	return all_measurements
