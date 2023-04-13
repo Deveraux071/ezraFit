@@ -22,7 +22,7 @@ class TestUtils(unittest.TestCase):
     
     def test_analyze_chessboard_affline_false(self):
         # takes in image 1 , affline flag
-        image1 = cv2.imread('/backend/tests/test_images/final_saket1.jpg')
+        image1 = cv2.imread('./backend/tests/test_images/final_saket1.jpg')
         metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters = analyze_chessboard(image1, 'False')
         metre_pixel_x_act = 0.04431528330296793 
         metre_pixel_y_act = 0.04419255298436231
