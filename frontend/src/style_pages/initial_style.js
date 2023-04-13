@@ -1,4 +1,4 @@
-import { ChangeEvent ,useState, useRef, useCallback, useMemo } from 'react';
+import { ChangeEvent ,useState, useRef, useCallback, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { WelcomeBanner } from "../components/welcome-banner";
 import { theme } from "../theme"
@@ -7,7 +7,6 @@ import { EditButton } from "../components/edit-button"
 import { TabPanel } from '../components/account-page-components/tab-panel';
 import { PasswordChangePopup } from '../components/account-page-components/password-change-popup';
 import { Navigation } from "../components/navigation";
-import { useAuth } from '../contexts/auth-context';
 import {useDropzone} from 'react-dropzone'
 import { PinkFillButton } from '../components/pink-fill-button';
 import { PinkOutlineButton } from '../components/pink-outline-button';
@@ -19,6 +18,10 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { getAuth } from 'firebase/auth';
+import { onValue, ref, set, get } from "firebase/database";
+import { useAuth, useDatabase } from '../contexts/auth-context';
+import { doc, getDoc } from 'firebase/firestore'
 
 export const InitialStylePage = () => {
 
@@ -27,14 +30,38 @@ export const InitialStylePage = () => {
     const [uploaded, setUploaded] = useState(false)
     let preference_values = []
     const [preferences, setPreferences] = useState([['Article Type'], ['Usage'], ['Season'], ['Colour']])
-
+    const db = useDatabase();
+    const { user } = useAuth()
+    // const [userId, setUserId] = useState(null)
+    
     const handleFileUpload = async (event) => {
         // setFile(event.target.files[0])
         await file.current.click()
         handleSubmit()
     }
 
+    // const getUserID = () => {
+    //     setUserId(getAuth().currentUser.uid)
+    //     return "ok"
+    // }
+
+    useEffect(() => {
+            const docRef = ref(db, '/users/' + user?.uid + '/preferences')
+            onValue(docRef, (snapshot) => {
+            const pref_list = snapshot.val()
+            let starter = [['Article Type'], ['Usage'], ['Season'], ['Colour']]
+            let i = 0
+            starter.map(s => {
+                s.push(pref_list[i])
+                i += 1
+            })
+            setPreferences(starter)
+            })
+        }, [user]) 
+        
+
     const handleSubmit = () => {
+        
         console.log('here')
         const url = 'http://localhost:5000/predict_all'
         const formData = new FormData()
@@ -46,6 +73,10 @@ export const InitialStylePage = () => {
                 'content_type' : 'multipart/form-data'
             },
         }
+        
+        const userId = getAuth().currentUser.uid;
+        // userName = getAuth().currentUser.displayName
+
         axios.post(url, formData, config).then((res) => {
             // preference_values = res
             let new_preferences = []
@@ -56,6 +87,11 @@ export const InitialStylePage = () => {
                 new_preferences[i] = p.concat([result[i]])
                 i += 1
             })
+            set(ref(db, '/users/' + userId), {
+                username: getAuth().currentUser.displayName,
+                email: getAuth().currentUser.email,
+                preferences: result
+                })
             console.log(res)
             console.log(new_preferences)
             setPreferences(new_preferences)
@@ -82,7 +118,7 @@ export const InitialStylePage = () => {
     return(
         <Box>
             <Navigation loggedIn={true}/>
-            <WelcomeBanner text='My Account'/>
+            <WelcomeBanner text='My Style Recommendations'/>
             <TabPanel activeTab='style'/>
             <Box marginLeft={'10%'} marginRight={'10%'} marginTop={'2%'} marginBottom={'10%'}>
                 <Typography fontSize='1.5rem' fontWeight={650}>No Recommendations yet!</Typography>
@@ -90,7 +126,8 @@ export const InitialStylePage = () => {
                     <Typography fontSize='1.5rem' fontWeight={650} marginTop={'1.5%'}>Your Preferences</Typography>
                 </div>
                 {preferences[0].length == 1? 
-                    <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>No preferences set yet!</Typography>
+                
+                <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>No preferences set yet. Upload an image of your preferred style below and we will take care of the rest!</Typography>
                 : <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>Update your preferences by uploading an image below!</Typography>}
                 <Box className='main-content'>
                     <TableContainer sx={{ width: 160, boxShadow: "none" }} component={Paper}>
@@ -98,7 +135,7 @@ export const InitialStylePage = () => {
                             <TableBody>
                             {preferences.map((preference) => (
                                 <TableRow
-                                    // key={preference}
+                                    key={preference}
                                     sx={{ 'td, th': { border: 0 }, 'th': { fontWeight: 1000 } }}>
                                 <TableCell component="th" scope="row" className='measurement-label'>
                                     {preference[0]}
