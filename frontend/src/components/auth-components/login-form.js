@@ -37,7 +37,7 @@ export default function LoginForm( {formWidth} ) {
                 <GridFormItem title='Password:' titleSize='1.25rem' textSize='1rem' id="password" onChange={(e) => {setPw(e.target.value)}} type="password"/>
                 <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' sx={{marginTop: 8}}>
                     <PinkFillButton text='Log In' fontSize='1.5rem' onClick={(e) => onSubmit(e)} disabled={loading}/>
-                    <PinkOutlineButton text='Cancel' onClick={() => navigate('/landing')} fontSize='1.5rem'/>
+                    <PinkOutlineButton text='Take measurements as a guest' onClick={() => navigate('/take-image')} fontSize='1rem'/>
                 </Box>
             </Box>
             <Typography>

@@ -22,6 +22,7 @@ function App() {
       <Router>
         <AuthProvider>
         <Routes>
+          <Route path='/' element={<Login/>}/>
           <Route path='/take-image' element={<TakeImage/>}/>
           <Route path='/view-image' element={<ViewImage/>}/>
           <Route path='/calculating' element={<Calculating/>}/>
