@@ -186,12 +186,6 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	block_cut = np.zeros(segmented_image.shape)
 	block_cut[coordinate[0][1]:coordinate[1][1],coordinate[0][0]:coordinate[1][0]] = 1
 
-	#if(affine_correct_flag=='True'):
-	#	arm_spread_image=affine_correct(arm_spread_image,affine_correct_parameters)
-	#	waist_chest_image=affine_correct(waist_chest_image,affine_correct_parameters)
-	#	segmented_image=affine_correct(segmented_image,affine_correct_parameters)
-	#	print("Affine Corrected")
-
 	all_measurements = {}
 	
 	waist_a = get_points_from_measurements(points, 'waist', 'spread')
@@ -216,8 +210,8 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	right_fall = points['neck']['check']['right']
 	right_shoulder = points['shoulder']['check']['right']
 	
-	points_arr = [left_shoulder, left_fall, right_shoulder, right_fall]
-	dist_ans= get_distance_between_fall(points_arr, metre_pixel_x, metre_pixel_y)
+	#points_arr = [left_shoulder, left_fall, right_shoulder, right_fall]
+	dist_ans= get_distance_between_fall([left_shoulder, left_fall, right_shoulder, right_fall], metre_pixel_x, metre_pixel_y)
 
 	left_fall = points['neck']['spread']['left']
 	left_shoulder = points['shoulder']['spread']['left']
@@ -226,22 +220,22 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	left_wrist = points['wrist']['spread']['left']
 	right_wrist = points['wrist']['spread']['right']
 
-	points_arr = [left_shoulder, left_fall, right_shoulder, right_fall]
-	dist= get_distance_between_fall(points_arr, metre_pixel_x, metre_pixel_y)
+	#points_arr = [left_shoulder, left_fall, right_shoulder, right_fall]
+	dist= get_distance_between_fall([left_shoulder, left_fall, right_shoulder, right_fall], metre_pixel_x, metre_pixel_y)
 
 	dist4 = get_pixel_distance(left_wrist, left_shoulder, metre_pixel_x, metre_pixel_y)
 	dist5 = get_pixel_distance(right_wrist, right_shoulder, metre_pixel_x, metre_pixel_y)
 
-	shoulder_length = (dist+dist_ans)/2
-	sleeve_length = (dist4+dist5)/2
-	all_measurements['shoulder'] = shoulder_length
-	all_measurements['sleeve'] = sleeve_length
+	#shoulder_length = (dist+dist_ans)/2
+	#sleeve_length = (dist4+dist5)/2
+	all_measurements['shoulder'] = (dist+dist_ans)/2
+	all_measurements['sleeve'] = (dist4+dist5)/2
 
-	left_waist = points['waist']['leg']['left']
-	right_waist = points['waist']['leg']['right']
+	left_waist, right_waist = points['waist']['leg']['left'], points['waist']['leg']['right']
+	#right_waist = points['waist']['leg']['right']
 
-	left_bottom = points['leg']['leg']['left']
-	right_bottom = points['leg']['leg']['right']
+	left_bottom, right_bottom = points['leg']['leg']['left'], points['leg']['leg']['right']
+	#right_bottom = points['leg']['leg']['right']
 	
 	dist1 = get_pixel_distance(left_waist, left_bottom, metre_pixel_x, metre_pixel_y)
 	dist2 = get_pixel_distance(right_waist, right_bottom, metre_pixel_x, metre_pixel_y)
