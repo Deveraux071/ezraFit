@@ -98,7 +98,7 @@ def affine_correct(image,M=None):
 	# dst=cv2.cvtColor(dst,cv2.COLOR_BGR2GRAY)
 	return dst
 
-def drawCircle(img, pt,state):
+'''def drawCircle(img, pt,state):
 
 	# print img.shape
 	# if()
@@ -116,7 +116,7 @@ def drawCircle(img, pt,state):
 		cv2.destroyAllWindows()
 		return img
 	else:
-		return cv2.cvtColor(img_col,cv2.COLOR_BGR2GRAY)
+		return cv2.cvtColor(img_col,cv2.COLOR_BGR2GRAY)'''
 
 def analyze_chessboard(image,affine_correct_flag):
 	clone = image.copy()
@@ -201,22 +201,22 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	metre_pixel_x,metre_pixel_y,coordinate,affine_correct_parameters=analyze_chessboard(image,affine_correct_flag)
 	
 	segmented_image=segment.segmenter(image)
-	print("Segmentation Completed 1")
+	#print("Segmentation Completed 1")
 
 	cv2.imwrite("first.jpg",segmented_image)
 	
-	print("images saved")
+	#print("images saved")
 	block_cut = np.zeros(segmented_image.shape)
 	block_cut[coordinate[0][1]:coordinate[1][1],coordinate[0][0]:coordinate[1][0]] = 1
 
-	if(affine_correct_flag=='True'):
-		arm_spread_image=affine_correct(arm_spread_image,affine_correct_parameters)
-		waist_chest_image=affine_correct(waist_chest_image,affine_correct_parameters)
-		segmented_image=affine_correct(segmented_image,affine_correct_parameters)
-		print("Affine Corrected")
+	#if(affine_correct_flag=='True'):
+	#	arm_spread_image=affine_correct(arm_spread_image,affine_correct_parameters)
+	#	waist_chest_image=affine_correct(waist_chest_image,affine_correct_parameters)
+	#	segmented_image=affine_correct(segmented_image,affine_correct_parameters)
+	#	print("Affine Corrected")
 
-	print(metre_pixel_x)
-	print(metre_pixel_y)
+	#print(metre_pixel_x)
+	#print(metre_pixel_y)
 
 	all_measurements = {}
 	
@@ -272,8 +272,9 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	dist1 = get_pixel_distance(left_waist, left_bottom, metre_pixel_x, metre_pixel_y)
 	dist2 = get_pixel_distance(right_waist, right_bottom, metre_pixel_x, metre_pixel_y)
 
-	maxDist = max(dist1,dist2) #average distance btw the two sides
-	distanceBtwWaistAndAnkle = maxDist * 2 #radius * 2= distance
+	#maxDist = max(dist1,dist2) #average distance btw the two sides
+	#distanceBtwWaistAndAnkle = maxDist * 2 #radius * 2= distance
+	distanceBtwWaistAndAnkle = max(dist1,dist2) * 2
 	all_measurements['leg'] = distanceBtwWaistAndAnkle
 	if os.path.exists("check.jpg"):
 		os.remove("check.jpg")
