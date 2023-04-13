@@ -5,17 +5,27 @@ import { JointButton } from "./joint-button";
 import { Grid, Link, Typography, Divider, Box } from "@mui/material";
 import { useAuth } from "../contexts/auth-context";
 
+const links = [{
+    title: 'About Us',
+    nav: '/about',
+},
+{
+    title: 'Contact',
+    nav: '/contact',
+}]
+
 export const Navigation = ( {loggedIn} ) => {
     const navigate = useNavigate();
     const { logout } = useAuth(); 
-    const navigateTo = (url) => {
-        navigate(url);
-    }
 
     const logOut = async () => {
         await logout();
         navigate('/login')
     }
+
+    let btns;
+    loggedIn ? (btns = [{'text': 'Settings', 'click': () => navigate('/settings')}, {'text': 'Log out', 'click': () => logOut()}]) : (btns = [{'text': 'Log in', 'click': () => navigate('/login')}, {'text': 'Sign up', 'click': () => navigate('/register')}])
+
     return (
         <Box sx={{backgroundColor: theme.colors.white}}>
             <Grid container alignItems='center' display='flex' flexDirection='row'>
@@ -27,20 +37,16 @@ export const Navigation = ( {loggedIn} ) => {
                 <Grid item xs={5} sx={{p: 2}} display='flex' flexDirection='row'>
                     <Typography color={theme.colors.black} fontSize='1.75rem' fontWeight={500}>Get your fit</Typography>
                 </Grid>
-                <Grid item xs={1} display='flex' flexDirection='row' justifyContent='center'>
-                    <Link onClick={() => navigateTo('/about')} sx={{color: theme.colors.pink, fontSize:'1.15rem'}} underline='none'>About Us</Link>
-                </Grid>
-                <Grid item xs={1} display='flex' flexDirection='row' justifyContent='center'>
-                    <Link onClick={() => navigateTo('/contact')} sx={{color: theme.colors.pink, fontSize:'1.15rem'}} underline='none'>Contact</Link>
-                </Grid>
+                {links.map((link, index) => {
+                    return (
+                        <Grid item key={index} xs={1} display='flex' flexDirection='row' justifyContent='center'>
+                            <Link onClick={() => navigate(link.nav)} sx={{color: theme.colors.pink, fontSize:'1.15rem'}} underline='none'>{link.title}</Link>
+                        </Grid>
+                    )
+                })}
                 <Grid item xs={2} display='flex' flexDirection='row' justifyContent='center' sx={{marginLeft: 3, marginRight: 3}}>
-                    {loggedIn ? (
-                        <JointButton text1='Settings' text2='Log out' onClick1={() => navigateTo('/settings')} onClick2={() => logOut()}/>
-                    ) : (
-                        <JointButton text1='Log in' text2='Sign up' onClick1={() => navigateTo('/login')} onClick2={() => navigateTo('/register')}/>
-                    )}
+                    <JointButton info={btns}/>
                 </Grid>
-                
             </Grid>
         </Box>
     )

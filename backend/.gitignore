@@ -1,0 +1,8 @@
+__pycache__/
+
+# the virtual environment
+be/
+
+# for security purposes
+.env
+.idea

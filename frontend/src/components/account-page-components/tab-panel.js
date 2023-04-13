@@ -1,45 +1,37 @@
-import { Box, Typography, Link } from "@mui/material"
+import { Box } from "@mui/material"
 import { useNavigate } from 'react-router-dom';
 import { theme } from "../../theme"
 import { MeasuringTape } from "../../assets/measuring-tape";
 import { AccountIcon } from "../../assets/account-icon";
 import { ClothesIcon } from "../../assets/clothes";
-
-/*
-TODOs:
-1. update the Style Recommendations and Measurements urls
-*/ 
+import { IndividualTab } from "./individual-tab";
 
 export const TabPanel = ( {activeTab} ) => {
     const navigate = useNavigate()
-    
-    const navigateTo = (e, url) => {
-        e.preventDefault()
-        navigate(url)
-    }
+    const tabs = [ {
+            'name': 'style',
+            'text': 'Style Recommendations',
+            'icon': <ClothesIcon width='5%' color={activeTab === 'style' ? theme.colors.pink : theme.colors.gray}/>
+        }, 
+        {
+            'name': 'measurements',
+            'text': 'Measurements',
+            'icon': <MeasuringTape width='5%' color={activeTab === 'measurements' ? theme.colors.pink : theme.colors.gray}/>
+        },
+        {
+            'name': 'account',
+            'text': 'Account',
+            'icon': <AccountIcon width='5%' color={activeTab === 'account' ? theme.colors.pink : theme.colors.gray}/>
+        }
+    ]
 
     return (
-        <Box display='flex' flexDirection='row' alignItems='center' justifyContent='space-evenly' height='10vh' sx={{
-            background: 'rgba(255, 158, 158, 0.07)',
-        }}>
-            <Link fontSize='1.5rem' fontWeight={800} color={activeTab === 'style' ? theme.colors.pink : theme.colors.gray} onClick={(e) => navigateTo(e, '/style')}>
-                <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
-                    <ClothesIcon width='5%' color={activeTab === 'style' ? theme.colors.pink : theme.colors.gray}/>
-                    <Typography sx={{ml: 1}} fontSize='1.5rem' fontWeight={800}>Style Recommendations</Typography>
-                </Box>
-            </Link>
-            <Link fontSize='1.5rem' fontWeight={800} color={activeTab === 'measurements' ? theme.colors.pink : theme.colors.gray} onClick={(e) => navigateTo(e, '/measurements')}>
-                <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
-                    <MeasuringTape width='5%' color={activeTab === 'measurements' ? theme.colors.pink : theme.colors.gray}/>
-                    <Typography sx={{ml: 1}} fontSize='1.5rem' fontWeight={800}>Measurements</Typography>
-                </Box>
-            </Link>
-            <Link fontSize='1.5rem' fontWeight={800} color={activeTab === 'account' ? theme.colors.pink : theme.colors.gray} onClick={(e) => navigateTo(e, '/account')}>
-                <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
-                    <AccountIcon width='5%' color={activeTab === 'account' ? theme.colors.pink : theme.colors.gray}/>
-                    <Typography sx={{ml: 1}} fontSize='1.5rem' fontWeight={800}>Account</Typography>
-                </Box>
-            </Link>
+        <Box display='flex' flexDirection='row' alignItems='center' justifyContent='space-evenly' height='10vh' sx={{background: 'rgba(255, 158, 158, 0.07)'}}>
+            {tabs.map((tab) => {
+                return (
+                    <IndividualTab key={tab['name']} icon={tab['icon']} text={tab['text']} onClick={() => navigate('/'+tab['name'])} isActive={activeTab === tab['name']}/>
+                )
+            })}
         </Box>
     )
 }

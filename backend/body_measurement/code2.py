@@ -3,10 +3,17 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-import sys
-import body_measurement.segment as segment
+import sys, os
+sys.path.append(os.path.abspath(os.path.join('..', '')))
+import backend.body_measurement.segment as segment
+
+## AV Notes:
+# points not chosen automatically, must be pre-selected by the user, after which projection points for shoulder are seen, but they don't seem accurate
+# have measurements for waist, shoulder, and arm
+# need measurements for chest, hips, legs
+# when extending for chest, need to specifically make sure that measurements are accurate for women
 import base64
-import os 
+
 
 # initialize the list of reference points and boolean indicating
 # whether cropping is being performed or not
