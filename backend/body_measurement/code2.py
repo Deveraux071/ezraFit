@@ -205,10 +205,8 @@ def get_distance_between_fall(points_arr, metre_pixel_x, metre_pixel_y):
 	dist3 = get_pixel_distance(points_arr[1], points_arr[3], metre_pixel_x, metre_pixel_y)
 	return dist1+dist2+dist3
 
-def get_points_from_measurements(points_arr, body_part):
-	arr_1 = [points[body_part]['spread']['left'], points[body_part]['spread']['right']]
-	arr_2 = [points[body_part]['side']['left'], points[body_part]['side']['right']]
-	return arr_1, arr_2
+def get_points_from_measurements(points_arr, body_part, position):
+	return = [points[body_part][position]['left'], points[body_part][position]['right']]
 
 
 def measure_distance_new(checkboardImage, points, affineFlag='False'):
@@ -240,7 +238,8 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	
 	# waist_a = [points['waist']['spread']['left'], points['waist']['spread']['right']]
 	# waist_b = [points['waist']['side']['left'], points['waist']['side']['right']]
-	waist_a, waist_b = get_points_from_measurements(points, 'waist')
+	waist_a = get_points_from_measurements(points, 'waist', 'spread')
+	waist_b = get_points_from_measurements(points, 'waist', 'side')
 	# dist1=getDistance(waist_a[0],waist_a[1])
 	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
 	# dist2=getDistance(waist_b[0],waist_b[1])
@@ -252,7 +251,8 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 
 	# chest_a = [points['chest']['spread']['left'], points['chest']['spread']['right']]
 	# chest_b = [points['chest']['side']['left'], points['chest']['side']['right']]
-	chest_a, chest_b = get_points_from_measurements(points, 'chest')
+	chest_a = get_points_from_measurements(points, 'chest', 'spread')
+	chest_b = get_points_from_measurements(points, 'chest', 'side')
 	# dist1=getDistance(chest_a[0],chest_a[1])
 	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
 	# dist2=getDistance(chest_b[0],chest_b[1])
@@ -264,7 +264,8 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 
 	# hip_a = [points['hip']['spread']['left'], points['hip']['spread']['right']]
 	# hip_b = [points['hip']['side']['left'], points['hip']['side']['right']]
-	hip_a, hip_b = get_points_from_measurements(points, 'hip')
+	hip_a = get_points_from_measurements(points, 'hip', 'spread')
+	hip_b = get_points_from_measurements(points, 'hip', 'side')
 	# dist1=getDistance(hip_a[0],hip_a[1])
 	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
 	# dist2=getDistance(hip_b[0],hip_b[1])
