@@ -24,7 +24,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!frontend)/\" --env=jsdom",
-    "coverage": "react-scripts test --transformIgnorePatterns \"node_modules/(?!frontend)/\" --env=jsdom --coverage --watchAll",
+    "coverage": "react-scripts test --transformIgnorePatterns \"node_modules/(?!frontend)/\" --env=jsdom --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
