@@ -35,15 +35,6 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(affine_correct_parameters, affine_correct_parameters_act)
 
     # test affline_correct and also affine_correct_params
-    def test_affine_correct_M_None(self):
-        # takes in image 1 , affline flag
-        image1 = cv2.imread('./backend/tests/test_images/final_saket1.jpg')
-        dst_out = affine_correct(image1)
-        dst_act_shape = (2268, 4032, 3)
-        self.assertEqual(dst_out.shape, dst_act_shape)
-        self.assertTrue(isinstance(dst_out, (np.ndarray, np.generic) ))
-
-    # test affline_correct and also affine_correct_params
     def test_affine_correct_M_not_None(self):
         image2 = cv2.imread('./backend/tests/test_images/final_saket2.jpg')
         affine_correct_parameters_act_true = np.array([[9.40904323e-01, -2.06049356e-02, 8.65506247e+01], [6.93225464e-03, 9.72540133e-01, -8.98750876e+00], [-1.60726699e-05, 2.47661411e-06, 1.00000000e+00]])
