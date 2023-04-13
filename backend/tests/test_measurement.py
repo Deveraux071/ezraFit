@@ -2,7 +2,7 @@ import sys, os
 sys.path.append(os.path.abspath(os.path.join('..', '')))
 #os.chdir#('..') #allows us to go back up one folder to body_measurement_folder
 import unittest
-from backend.body_measurement.code2 import analyze_chessboard, getDistance, pixel_to_distance, getHeadPoint, get_wrist, affine_correct, chess_board_corners, first_sharp_fall
+from backend.body_measurement.code2 import analyze_chessboard, getDistance, pixel_to_distance, affine_correct, chess_board_corners
 import cv2
 import numpy as np
 
