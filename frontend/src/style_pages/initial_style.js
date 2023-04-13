@@ -48,14 +48,16 @@ export const InitialStylePage = () => {
     useEffect(() => {
             const docRef = ref(db, '/users/' + user?.uid + '/preferences')
             onValue(docRef, (snapshot) => {
-            const pref_list = snapshot.val()
-            let starter = [['Article Type'], ['Usage'], ['Season'], ['Colour']]
-            let i = 0
-            starter.map(s => {
-                s.push(pref_list[i])
-                i += 1
-            })
-            setPreferences(starter)
+            if (snapshot.exists()){
+                const pref_list = snapshot.val()
+                let starter = [['Article Type'], ['Usage'], ['Season'], ['Colour']]
+                let i = 0
+                starter.map(s => {
+                    s.push(pref_list[i])
+                    i += 1
+                })
+                setPreferences(starter)
+            }
             })
         }, [user]) 
         
