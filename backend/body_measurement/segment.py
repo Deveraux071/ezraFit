@@ -29,14 +29,14 @@ def get_region(img):
     cv2.destroyAllWindows()
     return r
 
-def get_region(array, region):
+def get_region_arr(array, region):
     return array[int(region[1]):int(region[1] + region[3]), int(region[0]):int(region[0] + region[2])]
     
 def get_params_ycrcb(img, region):
     ycrcb_img = cv2.cvtColor(img, cv2.COLOR_BGR2YCR_CB).astype(np.float32)
     cv2.destroyAllWindows()
     r = [int(x) for x in region]
-    region = get_region(ycrcb_img, region)
+    region = get_region_arr(ycrcb_img, region)
     ''' region = ycrcb_img[int(region[1]):int(region[1] + region[3]), int(region[0]):int(region[0] + region[2])]'''
 
     y_mean, Cr_mean, Cb_mean = np.mean(region, axis=(0, 1))
@@ -47,7 +47,7 @@ def get_params_ycrcb(img, region):
 def get_params_hls(img, region):
     hls_img = cv2.cvtColor(img, cv2.COLOR_BGR2HLS).astype(np.float32)
     r = [int(x) for x in region]
-    region = get_region(hls_img, region)
+    region = get_region_arr(hls_img, region)
     '''region = hls_img[int(region[1]):int(region[1] + region[3]),
                      int(region[0]):int(region[0] + region[2])]'''
     h_mean, l_mean, s_mean = np.mean(region, axis=(0, 1))
