@@ -206,7 +206,7 @@ def get_distance_between_fall(points_arr, metre_pixel_x, metre_pixel_y):
 	return dist1+dist2+dist3
 
 def get_points_from_measurements(points_arr, body_part, position):
-	return [points[body_part][position]['left'], points[body_part][position]['right']]
+	return [points_arr[body_part][position]['left'], points_arr[body_part][position]['right']]
 
 
 def measure_distance_new(checkboardImage, points, affineFlag='False'):
