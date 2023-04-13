@@ -5,7 +5,7 @@ from sentry_sdk.integrations.flask import FlaskIntegration
 from firebase import firebase
 
 from style_recommender import train_classifier
-from body_measurement.code2 import measure_distance, measure_distance_new
+from body_measurement.code2 import measure_distance_new
 from size_recommender import get_size
 import firebase_admin
 from firebase_admin import db
