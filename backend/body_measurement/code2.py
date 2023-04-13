@@ -118,14 +118,6 @@ def drawCircle(img, pt,state):
 	else:
 		return cv2.cvtColor(img_col,cv2.COLOR_BGR2GRAY)
 
-# def getHeadPoint(mask):
-
-# 	shape=mask.shape
-# 	y_head=(np.nonzero(np.sum(mask,axis=1)))[0][0]
-# 	# print y_head
-# 	x_head=np.argmax(mask[y_head])
-# 	return (x_head,y_head)
-
 def analyze_chessboard(image,affine_correct_flag):
 	clone = image.copy()
 	gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
@@ -181,11 +173,7 @@ def get_pixel_distance(loc1, loc2, metre_pixel_x, metre_pixel_y):
 
 def get_perimeter(points1, points2, metre_pixel_x, metre_pixel_y):
 	
-	# dist1=getDistance(points1[0],points1[1])
-	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
 	dist1 = get_pixel_distance(points1[0], points1[1], metre_pixel_x, metre_pixel_y)
-	# dist2=getDistance(points2[0],points2[1])
-	# dist2=pixel_to_distance(dist2,metre_pixel_x,metre_pixel_y)
 	dist2 = get_pixel_distance(points2[0], points2[1], metre_pixel_x, metre_pixel_y)
 	dist1 = dist1/2
 	dist2 = dist2/2
@@ -194,14 +182,10 @@ def get_perimeter(points1, points2, metre_pixel_x, metre_pixel_y):
 
 def get_distance_between_fall(points_arr, metre_pixel_x, metre_pixel_y):
 
-	# dist1=getDistance(left_shoulder,left_fall)
-	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
 	dist1 = get_pixel_distance(points_arr[0], points_arr[1], metre_pixel_x, metre_pixel_y)
-	# dist2=getDistance(right_shoulder,right_fall)
-	# dist2=pixel_to_distance(dist2,metre_pixel_x,metre_pixel_y)
+
 	dist2 = get_pixel_distance(points_arr[2], points_arr[3], metre_pixel_x, metre_pixel_y)
-	# dist3=getDistance(left_fall,right_fall)
-	# dist3=pixel_to_distance(dist3,metre_pixel_x,metre_pixel_y)
+
 	dist3 = get_pixel_distance(points_arr[1], points_arr[3], metre_pixel_x, metre_pixel_y)
 	return dist1+dist2+dist3
 
@@ -236,43 +220,19 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 
 	all_measurements = {}
 	
-	# waist_a = [points['waist']['spread']['left'], points['waist']['spread']['right']]
-	# waist_b = [points['waist']['side']['left'], points['waist']['side']['right']]
 	waist_a = get_points_from_measurements(points, 'waist', 'spread')
 	waist_b = get_points_from_measurements(points, 'waist', 'side')
-	# dist1=getDistance(waist_a[0],waist_a[1])
-	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
-	# dist2=getDistance(waist_b[0],waist_b[1])
-	# dist2=pixel_to_distance(dist2,metre_pixel_x,metre_pixel_y)
-	# dist1 = dist1/2
-	# dist2 = dist2/2
-	# perimeter = 2 * 3.1415 * math.sqrt((dist1*dist1 + dist2*dist2)/2)
+	
 	all_measurements['waist'] = get_perimeter(waist_a, waist_b, metre_pixel_x, metre_pixel_y)
 
-	# chest_a = [points['chest']['spread']['left'], points['chest']['spread']['right']]
-	# chest_b = [points['chest']['side']['left'], points['chest']['side']['right']]
 	chest_a = get_points_from_measurements(points, 'chest', 'spread')
 	chest_b = get_points_from_measurements(points, 'chest', 'side')
-	# dist1=getDistance(chest_a[0],chest_a[1])
-	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
-	# dist2=getDistance(chest_b[0],chest_b[1])
-	# dist2=pixel_to_distance(dist2,metre_pixel_x,metre_pixel_y)
-	# dist1 = dist1/2
-	# dist2 = dist2/2
-	# perimeter = 2 * 3.1415 * math.sqrt((dist1*dist1 + dist2*dist2)/2)
+	
 	all_measurements['chest'] = get_perimeter(chest_a, chest_b, metre_pixel_x, metre_pixel_y)
 
-	# hip_a = [points['hip']['spread']['left'], points['hip']['spread']['right']]
-	# hip_b = [points['hip']['side']['left'], points['hip']['side']['right']]
 	hip_a = get_points_from_measurements(points, 'hip', 'spread')
 	hip_b = get_points_from_measurements(points, 'hip', 'side')
-	# dist1=getDistance(hip_a[0],hip_a[1])
-	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
-	# dist2=getDistance(hip_b[0],hip_b[1])
-	# dist2=pixel_to_distance(dist2,metre_pixel_x,metre_pixel_y)
-	# dist1 = dist1/2
-	# dist2 = dist2/2
-	# perimeter = 2 * 3.1415 * math.sqrt((dist1*dist1 + dist2*dist2)/2)
+	
 	all_measurements['hip'] = get_perimeter(hip_a, hip_b, metre_pixel_x, metre_pixel_y)
 
 	cv2.imwrite('detected2.jpg', segmented_image)	
@@ -282,12 +242,6 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	right_fall = points['neck']['check']['right']
 	right_shoulder = points['shoulder']['check']['right']
 	
-	# dist1=getDistance(left_shoulder,left_fall)
-	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
-	# dist2=getDistance(right_shoulder,right_fall)
-	# dist2=pixel_to_distance(dist2,metre_pixel_x,metre_pixel_y)
-	# dist3=getDistance(left_fall,right_fall)
-	# dist3=pixel_to_distance(dist3,metre_pixel_x,metre_pixel_y)
 	points_arr = [left_shoulder, left_fall, right_shoulder, right_fall]
 	dist_ans= get_distance_between_fall(points_arr, metre_pixel_x, metre_pixel_y)
 
@@ -298,25 +252,12 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	left_wrist = points['wrist']['spread']['left']
 	right_wrist = points['wrist']['spread']['right']
 
-	# dist1=getDistance(left_shoulder,left_fall)
-	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
-	# dist2=getDistance(right_shoulder,right_fall)
-	# dist2=pixel_to_distance(dist2,metre_pixel_x,metre_pixel_y)
-	# dist3=getDistance(left_fall,right_fall)
-	# dist3=pixel_to_distance(dist3,metre_pixel_x,metre_pixel_y)
 	points_arr = [left_shoulder, left_fall, right_shoulder, right_fall]
 	dist= get_distance_between_fall(points_arr, metre_pixel_x, metre_pixel_y)
 
-	# dist4=getDistance(left_wrist,left_shoulder)
-	# dist4=pixel_to_distance(dist4,metre_pixel_x,metre_pixel_y)
-	# dist5=getDistance(right_wrist,right_shoulder)
-	# dist5=pixel_to_distance(dist5,metre_pixel_x,metre_pixel_y)
 	dist4 = get_pixel_distance(left_wrist, left_shoulder, metre_pixel_x, metre_pixel_y)
 	dist5 = get_pixel_distance(right_wrist, right_shoulder, metre_pixel_x, metre_pixel_y)
 
-	# dist_sleeve = (dist5+dist4)/2.0
-	
-	# dist_tuple=dist1,dist2,dist3
 	shoulder_length = (dist+dist_ans)/2
 	sleeve_length = (dist4+dist5)/2
 	all_measurements['shoulder'] = shoulder_length
@@ -328,10 +269,6 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	left_bottom = points['leg']['leg']['left']
 	right_bottom = points['leg']['leg']['right']
 	
-	# dist1=getDistance(left_waist, left_bottom)
-	# dist1=pixel_to_distance(dist1,metre_pixel_x,metre_pixel_y)
-	# dist2=getDistance(right_waist, right_bottom)
-	# dist2=pixel_to_distance(dist2,metre_pixel_x,metre_pixel_y)
 	dist1 = get_pixel_distance(left_waist, left_bottom, metre_pixel_x, metre_pixel_y)
 	dist2 = get_pixel_distance(right_waist, right_bottom, metre_pixel_x, metre_pixel_y)
 
