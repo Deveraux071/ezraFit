@@ -52,6 +52,7 @@ jobs:
       run: npm ci
 
     - name: run tests and instrument coverage
+      working-directory: ./frontend
       run: npm run coverage
 
     - name: publish code coverage to code-climate (duh)
