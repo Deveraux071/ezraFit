@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box } from "@mui/material"
 import { WelcomeBanner } from "../components/welcome-banner";
-import { TabPanel } from '../components/account-page-components/tab-panel';
+import { TabPanel } from '../account-page-components/tab-panel';
 import { Navigation } from "../components/navigation";
 import './view-measurements.css';
 import Table from '@mui/material/Table';

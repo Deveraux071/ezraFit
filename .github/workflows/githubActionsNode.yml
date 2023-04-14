@@ -25,4 +25,13 @@ jobs:
         working-directory: ./frontend
         run: |
             npm ci
-            npm test
+            npm run coverage
+
+      - name: publish code coverage to code-climate
+        uses: paambaati/codeclimate-action@v2.7.1
+        env:
+          CC_TEST_REPORTER_ID: 1b6106874f51e674209d8804a115173e144ec375da5489ec4867f0a9dac41eed
+        with:
+          coverageCommand: npm run coverage
+
+  

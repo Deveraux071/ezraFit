@@ -1,5 +1,5 @@
 import { Box } from "@mui/material"
-import LoginForm from "../components/auth-components/login-form"
+import LoginForm from "../auth-components/login-form";
 import image from "../assets/background_combined.jpg"
 import { Navigation } from "../components/navigation";
 

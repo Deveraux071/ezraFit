@@ -7,7 +7,6 @@
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.13",
-    "@mui/styles": "^5.11.16",
     "@sentry/react": "^7.40.0",
     "@sentry/tracing": "^7.40.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -25,6 +24,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!frontend)/\" --env=jsdom",
+    "coverage": "react-scripts test --transformIgnorePatterns \"node_modules/(?!frontend)/\" --env=jsdom --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.4.3"
+    "@testing-library/user-event": "^14.4.3",
+    "nyc": "^15.1.0"
   }
 }

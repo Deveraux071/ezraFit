@@ -4,8 +4,8 @@ import { WelcomeBanner } from "../components/welcome-banner";
 import { theme } from "../theme"
 import { Box, Typography, Grid, Button, CardActionArea, Card, Divider } from "@mui/material"
 import { EditButton } from "../components/edit-button"
-import { TabPanel } from '../components/account-page-components/tab-panel';
-import { PasswordChangePopup } from '../components/account-page-components/password-change-popup';
+import { TabPanel } from '../account-page-components/tab-panel';
+import { PasswordChangePopup } from '../account-page-components/password-change-popup';
 import { Navigation } from "../components/navigation";
 import {useDropzone} from 'react-dropzone'
 import { PinkFillButton } from '../components/pink-fill-button';
