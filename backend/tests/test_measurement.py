@@ -35,6 +35,14 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(metre_pixel_y, metre_pixel_y_act)
         self.assertEqual(coordinate, coordinate_act)
         self.assertEqual(affine_correct_parameters, affine_correct_parameters_act)
+    
+    # test affline_correct and also affine_correct_params
+    def test_affine_correct_M_None(self):
+        # takes in image 1 , affline flag
+        dst_out = affine_correct(image1)
+        dst_act_shape = (2268, 4032, 3)
+        self.assertEqual(dst_out.shape, dst_act_shape)
+        self.assertTrue(isinstance(dst_out, (np.ndarray, np.generic) ))
 
     # test affline_correct and also affine_correct_params
     def test_affine_correct_M_not_None(self):
