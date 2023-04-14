@@ -19,6 +19,7 @@ def generate(preferences):
     returns a list of strings representing the key words that can be typed into a clothing store's search bar
     '''
     prompt = "Given the following clothing style preferences, give me some keywords that I can use to search for clothing on a website." 
+    prompt += "Give at least 10 keywords."
     prompt += "Ensure that the keywords are given as a comma-separated list, with no period at the end.\n\n"
     for preference in preferences:
         prompt += "{0}: {1}\n".format(preference, preferences[preference])
