@@ -69,14 +69,12 @@ jobs:
       run: cd frontend && npm run coverage
    
     - name: publish code coverage to code-climate 
-      uses: paambaati/codeclimate-action@v3.0.0
+      uses: paambaati/codeclimate-action@v3.2.0
       env:
         CC_TEST_REPORTER_ID: 1b6106874f51e674209d8804a115173e144ec375da5489ec4867f0a9dac41eed
       with:
         debug: true
-        coverageCommand: npm run coverage
         coverageLocations: ${{github.workspace}}/frontend/coverage/lcov.info:lcov
-      if: ${{ github.event_name == 'push' }}
 
 
   
