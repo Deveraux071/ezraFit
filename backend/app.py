@@ -52,19 +52,19 @@ def create_app():
   global bc_model
   global bc_classes
   
-  usage_res = train_classifier.train_usage_model()
+  usage_res = train_classifier.train_single_model("usage")
   usage_model = usage_res[0]
   usage_classes = usage_res[1]
 
-  article_res = train_classifier.train_article_model()
+  article_res = train_classifier.train_single_model("articleType")
   article_model = article_res[0]
   article_classes = article_res[1]
 
-  season_res = train_classifier.train_season_model()
+  season_res = train_classifier.train_single_model("season")
   season_model = season_res[0]
   season_classes = season_res[1]
 
-  bc_res = train_classifier.train_bc_model()
+  bc_res = train_classifier.train_single_model("baseColour")
   bc_model = bc_res[0]
   bc_classes = bc_res[1]
 
@@ -99,7 +99,7 @@ def trigger_error():
 def train_usage():
   global usage_model
   global usage_classes
-  usage_res = train_classifier.train_usage_model()
+  usage_res = train_classifier.train_single_model("usage")
   usage_model = usage_res[0]
   usage_classes = usage_res[1]
 
@@ -116,19 +116,19 @@ def train_models():
   global bc_model
   global bc_classes
   
-  usage_res = train_classifier.train_usage_model()
+  usage_res = train_classifier.train_single_model("usage")
   usage_model = usage_res[0]
   usage_classes = usage_res[1]
 
-  article_res = train_classifier.train_article_model()
+  article_res = train_classifier.train_single_model("articleType")
   article_model = article_res[0]
   article_classes = article_res[1]
 
-  season_res = train_classifier.train_season_model()
+  season_res = train_classifier.train_single_model("season")
   season_model = season_res[0]
   season_classes = season_res[1]
 
-  bc_res = train_classifier.train_bc_model()
+  bc_res = train_classifier.train_single_model("baseColour")
   bc_model = bc_res[0]
   bc_classes = bc_res[1]
 
