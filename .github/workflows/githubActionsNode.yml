@@ -29,6 +29,7 @@ jobs:
  
   coverage:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
     - name: checkout code
       uses: actions/checkout@v3
