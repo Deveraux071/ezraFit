@@ -74,6 +74,7 @@ jobs:
         CC_TEST_REPORTER_ID: 1b6106874f51e674209d8804a115173e144ec375da5489ec4867f0a9dac41eed
       with:
         debug: true
+        coverageCommand: npm run coverage
         coverageLocations: ${{github.workspace}}/frontend/coverage/lcov.info:lcov
       if: ${{ github.event_name == 'push' }}
 
