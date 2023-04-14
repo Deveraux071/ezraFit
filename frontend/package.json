@@ -55,12 +55,12 @@
       "src/**/*.js",
       "!**/node_modules/**"
     ],
-    "coverageReporters": [
+    "coverageReporters": [[
       "lcov",
       {
         "projectRoot": ".."
       }
-    ],
+    ]],
     "testMatch": [
       "**/*.test.js"
     ]
