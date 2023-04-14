@@ -1,45 +1,44 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios'
 import { getAuth } from 'firebase/auth';
 import { onValue, ref, set } from "firebase/database";
-import { theme } from "../theme";
-import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from "@mui/material";
-import {useDropzone} from 'react-dropzone';
-import { TabPanel } from '../account-page-components/tab-panel';
-import { WelcomeBanner } from "../components/welcome-banner";
-import { Navigation } from "../components/navigation";
-import { PinkFillButton } from '../components/pink-fill-button';
-import { PinkOutlineButton } from '../components/pink-outline-button';
 import { useAuth, useDatabase } from '../contexts/auth-context';
+import { theme } from "../theme";
+import {useDropzone} from 'react-dropzone';
+import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from "@mui/material";
+import { Navigation } from "../components/navigation";
+import { WelcomeBanner } from "../components/welcome-banner";
+import { TabPanel } from '../account-page-components/tab-panel';
 import { SubHeading } from '../components/sub-heading';
-import '../user-pages/view-measurements.css';
+import Popup from  '../components/popup';
 
 
 export const InitialStylePage = () => {
-
-    const [uploaded, setUploaded] = useState(false)
-    const [preferences, setPreferences] = useState([['Article Type'], ['Usage'], ['Season'], ['Colour']])
     const db = useDatabase();
     const { user } = useAuth()
+    const [uploaded, setUploaded] = useState(false)
+    const initial_preferences = [['Article Type'], ['Usage'], ['Season'], ['Colour']]
+    const [preferences, setPreferences] = useState([])
 
     useEffect(() => {
-            const docRef = ref(db, '/users/' + user?.uid + '/preferences')
-            onValue(docRef, (snapshot) => {
+        const docRef = ref(db, '/users/' + user?.uid + '/preferences')
+        onValue(docRef, (snapshot) => {
             if (snapshot.exists()){
                 const pref_list = snapshot.val()
-                const starter = [['Article Type'], ['Usage'], ['Season'], ['Colour']]
+                const starter = [...initial_preferences] // shallow copy of array
                 starter.forEach((s, i) => {
                     s.push(pref_list[i])
                 })
                 setPreferences(starter)
             }
-            })
-        }, [user]) 
+        })
+    }, [user, db]) 
         
 
     const handleSubmit = () => {
-        
-        console.log('here')
+        // console.log('submitting image')
+
+        // const url = 'https://ezrafit-backend.onrender.com/predict_all'
         const url = 'http://localhost:5000/predict_all'
         const formData = new FormData()
         formData.append('file', acceptedFiles[0])
@@ -50,100 +49,100 @@ export const InitialStylePage = () => {
                 'content_type' : 'multipart/form-data'
             },
         }
-        
-        const userId = getAuth().currentUser.uid;
 
-        axios.post(url, formData, config).then((res) => {
-            const new_preferences = []
-            const result = res.data
-            console.log(result[0])
+        const currentUser = getAuth().currentUser
+        if (typeof currentUser !== "undefined") {
+            const userId = currentUser.uid;
 
-            preferences.forEach((p, i) => {
-                new_preferences[i] = p.concat([result[i]])
-            })
-            set(ref(db, '/users/' + userId), {
-                username: getAuth().currentUser.displayName,
-                email: getAuth().currentUser.email,
-                preferences: result
+            axios.post(url, formData, config).then((res) => {
+                const new_preferences = [...initial_preferences]  // shallow copy of array
+                const result = res.data
+                // console.log("result:", result)
+
+                new_preferences.forEach((p, i) => {
+                    p.push(result[i])
                 })
-            console.log(res)
-            console.log(new_preferences)
-            setPreferences(new_preferences)
-            console.log(preferences[0][0])
-        })
+                set(ref(db, '/users/' + userId), {
+                    username: currentUser.displayName,
+                    email: currentUser.email,
+                    preferences: result
+                })
+                
+                // console.log("new preferences:", new_preferences)
+                setPreferences(new_preferences)
+            })
+        }
     }
 
     const handleCancel = () => {
         setUploaded(false)
     }
 
-    const onDrop = useCallback(uploaded_file => {
+    const onDrop = () => {
         setUploaded(true)
-        console.log(uploaded_file)
-    })
+    }
 
-
-    const {acceptedFiles, getRootProps, getInputProps, isDragActive} = useDropzone({maxFiles:1, onDrop})
-
-    const uploaded_files = acceptedFiles.map(f => (
-        <div>{f.path}</div>
-    ))
+    const {acceptedFiles, getRootProps, getInputProps} = useDropzone({maxFiles:1, onDrop})
     
     return(
         <Box>
             <Navigation loggedIn={true}/>
             <WelcomeBanner text='My Style Recommendations'/>
             <TabPanel activeTab='style'/>
-            <Box marginLeft={'10%'} marginRight={'10%'} marginTop={'2%'} marginBottom={'10%'}>
-                <Typography fontSize='1.5rem' fontWeight={650}>No Recommendations yet!</Typography>
-                <SubHeading title="Your Preferences"/>
-                {preferences[0].length === 1? 
-                
-                <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>No preferences set yet. Upload an image of your preferred style below and we will take care of the rest!</Typography>
-                : <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>Update your preferences by uploading an image below!</Typography>}
-                <Box className='main-content'>
-                    <TableContainer sx={{ width: 160, boxShadow: "none" }} component={Paper}>
-                        <Table aria-label="simple table">
-                            <TableBody>
-                            {preferences.map((preference) => (
-                                <TableRow
-                                    key={preference}
-                                    sx={{ 'td, th': { border: 0 }, 'th': { fontWeight: 1000 } }}>
-                                <TableCell component="th" scope="row" className='measurement-label'>
-                                    {preference[0]}
-                                </TableCell>
-                                <TableCell align="right">
-                                    {preference[1]} 
-                                </TableCell>
-                                </TableRow>
-                            ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Box>
-                <SubHeading title="Update your Preferences"/>
-                    {uploaded === false ?
-                    <Box display='flex' flexDirection='column' justifyContent='center' width='100%' alignItems='center' sx={{m:'auto'}} paddingTop={'5%'}>
-                        <div className='container'>
-                            <div style={{borderStyle:'solid', marginLeft: '10%', width:'80%', borderColor:theme.colors.pink, borderWidth: '2px', textAlign:'center', padding:'1%'}} {...getRootProps()}>
-                                <input {...getInputProps()}/>
-                                {
-                                    <div>
-                                        <p style={{color:theme.colors.pink, fontSize:'1.25rem', fontWeight:650}}> Upload an Image and update your preferences</p>
-                                        <p style={{color:theme.colors.gray, fontSize:'1.25rem', fontWeight:650}}> Click here to upload an image that shows your style and we will recommend clothes that match it!</p>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    </Box>:
-                    <Box width='100%' alignItems='center' paddingLeft={'25%'} paddingRight={'25%'} paddingTop={'5%'}>
-                        <Box textAlign={'center'} fontSize={'1.5rem'}>Confirm your file</Box>
-                        <Box textAlign={'center'} color={theme.colors.gray} fontSize={'1.25rem'}>{uploaded_files}</Box>
-                        <Box paddingLeft={'32%'} marginTop={'3%'}>
-                            <PinkFillButton text={'Submit'} onClick={handleSubmit}></PinkFillButton>
-                            <PinkOutlineButton text={'Cancel'} onClick={handleCancel}></PinkOutlineButton>
+            <Box margin="40px">
+                {preferences.length === 0 ? <Typography fontSize='1.5rem' fontWeight={650}>No Recommendations yet!</Typography> : null }
+                <SubHeading title="My Preferences"/>
+                {preferences.length === 0 ? 
+                    <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>No preferences set yet. Upload an image of your preferred style below and we will take care of the rest!</Typography>
+                    :
+                    <div>
+                        <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>These preferences are based on what we gathered from the image you uploaded.</Typography>
+                        <Box className='main-content'>
+                            <TableContainer sx={{ width: 250, boxShadow: "none" }} component={Paper}>
+                                <Table aria-label="simple table">
+                                    <TableBody>
+                                    {preferences.map((preference) => (
+                                        <TableRow
+                                            key={preference}
+                                            sx={{ 'td, th': { border: 0 }, 'th': { fontWeight: 1000 } }}>
+                                        <TableCell component="th" scope="row" className='measurement-label'>
+                                            {preference[0]}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {preference[1]} 
+                                        </TableCell>
+                                        </TableRow>
+                                    ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
                         </Box>
-                    </Box>}
+                    </div>
+                }
+                
+                <SubHeading title={`${preferences.length === 0 ? "Set" : "Update"} Preferences`}/>
+                <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>{preferences.length === 0 ? "Set" : "Update"} your preferences by uploading {preferences.length === 0 ? "an" : "another"} image!</Typography>
+                <Popup buttonText="Add Image" title="Add Style Image" submitText="Add" onSubmit={handleSubmit} onCancel={handleCancel} enableSubmit={!uploaded}>
+                {!uploaded ?
+                    <div style={{borderStyle:'solid', marginLeft: '10%', width:'80%', borderColor:theme.colors.pink, borderWidth: '2px', textAlign:'center', padding:'1%'}} {...getRootProps()}>
+                        <input {...getInputProps()}/>
+                        <div>
+                            <p style={{color:theme.colors.pink, fontSize:'1.25rem', fontWeight:650}}> Upload an Image and update your preferences</p>
+                            <p style={{color:theme.colors.gray, fontSize:'1.25rem', fontWeight:650}}> Click here to upload an image that shows your style and we will recommend clothes that match it!</p>
+                        </div>
+                    </div>:
+
+                    <Box width='100%' alignItems='center'>
+                        <Typography fontSize={'1.25rem'} marginBottom={'10px'}>
+                            Your uploaded image:
+                        </Typography>
+                        <img style={{width:"100%"}} alt="The image you uploaded" src={URL.createObjectURL(acceptedFiles[0])}/>
+                        <Typography sx={{textAlign:'center', color:theme.colors.gray, fontSize:'1.25rem'}}>
+                            {acceptedFiles[0].path}
+                        </Typography>
+                    </Box>
+                }
+                </Popup>
             </Box>
         </Box> 
     )
