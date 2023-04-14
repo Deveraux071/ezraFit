@@ -155,15 +155,16 @@ def train_all_models():
 
     return article_model, usage_model, bc_model, season_model
 
-def train_single_model(model):
+def train_single_model(model, num, load1, load2):
     print('\n')
     print("Training " + model + " model now")
-    train_gen, val_gen, test_gen = load_data(model, 4000, 4000)
-    model = train_model(train_gen, val_gen, 1)
+    train_gen, val_gen, test_gen = load_data(model, load1, load2)
+    rec_model = train_model(train_gen, val_gen, num)
+    test_model(rec_model, test_gen)
 
     class_indices = {value: key for key, value in train_gen.class_indices.items()}
     print(class_indices)
-    return model, class_indices
+    return rec_model, class_indices
 
 '''def train_usage_model():
     print('\n')
@@ -181,7 +182,7 @@ def train_article_model():
     print("Training ArticleType Model Now")
     article_train_gen, article_val_gen, article_test_gen = load_data("articleType", 3000, 2500)
     article_model = train_model(article_train_gen, article_val_gen, 3)
-    # test_model(article_model, article_test_gen)
+    test_model(article_model, article_test_gen)
 
     article_class_indices = {value: key for key, value in article_train_gen.class_indices.items()}
     print(article_class_indices)
