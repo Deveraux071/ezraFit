@@ -38,11 +38,9 @@ export const InitialStylePage = () => {
             onValue(docRef, (snapshot) => {
             if (snapshot.exists()){
                 const pref_list = snapshot.val()
-                let starter = [['Article Type'], ['Usage'], ['Season'], ['Colour']]
-                let i = 0
-                starter.map(s => {
+                const starter = [['Article Type'], ['Usage'], ['Season'], ['Colour']]
+                starter.forEach((s, i) => {
                     s.push(pref_list[i])
-                    i += 1
                 })
                 setPreferences(starter)
             }
@@ -68,13 +66,12 @@ export const InitialStylePage = () => {
         // userName = getAuth().currentUser.displayName
 
         axios.post(url, formData, config).then((res) => {
-            let new_preferences = []
-            let result = res.data
+            const new_preferences = []
+            const result = res.data
             console.log(result[0])
-            let i = 0
-            preferences.map(p => {
+
+            preferences.forEach((p, i) => {
                 new_preferences[i] = p.concat([result[i]])
-                i += 1
             })
             set(ref(db, '/users/' + userId), {
                 username: getAuth().currentUser.displayName,
@@ -112,7 +109,7 @@ export const InitialStylePage = () => {
             <Box marginLeft={'10%'} marginRight={'10%'} marginTop={'2%'} marginBottom={'10%'}>
                 <Typography fontSize='1.5rem' fontWeight={650}>No Recommendations yet!</Typography>
                 <SubHeading title="Your Preferences"/>
-                {preferences[0].length == 1? 
+                {preferences[0].length === 1? 
                 
                 <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>No preferences set yet. Upload an image of your preferred style below and we will take care of the rest!</Typography>
                 : <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>Update your preferences by uploading an image below!</Typography>}
