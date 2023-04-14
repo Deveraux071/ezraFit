@@ -12,16 +12,10 @@ import { PinkFillButton } from '../components/pink-fill-button';
 import { PinkOutlineButton } from '../components/pink-outline-button';
 import axios from 'axios'
 import '../user-pages/view-measurements.css';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { getAuth } from 'firebase/auth';
 import { onValue, ref, set, get } from "firebase/database";
 import { useAuth, useDatabase } from '../contexts/auth-context';
-import { doc, getDoc } from 'firebase/firestore'
+import { ContentBox } from '../components/box-component';
 
 export const InitialStylePage = () => {
 
@@ -131,26 +125,8 @@ export const InitialStylePage = () => {
                 
                 <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>No preferences set yet. Upload an image of your preferred style below and we will take care of the rest!</Typography>
                 : <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>Update your preferences by uploading an image below!</Typography>}
-                <Box className='main-content'>
-                    <TableContainer sx={{ width: 160, boxShadow: "none" }} component={Paper}>
-                        <Table aria-label="simple table">
-                            <TableBody>
-                            {preferences.map((preference) => (
-                                <TableRow
-                                    key={preference}
-                                    sx={{ 'td, th': { border: 0 }, 'th': { fontWeight: 1000 } }}>
-                                <TableCell component="th" scope="row" className='measurement-label'>
-                                    {preference[0]}
-                                </TableCell>
-                                <TableCell align="right">
-                                    {preference[1]} 
-                                </TableCell>
-                                </TableRow>
-                            ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Box>
+                <ContentBox preferences={preferences}>
+                </ContentBox>
                 <div style={{background:'rgba(255, 158, 158, 0.2)'}}>
                     <Typography fontSize='1.5rem' fontWeight={650} marginTop={'1.5%'}>Update your Preferences</Typography>
                 </div>

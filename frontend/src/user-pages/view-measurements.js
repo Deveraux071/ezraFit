@@ -1,18 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Box } from "@mui/material"
 import { WelcomeBanner } from "../components/welcome-banner";
 import { TabPanel } from '../components/account-page-components/tab-panel';
 import { Navigation } from "../components/navigation";
 import './view-measurements.css';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { useAuth, useDatabase } from '../contexts/auth-context';
 import { onValue, ref, get } from "firebase/database";
-
+import { ContentBox } from '../components/box-component';
 
 export const ViewMeasurements = () => {
     // TODO: make the measurements dynamic (connect to backend)
@@ -40,26 +33,8 @@ export const ViewMeasurements = () => {
             <Navigation loggedIn={true}/>
             <WelcomeBanner text='My Measurements'/>
             <TabPanel activeTab='measurements'/>
-            <Box className='main-content'>
-                <TableContainer sx={{ width: 160, boxShadow: "none" }} component={Paper}>
-                    <Table aria-label="simple table">
-                        <TableBody >
-                        {measurements.map((preference) => (
-                                <TableRow
-                                    key={preference}
-                                    sx={{ 'td, th': { border: 0 }, 'th': { fontWeight: 1000 } }}>
-                                <TableCell component="th" scope="row" className='measurement-label'>
-                                    {preference[0]}
-                                </TableCell>
-                                <TableCell align="center">
-                                    {preference[1]} 
-                                </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Box>
+            <ContentBox preferences={measurements}>
+            </ContentBox>
         </div>
     )
 }
