@@ -47,11 +47,10 @@ jobs:
         DISPLAY: ':99.0'
       run: |
         python -m pytest
-    - name: "Upload to CodeClimate"
+        coverage run -m pytest
+    - name: publish code coverage to code-climate
+      uses: paambaati/codeclimate-action@v2.7.1
       env:
         CC_TEST_REPORTER_ID: 1b6106874f51e674209d8804a115173e144ec375da5489ec4867f0a9dac41eed
-      run: |
-        export GIT_BRANCH="${GITHUB_REF##*/}"
-        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        chmod +x ./cc-test-reporter
-        ./cc-test-reporter upload-coverage --id $CC_TEST_REPORTER_ID
+      with:
+        coverageCommand: npm run coverage
