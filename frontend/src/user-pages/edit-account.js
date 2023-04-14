@@ -41,7 +41,7 @@ export const EditAccount = () => {
     }
 
     return (
-        <PrimaryLayout loggedIn={true} welcomeText='Edit Account' showWelcome={true} showTab={true} activeTab='account'>
+        <PrimaryLayout loggedIn={true} showTab={true} activeTab='account'>
             <Box component="form" onSubmit={onSave} noValidate display='flex' flexDirection='column' justifyContent='center' width='50%' alignItems='center' sx={{m:'auto'}} >
                 <Typography fontSize='1rem' color={theme.colors.red}>{errMsg}</Typography>
                 <GridFormItem title='Name:' defaultValue={currName} id='name' onChange={(e) => {setCurrName(e.target.value)}}/>

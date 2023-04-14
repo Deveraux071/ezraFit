@@ -8,7 +8,6 @@ import { theme } from "../theme";
 import {useDropzone} from 'react-dropzone';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from "@mui/material";
 import { Navigation } from "../components/navigation";
-import { WelcomeBanner } from "../components/welcome-banner";
 import { TabPanel } from '../account-page-components/tab-panel';
 import { SubHeading } from '../components/sub-heading';
 import { PinkOutlineButton } from '../components/pink-outline-button';
@@ -76,7 +75,6 @@ export const InitialStylePage = () => {
     return(
         <Box>
             <Navigation loggedIn={true}/>
-            <WelcomeBanner text='My Style Recommendations'/>
             <TabPanel activeTab='style'/>
             <Box margin="40px">
                 {preferences.length === 0 ? 
