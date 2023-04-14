@@ -15,6 +15,16 @@ PATH = "training_data/"
 DEMO_PATH = "demo_data/1163.jpg"
 DEMO_PATH_2 = "demo_data/1855.jpg"
 
+def get_gen(img_gen, subset, df, category):
+    return img_gen.flow_from_dataframe(
+        dataframe=df,
+        directory=PATH + "images",
+        x_col="image",
+        y_col=category,
+        target_size=(96,96),
+        subset=subset
+    )
+
 def load_data(category, df_endpoint, test_df_startpoint):
     """
     Loads data from training_data and returns training, validaiton and 
@@ -24,15 +34,20 @@ def load_data(category, df_endpoint, test_df_startpoint):
     master_df["image"] = master_df.apply(lambda row: str(row['id']) + ".jpg", axis=1)
     # apparel_df = master_df[(master_df["masterCategory"] == "Apparel") & (master_df["articleType"].notna())]
     not_apparel_df = master_df[(master_df["masterCategory"] != "Apparel")]
-    apparel_df_extra = master_df[(master_df["masterCategory"] == "Apparel")].iloc[7000:, :]
+    #apparel_df_extra = master_df[(master_df["masterCategory"] == "Apparel")].iloc[7000:, :]
+
     if category == "articleType":
         apparel_df = master_df[(master_df["masterCategory"] == "Apparel")].iloc[0:7000, :]
-    elif category == "usage":
-        apparel_df = master_df[(master_df["masterCategory"] == "Apparel") & (master_df["usage"].notna())].iloc[0:7000, :]
-    elif category == "baseColour":
-        apparel_df = master_df[(master_df["masterCategory"] == "Apparel") & (master_df["baseColour"].notna())].iloc[0:7000, :]
-    elif category == "season":
-        apparel_df = master_df[(master_df["masterCategory"] == "Apparel") & (master_df["season"].notna())].iloc[0:7000, :]
+    else:
+        apparel_df = master_df[(master_df["masterCategory"] == "Apparel") & (master_df[category].notna())].iloc[0:7000, :]
+    #if category == "articleType":
+    #    apparel_df = master_df[(master_df["masterCategory"] == "Apparel")].iloc[0:7000, :]
+    #elif category == "usage":
+    #    apparel_df = master_df[(master_df["masterCategory"] == "Apparel") & (master_df["usage"].notna())].iloc[0:7000, :]
+    #elif category == "baseColour":
+    #    apparel_df = master_df[(master_df["masterCategory"] == "Apparel") & (master_df["baseColour"].notna())].iloc[0:7000, :]
+    #elif category == "season":
+    #    apparel_df = master_df[(master_df["masterCategory"] == "Apparel") & (master_df["season"].notna())].iloc[0:7000, :]
     
     # Usage split
     df = apparel_df.iloc[:df_endpoint,:]
@@ -48,8 +63,11 @@ def load_data(category, df_endpoint, test_df_startpoint):
     img_gen_test = ImageDataGenerator(
         rescale=1/255.
     )
+    train_gen = get_gen(img_gen, "training", df, category)
+    val_gen = get_gen(img_gen, "validation", df, category)
+    test_gen = get_gen(img_gen_test, "training", test_df, category)
 
-    train_gen = img_gen.flow_from_dataframe(
+    '''train_gen = img_gen.flow_from_dataframe(
     dataframe=df,
     directory=PATH + "images",
     x_col="image",
@@ -74,7 +92,7 @@ def load_data(category, df_endpoint, test_df_startpoint):
         y_col=category,
         target_size=(96,96),
         subset="training"
-    )
+    )'''
 
     return train_gen, val_gen, test_gen
 
@@ -137,7 +155,17 @@ def train_all_models():
 
     return article_model, usage_model, bc_model, season_model
 
-def train_usage_model():
+def train_single_model(model):
+    print('\n')
+    print("Training " + model + " model now")
+    train_gen, val_gen, test_gen = load_data(model, 4000, 4000)
+    model = train_model(train_gen, val_gen, 1)
+
+    class_indices = {value: key for key, value in train_gen.class_indices.items()}
+    print(class_indices)
+    return model, class_indices
+
+'''def train_usage_model():
     print('\n')
     print("Training usage model now")
     usage_train_gen, usage_val_gen, usage_test_gen = load_data("usage", 4000, 4000)
@@ -179,7 +207,7 @@ def train_bc_model():
 
     bc_class_indices = {value: key for key, value in bc_train_gen.class_indices.items()}
     print(bc_class_indices)
-    return bc_model, bc_class_indices
+    return bc_model, bc_class_indices'''
     
 def predict(model, class_indices, path):
     image = tf.keras.preprocessing.image.load_img(path, target_size=(96, 96))
@@ -205,10 +233,14 @@ if __name__ == "__main__":
     # print(prediction2)
 
     print("\n training models")
-    article_model = train_article_model()
-    usage_model = train_usage_model()
-    season_model = train_season_model()
-    bc_model = train_bc_model()
+    #article_model = train_article_model()
+    #usage_model = train_usage_model()
+    #season_model = train_season_model()
+    #bc_model = train_bc_model()
+    article_model = train_single_model("article")
+    usage_model = train_single_model("usage")
+    season_model = train_single_model("season")
+    bc_model = train_single_model("bc")
 
     print("\n predicting")
     article_prediction = predict(article_model[0], article_model[1], DEMO_PATH_2)
