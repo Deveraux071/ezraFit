@@ -27,7 +27,7 @@ jobs:
             npm ci
             npm test
  
-  check_pr:
+  coverage:
     runs-on: ubuntu-latest
     steps:
     - name: checkout code
