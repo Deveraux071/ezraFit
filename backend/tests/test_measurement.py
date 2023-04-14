@@ -8,6 +8,7 @@ import numpy as np
 
 image1 = cv2.imread('./backend/tests/test_images/final_saket1.jpg')
 image2 = cv2.imread('./backend/tests/test_images/final_saket2.jpg')
+affine_correct_parameters_act_true = np.array([[9.40904323e-01, -2.06049356e-02, 8.65506247e+01], [6.93225464e-03, 9.72540133e-01, -8.98750876e+00], [-1.60726699e-05, 2.47661411e-06, 1.00000000e+00]])
 
 class TestUtils(unittest.TestCase):
     
