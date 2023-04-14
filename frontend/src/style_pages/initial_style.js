@@ -94,17 +94,14 @@ export const InitialStylePage = () => {
             <TabPanel activeTab='style'/>
             <Box margin="40px">
                 {preferences.length === 0 ? 
+                    <div>
                     <Typography fontSize='1.5rem' fontWeight={650}>No Recommendations yet!</Typography> 
+                        <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>Upload an image of your preferred style below and we will take care of the rest!</Typography>
+                    </div>
                     : <div>
                         <PinkOutlineButton text={"Get Recommendations"} onClick={() => navigate('/clothing-store')}/>
                         <Typography sx={{marginBottom: "30px"}}>You will be redirected to the Clothing Store you last shopped at.</Typography>
-                    </div>
-                }
                 <SubHeading title="My Preferences"/>
-                {preferences.length === 0 ? 
-                    <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>No preferences set yet. Upload an image of your preferred style below and we will take care of the rest!</Typography>
-                    :
-                    <div>
                         <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>These preferences are based on what we gathered from the image you uploaded.</Typography>
                         <Box className='main-content'>
                             <TableContainer sx={{ width: 250, boxShadow: "none" }} component={Paper}>
@@ -126,11 +123,11 @@ export const InitialStylePage = () => {
                                 </Table>
                             </TableContainer>
                         </Box>
+                        <SubHeading title={`${preferences.length === 0 ? "Set" : "Update"} Preferences`}/>
+                        <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>{preferences.length === 0 ? "Set" : "Update"} your preferences by uploading {preferences.length === 0 ? "an" : "another"} image!</Typography>
                     </div>
                 }
                 
-                <SubHeading title={`${preferences.length === 0 ? "Set" : "Update"} Preferences`}/>
-                <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>{preferences.length === 0 ? "Set" : "Update"} your preferences by uploading {preferences.length === 0 ? "an" : "another"} image!</Typography>
                 <Popup buttonText="Add Image" title="Add Style Image" submitText="Add" onSubmit={handleSubmit} onCancel={handleCancel} enableSubmit={!uploaded}>
                 {!uploaded ?
                     <div style={{borderStyle:'solid', marginLeft: '10%', width:'80%', borderColor:theme.colors.pink, borderWidth: '2px', textAlign:'center', padding:'1%'}} {...getRootProps()}>
@@ -139,9 +136,8 @@ export const InitialStylePage = () => {
                             <p style={{color:theme.colors.pink, fontSize:'1.25rem', fontWeight:650}}> Upload an Image and update your preferences</p>
                             <p style={{color:theme.colors.gray, fontSize:'1.25rem', fontWeight:650}}> Click here to upload an image that shows your style and we will recommend clothes that match it!</p>
                         </div>
-                    </div>:
-
-                    <Box width='100%' alignItems='center'>
+                        </div>
+                        : <Box width='100%' alignItems='center'>
                         <Typography fontSize={'1.25rem'} marginBottom={'10px'}>
                             Your uploaded image:
                         </Typography>
