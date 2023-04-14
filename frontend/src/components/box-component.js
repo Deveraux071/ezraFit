@@ -8,8 +8,8 @@ import Paper from '@mui/material/Paper';
 
 export const ContentBox = ( { preferences }) => {
     return (
-        <Box className='main-content'>
-            <TableContainer sx={{ width: 160, boxShadow: "none" }} component={Paper}>
+        <Box className='main-content' sx= {{ display: 'flex', alignItems: "center", width: 400, marginLeft: "auto", marginRight: "auto"}}>
+            <TableContainer sx={{ width: 300, boxShadow: "none" }} component={Paper}>
                 <Table aria-label="simple table">
                     <TableBody>
                     {preferences.map((preference) => (
