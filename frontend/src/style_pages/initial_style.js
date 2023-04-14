@@ -1,24 +1,19 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { WelcomeBanner } from "../components/welcome-banner";
-import { theme } from "../theme"
-import { Box, Typography } from "@mui/material"
+import axios from 'axios'
+import { getAuth } from 'firebase/auth';
+import { onValue, ref, set } from "firebase/database";
+import { theme } from "../theme";
+import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from "@mui/material";
+import {useDropzone} from 'react-dropzone';
 import { TabPanel } from '../account-page-components/tab-panel';
+import { WelcomeBanner } from "../components/welcome-banner";
 import { Navigation } from "../components/navigation";
-import {useDropzone} from 'react-dropzone'
 import { PinkFillButton } from '../components/pink-fill-button';
 import { PinkOutlineButton } from '../components/pink-outline-button';
-import axios from 'axios'
-import '../user-pages/view-measurements.css';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { getAuth } from 'firebase/auth';
-import { onValue, ref, set, get } from "firebase/database";
 import { useAuth, useDatabase } from '../contexts/auth-context';
 import { SubHeading } from '../components/sub-heading';
+import '../user-pages/view-measurements.css';
+
 
 export const InitialStylePage = () => {
 
