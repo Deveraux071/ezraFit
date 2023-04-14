@@ -1,11 +1,8 @@
-import { ChangeEvent ,useState, useRef, useCallback, useMemo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { WelcomeBanner } from "../components/welcome-banner";
 import { theme } from "../theme"
-import { Box, Typography, Grid, Button, CardActionArea, Card, Divider } from "@mui/material"
-import { EditButton } from "../components/edit-button"
+import { Box, Typography } from "@mui/material"
 import { TabPanel } from '../account-page-components/tab-panel';
-import { PasswordChangePopup } from '../account-page-components/password-change-popup';
 import { Navigation } from "../components/navigation";
 import {useDropzone} from 'react-dropzone'
 import { PinkFillButton } from '../components/pink-fill-button';
@@ -21,24 +18,14 @@ import Paper from '@mui/material/Paper';
 import { getAuth } from 'firebase/auth';
 import { onValue, ref, set, get } from "firebase/database";
 import { useAuth, useDatabase } from '../contexts/auth-context';
-import { doc, getDoc } from 'firebase/firestore'
 
 export const InitialStylePage = () => {
 
-    // const [file, setFile] = useState()
-    const file = useRef(null)
     const [uploaded, setUploaded] = useState(false)
-    let preference_values = []
     const [preferences, setPreferences] = useState([['Article Type'], ['Usage'], ['Season'], ['Colour']])
     const db = useDatabase();
     const { user } = useAuth()
     // const [userId, setUserId] = useState(null)
-    
-    const handleFileUpload = async (event) => {
-        // setFile(event.target.files[0])
-        await file.current.click()
-        handleSubmit()
-    }
 
     // const getUserID = () => {
     //     setUserId(getAuth().currentUser.uid)
@@ -80,7 +67,6 @@ export const InitialStylePage = () => {
         // userName = getAuth().currentUser.displayName
 
         axios.post(url, formData, config).then((res) => {
-            // preference_values = res
             let new_preferences = []
             let result = res.data
             console.log(result[0])
@@ -167,21 +153,6 @@ export const InitialStylePage = () => {
                                 }
                             </div>
                         </div>
-                        {/* <Box display='flex' flexDirection='row' justifyContent='center' width='80%'>
-                            <Button variant='outlined' onClick={handleFileUpload} sx={{width:'70%', borderColor:theme.colors.pink, borderWidth: '2px', 
-                            padding:'4%', paddingLeft:'3%', paddingRight:'3%', textTransform:'none'}}>
-                                <div>
-                                    <input ref={file} type='file' style={{display:'none'}}/>
-                                    <Typography color={theme.colors.pink} align='center' fontSize={'1.25rem'} paddingRight={'3%'}>
-                                        Upload Images
-                                    </Typography> */}
-                                    {/* <Divider orientation="vertical" variant="middle" flexItem/> */}
-                                    {/* <Typography color={theme.colors.gray} align='center' fontSize={'1.25rem'} marginTop={'2%'}>
-                                        Upload images that show your style and we will recommend clothes that match it!
-                                    </Typography>
-                                </div>
-                            </Button>
-                        </Box> */}
                     </Box>:
                     <Box width='100%' alignItems='center' paddingLeft={'25%'} paddingRight={'25%'} paddingTop={'5%'}>
                         <Box textAlign={'center'} fontSize={'1.5rem'}>Confirm your file</Box>
