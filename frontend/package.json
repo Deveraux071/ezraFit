@@ -23,8 +23,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test -- --config=jest.config.js --transformIgnorePatterns \"node_modules/(?!frontend)/\" --env=jsdom",
-    "coverage": "react-scripts test -- --config=jest.config.js --transformIgnorePatterns \"node_modules/(?!frontend)/\" --env=jsdom --coverage",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!frontend)/\" --env=jsdom",
+    "coverage": "react-scripts test --transformIgnorePatterns \"node_modules/(?!frontend)/\" --env=jsdom --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -49,5 +49,20 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "nyc": "^15.1.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!**/node_modules/**"
+    ],
+    "coverageReporters": [
+      "lcov",
+      {
+        "projectRoot": ".."
+      }
+    ],
+    "testMatch": [
+      "**/*.test.js"
+    ]
   }
 }
