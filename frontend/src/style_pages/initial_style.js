@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 import { onValue, ref, set } from "firebase/database";
 import { useAuth, useDatabase } from '../contexts/auth-context';
@@ -10,10 +11,12 @@ import { Navigation } from "../components/navigation";
 import { WelcomeBanner } from "../components/welcome-banner";
 import { TabPanel } from '../account-page-components/tab-panel';
 import { SubHeading } from '../components/sub-heading';
+import { PinkOutlineButton } from '../components/pink-outline-button';
 import Popup from  '../components/popup';
 
 
 export const InitialStylePage = () => {
+    const navigate = useNavigate();
     const db = useDatabase();
     const { user } = useAuth()
     const [uploaded, setUploaded] = useState(false)
@@ -90,7 +93,13 @@ export const InitialStylePage = () => {
             <WelcomeBanner text='My Style Recommendations'/>
             <TabPanel activeTab='style'/>
             <Box margin="40px">
-                {preferences.length === 0 ? <Typography fontSize='1.5rem' fontWeight={650}>No Recommendations yet!</Typography> : null }
+                {preferences.length === 0 ? 
+                    <Typography fontSize='1.5rem' fontWeight={650}>No Recommendations yet!</Typography> 
+                    : <div>
+                        <PinkOutlineButton text={"Get Recommendations"} onClick={() => navigate('/clothing-store')}/>
+                        <Typography sx={{marginBottom: "30px"}}>You will be redirected to the Clothing Store you last shopped at.</Typography>
+                    </div>
+                }
                 <SubHeading title="My Preferences"/>
                 {preferences.length === 0 ? 
                     <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>No preferences set yet. Upload an image of your preferred style below and we will take care of the rest!</Typography>

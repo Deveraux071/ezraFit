@@ -14,6 +14,7 @@ import { InitialStylePage } from './style_pages/initial_style';
 import { ViewMeasurements } from './user-pages/view-measurements';
 import { SelectPoint } from './select-points-pages/select-point';
 import Calculated from './camera-pages/calculated';
+import { ClothingRecommendationsPage } from './style_pages/clothing_recommendations';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path='/measurements' element={<ViewMeasurements/>}/>
           <Route path='/select' element={<SelectPoint/>}/>
           <Route path='/calculated' element={<Calculated/>}/>
+          <Route path='/clothing-store' element={<ClothingRecommendationsPage/>}/>
         </Routes>
         </AuthProvider>
       </Router>
