@@ -18,6 +18,7 @@ import Paper from '@mui/material/Paper';
 import { getAuth } from 'firebase/auth';
 import { onValue, ref, set, get } from "firebase/database";
 import { useAuth, useDatabase } from '../contexts/auth-context';
+import { SubHeading } from '../components/sub-heading';
 
 export const InitialStylePage = () => {
 
@@ -110,9 +111,7 @@ export const InitialStylePage = () => {
             <TabPanel activeTab='style'/>
             <Box marginLeft={'10%'} marginRight={'10%'} marginTop={'2%'} marginBottom={'10%'}>
                 <Typography fontSize='1.5rem' fontWeight={650}>No Recommendations yet!</Typography>
-                <div style={{background:'rgba(255, 158, 158, 0.2)'}}>
-                    <Typography fontSize='1.5rem' fontWeight={650} marginTop={'1.5%'}>Your Preferences</Typography>
-                </div>
+                <SubHeading title="Your Preferences"/>
                 {preferences[0].length == 1? 
                 
                 <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>No preferences set yet. Upload an image of your preferred style below and we will take care of the rest!</Typography>
@@ -137,9 +136,7 @@ export const InitialStylePage = () => {
                         </Table>
                     </TableContainer>
                 </Box>
-                <div style={{background:'rgba(255, 158, 158, 0.2)'}}>
-                    <Typography fontSize='1.5rem' fontWeight={650} marginTop={'1.5%'}>Update your Preferences</Typography>
-                </div>
+                <SubHeading title="Update your Preferences"/>
                     {uploaded === false ?
                     <Box display='flex' flexDirection='column' justifyContent='center' width='100%' alignItems='center' sx={{m:'auto'}} paddingTop={'5%'}>
                         <div className='container'>
