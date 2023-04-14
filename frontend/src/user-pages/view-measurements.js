@@ -23,7 +23,7 @@ export const ViewMeasurements = () => {
     ]);
 
     return (
-        <PrimaryLayout loggedIn={true} welcomeText='My Measurements' showWelcome={true} showTab={true} activeTab='measurements'>
+        <PrimaryLayout loggedIn={true} showTab={true} activeTab='measurements'>
             <Box className='main-content'>
                 <TableContainer sx={{ width: 160, boxShadow: "none" }} component={Paper}>
                     <Table aria-label="simple table">

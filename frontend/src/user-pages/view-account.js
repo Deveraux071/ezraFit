@@ -13,7 +13,7 @@ export const ViewAccount = () => {
     const navigate = useNavigate();
     const [pwChange, setPwChange] = useState(false);
     return (
-        <PrimaryLayout loggedIn={true} welcomeText='View Account' showWelcome={true} showTab={true} activeTab='account'>
+        <PrimaryLayout loggedIn={true}  showTab={true} activeTab='account'>
             <Box display='flex' flexDirection='column' justifyContent='center' width='35%' alignItems='center' sx={{m:'auto'}}>
                 <Box display='flex' flexDirection='row' justifyContent='flex-end' width='100%'>
                     <EditButton onClick={() => navigate('/edit')} fontSize='1.25rem' fontWeight={650}/>
