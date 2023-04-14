@@ -44,8 +44,7 @@ jobs:
    
     - name: Test Coverage Frontend
       run: |
-        cd client
-        cp -r .env.example .env
+        cd frontend
         npm install
         npm test
         
