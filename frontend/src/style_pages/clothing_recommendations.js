@@ -9,30 +9,17 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useUserPreferences } from '../hooks/get_user_preferences';
 
 
 export const ClothingRecommendationsPage = () => {
-    const db = useDatabase();
-    const { user } = useAuth()
-    const initial_preferences = [['Article Type'], ['Usage'], ['Season'], ['Colour']]
+    const initialPreferences = [['Article Type'], ['Usage'], ['Season'], ['Colour']]
     const [preferences, setPreferences] = useState([])
+    useUserPreferences({
+        initialPreferences: initialPreferences,
+        setPreferences: setPreferences
+    });
     const [keywords, setKeywords] = useState([])
-
-    // get preferences 
-    useEffect(() => {
-        const docRef = ref(db, '/users/' + user?.uid + '/preferences')
-        onValue(docRef, (snapshot) => {
-            if (snapshot.exists()){
-                const pref_list = snapshot.val()
-                const starter = [...initial_preferences] // shallow copy of array
-                starter.forEach((s, i) => {
-                    s.push(pref_list[i])
-                })
-                setPreferences(starter)
-            }
-        })
-    }, [user, db]) 
-
 
     // calcualte keywords if the preferences are set
     useEffect(() => {

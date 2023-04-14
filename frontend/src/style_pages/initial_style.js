@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
-import { onValue, ref, set } from "firebase/database";
-import { useAuth, useDatabase } from '../contexts/auth-context';
+import { ref, set } from "firebase/database";
+import { useDatabase } from '../contexts/auth-context';
 import { theme } from "../theme";
 import {useDropzone} from 'react-dropzone';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from "@mui/material";
@@ -13,29 +13,21 @@ import { TabPanel } from '../account-page-components/tab-panel';
 import { SubHeading } from '../components/sub-heading';
 import { PinkOutlineButton } from '../components/pink-outline-button';
 import Popup from  '../components/popup';
+import { useUserPreferences } from '../hooks/get_user_preferences';
 
 
 export const InitialStylePage = () => {
     const navigate = useNavigate();
     const db = useDatabase();
-    const { user } = useAuth()
+    const onDrop = () => { setUploaded(true) }
+    const {acceptedFiles, getRootProps, getInputProps} = useDropzone({maxFiles:1, onDrop})
     const [uploaded, setUploaded] = useState(false)
-    const initial_preferences = [['Article Type'], ['Usage'], ['Season'], ['Colour']]
+    const initialPreferences = [['Article Type'], ['Usage'], ['Season'], ['Colour']]
     const [preferences, setPreferences] = useState([])
-
-    useEffect(() => {
-        const docRef = ref(db, '/users/' + user?.uid + '/preferences')
-        onValue(docRef, (snapshot) => {
-            if (snapshot.exists()){
-                const pref_list = snapshot.val()
-                const starter = [...initial_preferences] // shallow copy of array
-                starter.forEach((s, i) => {
-                    s.push(pref_list[i])
-                })
-                setPreferences(starter)
-            }
-        })
-    }, [user, db]) 
+    useUserPreferences({
+        initialPreferences: initialPreferences,
+        setPreferences: setPreferences
+    });
         
 
     const handleSubmit = () => {
@@ -58,7 +50,7 @@ export const InitialStylePage = () => {
             const userId = currentUser.uid;
 
             axios.post(url, formData, config).then((res) => {
-                const new_preferences = [...initial_preferences]  // shallow copy of array
+                const new_preferences = [...initialPreferences]  // shallow copy of array
                 const result = res.data
                 // console.log("result:", result)
 
@@ -80,12 +72,6 @@ export const InitialStylePage = () => {
     const handleCancel = () => {
         setUploaded(false)
     }
-
-    const onDrop = () => {
-        setUploaded(true)
-    }
-
-    const {acceptedFiles, getRootProps, getInputProps} = useDropzone({maxFiles:1, onDrop})
     
     return(
         <Box>
