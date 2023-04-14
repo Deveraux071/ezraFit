@@ -26,12 +26,6 @@ export const InitialStylePage = () => {
     const [preferences, setPreferences] = useState([['Article Type'], ['Usage'], ['Season'], ['Colour']])
     const db = useDatabase();
     const { user } = useAuth()
-    // const [userId, setUserId] = useState(null)
-
-    // const getUserID = () => {
-    //     setUserId(getAuth().currentUser.uid)
-    //     return "ok"
-    // }
 
     useEffect(() => {
             const docRef = ref(db, '/users/' + user?.uid + '/preferences')
@@ -63,7 +57,6 @@ export const InitialStylePage = () => {
         }
         
         const userId = getAuth().currentUser.uid;
-        // userName = getAuth().currentUser.displayName
 
         axios.post(url, formData, config).then((res) => {
             const new_preferences = []
