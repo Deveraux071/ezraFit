@@ -23,8 +23,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!frontend)/\" --env=jsdom",
-    "coverage": "react-scripts test --transformIgnorePatterns \"node_modules/(?!frontend)/\" --env=jsdom --coverage",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!frontend)/\" --env=jsdom --config=jest.config.js",
+    "coverage": "react-scripts test --transformIgnorePatterns \"node_modules/(?!frontend)/\" --env=jsdom --coverage --config=jest.config.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
