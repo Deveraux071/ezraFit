@@ -7,7 +7,7 @@ import { PrimaryLayout } from "../layout-components/primary-layout";
 
 export const Register = () => {
     return (
-        <PrimaryLayout loggedIn={false}>
+        <PrimaryLayout showWelcome={false} showTab={false} loggedIn={false}>
             <Helmet>
                 <title>Welcome! - Sign Up | EzraFit</title>
             </Helmet>
