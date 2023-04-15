@@ -2,7 +2,7 @@ import { Logo } from "../assets/logo"
 import { useNavigate } from 'react-router-dom';
 import { theme } from "../theme"
 import { JointButton } from "./joint-button";
-import { Grid, Link, Typography, Divider, Box } from "@mui/material";
+import { Grid, Typography, Divider, Box } from "@mui/material";
 import { useAuth } from "../contexts/auth-context";
 
 
