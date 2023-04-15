@@ -7,10 +7,7 @@ import { PrimaryLayout } from "../layout-components/primary-layout";
 
 export const Login = () => {
     return (
-        <PrimaryLayout loggedIn={false}>
-            <Helmet>
-                <title>Welcome! - Log In | EzraFit</title>
-            </Helmet>
+        <PrimaryLayout loggedIn={false} type='auth' val='Log In'>
             <Box sx={{
                 backgroundImage: `url(${image})`,
                 height: '100vh',

@@ -7,10 +7,7 @@ import { PrimaryLayout } from "../layout-components/primary-layout";
 
 export const Register = () => {
     return (
-        <PrimaryLayout showWelcome={false} showTab={false} loggedIn={false}>
-            <Helmet>
-                <title>Welcome! - Sign Up | EzraFit</title>
-            </Helmet>
+        <PrimaryLayout showWelcome={false} showTab={false} loggedIn={false} type='auth' val='Sign Up'>
             <Box sx={{
                 backgroundImage: `url(${image})`,
                 height: '100vh',
