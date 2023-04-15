@@ -53,7 +53,7 @@ export const EditAccount = () => {
             <Box component="form" onSubmit={onSave} noValidate display='flex' flexDirection='column' justifyContent='center' width='50%' alignItems='center' sx={{m:'auto'}} >
                 <Typography fontSize='1rem' color={theme.colors.red}>{errMsg}</Typography>
                 {fields.map((field) => { return (
-                    <GridFormItem title={field.title} defaultValue={field.defaultVal} id={field.id} onChange={field.fn}/>
+                    <GridFormItem key={field.id} title={field.title} defaultValue={field.defaultVal} id={field.id} onChange={field.fn}/>
                 )})}
                 <PasswordChangeComp onClick={() => setPwChange(true)}/>
                 <Button variant='outlined' onClick={() => onDelete()} startIcon={<DeleteForeverOutlinedIcon sx={{ color: theme.colors.red}}/>} sx={{background: theme.colors.white, borderColor: theme.colors.red, borderRadius: '20px', textTransform: 'none'}}>

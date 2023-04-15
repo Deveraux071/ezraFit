@@ -72,7 +72,7 @@ export const InitialStylePage = () => {
                 <title>My Style Recommendations | EzraFit</title>
             </Helmet>
             <Box margin="40px">
-                {preferences ? 
+                {preferences.length === 0 ? 
                     <div>
                     <Typography fontSize='1.5rem' fontWeight={650}>No Recommendations yet!</Typography> 
                         <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>Upload an image of your preferred style below and we will take care of the rest!</Typography>
