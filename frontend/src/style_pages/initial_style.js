@@ -7,7 +7,6 @@ import { useAuth, useDatabase } from '../contexts/auth-context';
 import { ContentBox } from '../components/box-component';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { ref, set } from "firebase/database";
 import { theme } from "../theme";
 import { useDropzone } from 'react-dropzone';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from "@mui/material";

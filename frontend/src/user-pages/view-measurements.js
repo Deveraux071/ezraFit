@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import { WelcomeBanner } from "../components/welcome-banner";
-import { TabPanel } from '../components/account-page-components/tab-panel';
 import { Navigation } from "../components/navigation";
 import './view-measurements.css';
 import { useAuth, useDatabase } from '../contexts/auth-context';
@@ -16,7 +14,7 @@ import { PinkOutlineButton } from '../components/pink-outline-button';
 export const ViewMeasurements = () => {
     // TODO: make the measurements dynamic (connect to backend)
     // weight is in lb, the rest in inches
-
+    const navigate = useNavigate();
     const { user } = useAuth()
     const db = useDatabase();
     const [measurements, setMeasurements] = useState([['CHEST'], ['HIP'], ['LEG'], ['SHOULDER'], ['SLEEVE'], ['WAIST']])
