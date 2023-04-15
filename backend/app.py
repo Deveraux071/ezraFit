@@ -22,6 +22,7 @@ cred_obj = firebase_admin.credentials.Certificate('ezrafit-e157e-firebase-admins
 default_app = firebase_admin.initialize_app(cred_obj, {
 	'databaseURL':'https://ezrafit-e157e-default-rtdb.firebaseio.com/'
 	})
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 UPLOAD_FOLDER = 'demo_data'
 USAGE_CLASS_INDICES = {0: 'Casual', 1: 'Ethnic', 2: 'Formal', 3: 'Party', 4: 'Smart Casual', 5: 'Sports'}
 ARTICLE_CLASS_INDICES = {0: 'Baby Dolls', 1: 'Bath Robe', 2: 'Blazers', 3: 'Boxers', 4: 'Bra', 5: 'Briefs', 6: 'Camisoles', 7: 'Capris', 8: 'Churidar', 9: 'Dresses', 10: 'Dupatta', 11: 'Innerwear Vests', 12: 'Jackets', 13: 'Jeans', 14: 'Jeggings', 15: 'Jumpsuit', 16: 'Kurta Sets', 17: 'Kurtas', 18: 'Kurtis', 19: 'Leggings', 20: 'Lounge Pants', 21: 'Lounge Shorts', 22: 'Lounge Tshirts', 23: 'Nehru Jackets', 24: 'Night suits', 25: 'Nightdress', 26: 'Patiala', 27: 'Rain Jacket', 28: 'Robe', 29: 'Rompers', 30: 'Salwar', 31: 'Salwar and Dupatta', 32: 'Sarees', 33: 'Shapewear', 34: 'Shirts', 35: 'Shorts', 36: 'Shrug', 37: 'Skirts', 38: 'Stockings', 39: 'Suspenders', 40: 'Sweaters', 41: 'Sweatshirts', 42: 'Swimwear', 43: 'Tights', 44: 'Tops', 45: 'Track Pants', 46: 'Tracksuits', 47: 'Trousers', 48: 'Trunk', 49: 'Tshirts', 50: 'Tunics', 51: 'Waistcoat'}
