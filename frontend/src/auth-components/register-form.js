@@ -48,7 +48,7 @@ export default function RegisterForm( {formWidth} ) {
             <Typography fontSize='1rem' color={theme.colors.red}>{err}</Typography>
             <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1, width: '75%' }} width={formWidth} display='flex' flexDirection='column' justifyContent='center'>
                 <GridFormItem title='First Name:' titleSize='1.25rem' textSize='1rem' id='first_name' onChange={(e) => {setFirst(e.target.value)}}/>
-                <GridFormItem title='First Name:' titleSize='1.25rem' textSize='1rem' id='last_name' onChange={(e) => {setLast(e.target.value)}}/>
+                <GridFormItem title='Last Name:' titleSize='1.25rem' textSize='1rem' id='last_name' onChange={(e) => {setLast(e.target.value)}}/>
                 <GridFormItem title='Email:' titleSize='1.25rem' textSize='1rem' id='email' onChange={(e) => {setEmail(e.target.value)}}/>
                 <GridFormItem title='Password:' titleSize='1.25rem' textSize='1rem' id='password' onChange={(e) => {setPw(e.target.value)}} type="password"/>
                 <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' sx={{marginTop: 8}}>
