@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import { Typography, Box } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -139,9 +140,11 @@ export const SelectPoint = ( {img, type, dict} ) => {
 
     return (
         <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
+            <Helmet>
+                <title>Get Measurements - Select Image Point | EzraFit</title>
+            </Helmet>
             <Typography fontSize='2rem'>Click the {pos} point of the {currType === 'leg' ? 'ankle' : currType}</Typography>
-            <img src={localStorage.getItem(currImg)} alt={currImg} onClick={(e) => getPos(e)}></img>
+            <img data-testid='img' src={localStorage.getItem(currImg)} alt={currType} onClick={(e) => getPos(e)}></img>
         </Box>
-        
     )
 }

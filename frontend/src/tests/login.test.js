@@ -25,6 +25,6 @@ test('test whether link to registration page works', async () => {
             </AuthProvider>
         </Router>
     )
-    fireEvent.click(screen.getByText(/Register here!/i))
-    await waitFor(() => screen.getByText(/Sign up/i))
+    fireEvent.click(screen.getByText(/Sign up here!/i))
+    await waitFor(() => screen.getAllByText(/Sign up/i))
 })

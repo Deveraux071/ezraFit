@@ -1,12 +1,16 @@
+import { Helmet } from 'react-helmet';
 import { Box } from "@mui/material"
-import RegisterForm from "../components/auth-components/register-form"
+import RegisterForm from "../auth-components/register-form"
 import image from "../assets/background_combined.jpg"
 import { Navigation } from "../components/navigation";
+import { PrimaryLayout } from "../layout-components/primary-layout";
 
 export const Register = () => {
     return (
-        <Box>
-            <Navigation loggedIn={false}/>
+        <PrimaryLayout showWelcome={false} showTab={false} loggedIn={false}>
+            <Helmet>
+                <title>Welcome! - Sign Up | EzraFit</title>
+            </Helmet>
             <Box sx={{
                 backgroundImage: `url(${image})`,
                 height: '100vh',
@@ -17,6 +21,6 @@ export const Register = () => {
             }}>
                 <RegisterForm formWidth='40%'/>
             </Box>
-        </Box>
+        </PrimaryLayout>
     )
 }

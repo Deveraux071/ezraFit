@@ -1,5 +1,5 @@
 import { Grid, Typography, Button } from "@mui/material"
-import { theme } from "../../theme"
+import { theme } from "../theme"
 
 export const PasswordChangeComp = ( {onClick} ) => {
     return (

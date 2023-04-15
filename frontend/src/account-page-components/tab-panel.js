@@ -1,9 +1,9 @@
 import { Box } from "@mui/material"
 import { useNavigate } from 'react-router-dom';
-import { theme } from "../../theme"
-import { MeasuringTape } from "../../assets/measuring-tape";
-import { AccountIcon } from "../../assets/account-icon";
-import { ClothesIcon } from "../../assets/clothes";
+import { theme } from "../theme"
+import { MeasuringTape } from "../assets/measuring-tape";
+import { AccountIcon } from "../assets/account-icon";
+import { ClothesIcon } from "../assets/clothes";
 import { IndividualTab } from "./individual-tab";
 
 export const TabPanel = ( {activeTab} ) => {

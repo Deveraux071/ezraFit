@@ -1,4 +1,5 @@
 import Webcam from 'react-webcam';
+import { Helmet } from 'react-helmet';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useRef, useState, useEffect } from 'react';
 import { Grid, Box, Typography } from "@mui/material"
@@ -35,6 +36,10 @@ export const TakeImage = ( {imageType} ) => {
     imageType = imageType || location.state?.imageType 
     if (!imageType) {
         imageType = 'check'
+        localStorage.removeItem('check')
+        localStorage.removeItem('spread')
+        localStorage.removeItem('side')
+        localStorage.removeItem('leg')
     }
 
     const navigate = useNavigate();
@@ -89,6 +94,9 @@ export const TakeImage = ( {imageType} ) => {
 
     return (
         <Box>
+            <Helmet>
+                <title>Get Measurements - Take Image | EzraFit</title>
+            </Helmet>
             <Grid container>
                 <Grid item xs={2}>
                     <AllImagePlacers/>

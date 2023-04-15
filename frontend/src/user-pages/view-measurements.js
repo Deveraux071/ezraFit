@@ -6,10 +6,17 @@ import './view-measurements.css';
 import { useAuth, useDatabase } from '../contexts/auth-context';
 import { onValue, ref, get } from "firebase/database";
 import { ContentBox } from '../components/box-component';
+import { Helmet } from 'react-helmet';
+import { useNavigate } from 'react-router-dom';
+import { Box } from "@mui/material"
+import './view-measurements.css';
+import { PrimaryLayout } from '../layout-components/primary-layout';
+import { PinkOutlineButton } from '../components/pink-outline-button';
 
 export const ViewMeasurements = () => {
     // TODO: make the measurements dynamic (connect to backend)
     // weight is in lb, the rest in inches
+
     const { user } = useAuth()
     const db = useDatabase();
     const [measurements, setMeasurements] = useState([['CHEST'], ['HIP'], ['LEG'], ['SHOULDER'], ['SLEEVE'], ['WAIST']])
@@ -29,12 +36,16 @@ export const ViewMeasurements = () => {
     }, [user]) 
 
     return (
-        <div>
-            <Navigation loggedIn={true}/>
-            <WelcomeBanner text='My Measurements'/>
-            <TabPanel activeTab='measurements'/>
+        <PrimaryLayout loggedIn={true} showTab={true} activeTab='measurements'>
+            <Helmet>
+                <title>My Measurements | EzraFit</title>
+            </Helmet>
             <ContentBox preferences={measurements}>
             </ContentBox>
-        </div>
+            <Box textAlign='center'>
+                <PinkOutlineButton text='Take Pictures' onClick={() => navigate('/take-image')}/>
+            </Box>
+        </PrimaryLayout>
+
     )
 }

@@ -1,16 +1,17 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 import { theme } from "../theme"
 import { Box, Typography, Button } from "@mui/material"
 import { PinkOutlineButton } from "../components/pink-outline-button"
 import { PinkFillButton } from "../components/pink-fill-button"
-import { PasswordChangePopup } from '../components/account-page-components/password-change-popup';
+import { PasswordChangePopup } from '../account-page-components/password-change-popup';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { useAuth, useDatabase } from '../contexts/auth-context';
 import { ref, update } from "firebase/database";
-import { GridFormItem } from '../components/styled-grids/grid-form-item';
-import { PrimaryLayout } from '../components/layout-components/primary-layout';
-import { PasswordChangeComp } from '../components/account-page-components/password-change-comp';
+import { GridFormItem } from '../styled-grids/grid-form-item';
+import { PrimaryLayout } from '../layout-components/primary-layout';
+import { PasswordChangeComp } from '../account-page-components/password-change-comp';
 
 export const EditAccount = () => {
     const { user, updateEm, updateName, deleteAccount } = useAuth()
@@ -41,7 +42,10 @@ export const EditAccount = () => {
     }
 
     return (
-        <PrimaryLayout loggedIn={true} welcomeText='Edit Account' showWelcome={true} showTab={true} activeTab='account'>
+        <PrimaryLayout loggedIn={true} showTab={true} activeTab='account'>
+            <Helmet>
+                <title>Edit My Account | EzraFit</title>
+            </Helmet>
             <Box component="form" onSubmit={onSave} noValidate display='flex' flexDirection='column' justifyContent='center' width='50%' alignItems='center' sx={{m:'auto'}} >
                 <Typography fontSize='1rem' color={theme.colors.red}>{errMsg}</Typography>
                 <GridFormItem title='Name:' defaultValue={currName} id='name' onChange={(e) => {setCurrName(e.target.value)}}/>
