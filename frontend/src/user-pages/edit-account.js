@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 import { theme } from "../theme"
 import { Box, Typography, Button } from "@mui/material"
@@ -42,6 +43,9 @@ export const EditAccount = () => {
 
     return (
         <PrimaryLayout loggedIn={true} showTab={true} activeTab='account'>
+            <Helmet>
+                <title>Edit My Account | EzraFit</title>
+            </Helmet>
             <Box component="form" onSubmit={onSave} noValidate display='flex' flexDirection='column' justifyContent='center' width='50%' alignItems='center' sx={{m:'auto'}} >
                 <Typography fontSize='1rem' color={theme.colors.red}>{errMsg}</Typography>
                 <GridFormItem title='Name:' defaultValue={currName} id='name' onChange={(e) => {setCurrName(e.target.value)}}/>

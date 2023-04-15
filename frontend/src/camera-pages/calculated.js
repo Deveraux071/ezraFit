@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import { Typography, Box } from "@mui/material"
 import { PinkOutlineButton } from "../components/pink-outline-button"
 import { useState, useEffect } from "react";
@@ -27,6 +28,9 @@ export default function Calculated() {
 
     return (
         <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' sx={{height: '100vh'}}>
+            <Helmet>
+                <title>Get Measurements - Measurements Calculated! | EzraFit</title>
+            </Helmet>
             <Typography fontSize='2rem' fontWeight={800}>
                 We have calculated your measurements!
             </Typography>

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios'
-import { onValue, ref } from "firebase/database";
-import { useAuth, useDatabase } from '../contexts/auth-context';
+import { Helmet } from 'react-helmet';
 import { Box, Typography } from "@mui/material"
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -53,6 +52,9 @@ export const ClothingRecommendationsPage = () => {
 
     return (
         <Box sx={{padding:"30px", width:"100%"}}>
+            <Helmet>
+                <title>EzraFit Recommendations | Zoe's Boutique</title>
+            </Helmet>
             <Typography>Zoe's Boutique</Typography>
             <Typography>Here are some keywords that can be inputted into the store's search bar:</Typography>
             <TableContainer sx={{ width: "100%", boxShadow: "none" }} component={Paper}>

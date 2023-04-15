@@ -1,4 +1,5 @@
 import Webcam from 'react-webcam';
+import { Helmet } from 'react-helmet';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useRef, useState, useEffect } from 'react';
 import { Grid, Box, Typography } from "@mui/material"
@@ -93,6 +94,9 @@ export const TakeImage = ( {imageType} ) => {
 
     return (
         <Box>
+            <Helmet>
+                <title>Get Measurements - Take Image | EzraFit</title>
+            </Helmet>
             <Grid container>
                 <Grid item xs={2}>
                     <AllImagePlacers/>
