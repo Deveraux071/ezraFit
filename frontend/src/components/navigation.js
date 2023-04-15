@@ -26,11 +26,7 @@ export const Navigation = ( {loggedIn} ) => {
                     <Divider orientation="vertical" variant="middle" flexItem/>
                     <Typography color={theme.colors.black} fontSize='1.75rem' fontWeight={500} sx={{paddingLeft: 2, paddingRight: 2, paddingTop: "7px"}}>Get your fit</Typography>
                 </Grid>
-                <Divider orientation="vertical" variant="middle" flexItem/>
-                <Grid item xs={6} sx={{p: 2}} display='flex' flexDirection='row'>
-                    <Typography color={theme.colors.black} fontSize='1.75rem' fontWeight={500}>Get your fit</Typography>
-                </Grid>
-                <Grid item xs={3} display='flex' flexDirection='row' justifyContent='flex-end' sx={{marginLeft: 3}}>
+                <Grid item display='flex' flexDirection='row' justifyContent='flex-end' sx={{marginRight: 2}}>
                     <JointButton info={btns}/>
                 </Grid>
             </Grid>
