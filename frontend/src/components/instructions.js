@@ -14,7 +14,7 @@ export const Instructions = ( {imageType} ) => {
         `Set the desired timer length, in seconds, in the "Timer" dropdown below.`,
         `Press the pink "START" button to start the countdown.`,
     ])
-    instructions.push(imageType === 'check' ? `Hold up the checkboard to your chest.'` : `Stand in the silhouette`)
+    instructions.push(imageType === 'check' ? `Hold up the checkboard to your chest.'` : `Stand in the silhouette ${info}.`)
 
     return (
         <Box display='flex' flexDirection='column'>
