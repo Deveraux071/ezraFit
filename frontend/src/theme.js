@@ -26,10 +26,12 @@ export const theme = createTheme(
         },
         colors: {
             pink: '#F888CB',
+            faint_pink: '#fff7fb',
+            bg_pink: '#FF9E9E',
+            dark_pink: "#f93ea6",
             white: '#ffffff',
             gray: '#AEAEAE',
             dark_gray: '#7B7B7B',
-            bg_pink: '#FF9E9E',
             red: '#FF3737'
         }
     },

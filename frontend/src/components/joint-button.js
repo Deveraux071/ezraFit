@@ -1,4 +1,4 @@
-import { Button, Typography, Box } from "@mui/material"
+import { ButtonGroup, Button, Typography } from "@mui/material"
 import { theme } from "../theme"
 
 export const JointButton = ( {info} ) => {
@@ -7,14 +7,21 @@ export const JointButton = ( {info} ) => {
     }
 
     return (
-        <Box display='flex' flexDirection='row'>
+        <ButtonGroup variant= "outlined" >
             {info.map((btn, index) => {
                 return (
-                    <Button key={index} variant='outlined' onClick={btn['click']} sx={{border: 2, background: theme.colors.white, borderColor: theme.colors.pink, borderRadius: getRadius(index), m: 0}}>
-                        <Typography color={theme.colors.pink} fontWeight={600}>{btn['text']}</Typography>
+                    <Button key={index} 
+                            variant='outlined' 
+                            onClick={btn['click']} 
+                            sx={{'&:hover': { border: 2, color: theme.colors.dark_pink, backgroundColor: theme.colors.faint_pink }, border: 2, background: theme.colors.white, borderColor: theme.colors.pink, color: theme.colors.pink, borderRadius: getRadius(index), m: 0}}
+                    >
+                        <Typography 
+                            fontWeight={600}>
+                                {btn['text']}
+                        </Typography>
                     </Button>   
-                )
-            })}
-        </Box>
+                )}
+            )}
+        </ButtonGroup>
     )
 }
