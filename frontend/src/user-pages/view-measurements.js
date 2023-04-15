@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 import { Box } from "@mui/material"
 import './view-measurements.css';
@@ -24,6 +25,9 @@ export const ViewMeasurements = () => {
 
     return (
         <PrimaryLayout loggedIn={true} showTab={true} activeTab='measurements'>
+            <Helmet>
+                <title>My Measurements | EzraFit</title>
+            </Helmet>
             <Box className='main-content'>
                 <TableContainer sx={{ width: 160, boxShadow: "none" }} component={Paper}>
                     <Table aria-label="simple table">
