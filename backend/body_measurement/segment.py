@@ -54,15 +54,6 @@ def get_params_hls(img, region):
     h_std, l_std, s_std = np.std(region, axis=(0, 1))
     return [h_mean, h_std, l_mean, l_std, s_mean, s_std]
 
-
-#def brighten(img, alpha, beta, gamma):
-#    cor_img = img.astype(np.float32)
-#    bright_img = alpha * cor_img + beta
-#    gam_cor = np.power(bright_img / 255, gamma) * 255
-#    bright_img = gam_cor.clip(0, 255).astype(np.uint8)
-#    return bright_img
-
-
 def mod_mask(mask, low, high):
     mask = mask.copy()
     mask[mask > high] = 1.0
