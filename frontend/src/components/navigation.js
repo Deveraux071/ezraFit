@@ -8,10 +8,6 @@ import { useAuth } from "../contexts/auth-context";
 const links = [{
     title: 'About Us',
     nav: '/about',
-},
-{
-    title: 'Contact',
-    nav: '/contact',
 }]
 
 export const Navigation = ( {loggedIn} ) => {

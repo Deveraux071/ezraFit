@@ -5,7 +5,7 @@ import { getAuth } from 'firebase/auth';
 import { ref, set } from "firebase/database";
 import { useDatabase } from '../contexts/auth-context';
 import { theme } from "../theme";
-import {useDropzone} from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from "@mui/material";
 import { Navigation } from "../components/navigation";
 import { TabPanel } from '../account-page-components/tab-panel';
@@ -13,7 +13,7 @@ import { SubHeading } from '../components/sub-heading';
 import { PinkOutlineButton } from '../components/pink-outline-button';
 import Popup from  '../components/popup';
 import { useUserPreferences } from '../hooks/get_user_preferences';
-
+import { PrimaryLayout } from '../layout-components/primary-layout';
 
 export const InitialStylePage = () => {
     const navigate = useNavigate();
@@ -30,8 +30,6 @@ export const InitialStylePage = () => {
         
 
     const handleSubmit = () => {
-        // console.log('submitting image')
-
         // const url = 'https://ezrafit-backend.onrender.com/predict_all'
         const url = 'http://localhost:5000/predict_all'
         const formData = new FormData()
@@ -51,7 +49,6 @@ export const InitialStylePage = () => {
             axios.post(url, formData, config).then((res) => {
                 const new_preferences = [...initialPreferences]  // shallow copy of array
                 const result = res.data
-                // console.log("result:", result)
 
                 new_preferences.forEach((p, i) => {
                     p.push(result[i])
@@ -62,7 +59,6 @@ export const InitialStylePage = () => {
                     preferences: result
                 })
                 
-                // console.log("new preferences:", new_preferences)
                 setPreferences(new_preferences)
             })
         }
@@ -73,9 +69,7 @@ export const InitialStylePage = () => {
     }
     
     return(
-        <Box>
-            <Navigation loggedIn={true}/>
-            <TabPanel activeTab='style'/>
+        <PrimaryLayout loggedIn={true} welcomeText='My Style Recommendations' showWelcome={true} showTab={true} activeTab='style'>
             <Box margin="40px">
                 {preferences.length === 0 ? 
                     <div>
@@ -133,6 +127,6 @@ export const InitialStylePage = () => {
                 }
                 </Popup>
             </Box>
-        </Box> 
+        </PrimaryLayout>
     )
 }

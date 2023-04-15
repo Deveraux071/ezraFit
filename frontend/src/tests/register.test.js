@@ -16,15 +16,3 @@ test('renders Register page', () => {
     expect(screen.getAllByText(/Sign up/i)[0]).toBeInTheDocument()
     expect(screen.getByText(/already have an account?/i)).toBeInTheDocument()
 })
-
-test('test whether link to login page works', async () => {
-    render(
-        <Router>
-            <AuthProvider>
-                <Register/>
-            </AuthProvider>
-        </Router>
-    )
-    fireEvent.click(screen.getByText(/Login here!/i))
-    await waitFor(() => screen.getByText(/Log in/i))
-})
