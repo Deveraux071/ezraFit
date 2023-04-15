@@ -25,13 +25,28 @@ jobs:
         working-directory: ./frontend
         run: |
             npm ci
-            npm run coverage
+            npm test
+ 
+  coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v3
 
-      - name: publish code coverage to code-climate
-        uses: paambaati/codeclimate-action@v2.7.1
-        env:
-          CC_TEST_REPORTER_ID: 1b6106874f51e674209d8804a115173e144ec375da5489ec4867f0a9dac41eed
-        with:
-          coverageCommand: npm run coverage
+    - name: install dependencies
+      run: cd frontend && npm ci
+
+    - name: run tests and instrument coverage
+      run: cd frontend && npm run coverage
+   
+    - name: publish code coverage to code-climate 
+      uses: paambaati/codeclimate-action@v3.2.0
+      env:
+        CC_TEST_REPORTER_ID: 1b6106874f51e674209d8804a115173e144ec375da5489ec4867f0a9dac41eed
+      with:
+        debug: true
+        coverageLocations: ${{github.workspace}}/frontend/coverage/lcov.info:lcov
+
 
   

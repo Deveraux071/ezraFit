@@ -49,5 +49,20 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "nyc": "^15.1.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!**/node_modules/**"
+    ],
+    "coverageReporters": [[
+      "lcov",
+      {
+        "projectRoot": ".."
+      }
+    ]],
+    "testMatch": [
+      "**/*.test.js"
+    ]
   }
 }
