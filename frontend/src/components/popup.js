@@ -11,30 +11,22 @@ import CloseIcon from '@mui/icons-material/Close';
 const Popup = ( props ) => {
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
   const handleCancel = () => {
-    handleClose()
+    setOpen(false)
     if (typeof props.onCancel !== 'undefined') { props.onCancel() }
   }
   const handleSubmit = () => {
     if (typeof props.onSubmit !== 'undefined') { props.onSubmit() }
-    handleClose()
+    setOpen(false)
   }
 
   return (
     <div style={{marginTop:"10px"}}>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        {props.buttonText}
-      </Button>
-      <Dialog onClose={handleClose} open={open}>
+      <Button variant="outlined" onClick={() => setOpen(true)}>{props.buttonText}</Button>
+      <Dialog onClose={() => setOpen(false)} open={open}>
         <DialogTitle sx={{ m: 0, p: 2, textAlign: "center", fontWeight: 600}} >
           {props.title}
-          <IconButton aria-label="close" onClick={handleClose} sx={{ position: 'absolute', right: 8, top: 8, color: (theme) => theme.palette.grey[500], }}>
+          <IconButton aria-label="close" onClick={() => setOpen(false)} sx={{ position: 'absolute', right: 8, top: 8, color: (theme) => theme.palette.grey[500], }}>
             <CloseIcon />
           </IconButton>
         </DialogTitle>
@@ -42,12 +34,8 @@ const Popup = ( props ) => {
           {props.children}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel}>
-            Cancel
-          </Button>
-          <Button disabled={props.enableSubmit} autoFocus onClick={handleSubmit}>
-            {props.submitText ?? "Submit"}
-          </Button>
+          <Button onClick={handleCancel}>Cancel</Button>
+          <Button disabled={props.enableSubmit} autoFocus onClick={handleSubmit}>{props.submitText ?? "Submit"}</Button>
         </DialogActions>
       </Dialog>
     </div>
