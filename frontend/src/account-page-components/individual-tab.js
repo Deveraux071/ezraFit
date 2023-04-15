@@ -3,7 +3,7 @@ import { theme } from "../theme"
 
 export const IndividualTab = ({onClick, text, icon, isActive}) => {
     return (
-        <Link fontSize='1.5rem' fontWeight={800} color={isActive ? theme.colors.pink : theme.colors.gray} onClick={onClick}>
+        <Link component="button" fontSize='1.5rem' fontWeight={800} color={isActive ? theme.colors.pink : theme.colors.gray} onClick={onClick}>
             <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
                 {icon}
                 
