@@ -1,0 +1,4 @@
+backend/articleType/variables/variables.data-00000-of-00001 filter=lfs diff=lfs merge=lfs -text
+backend/baseColour/variables/variables.data-00000-of-00001 filter=lfs diff=lfs merge=lfs -text
+backend/season/variables/variables.data-00000-of-00001 filter=lfs diff=lfs merge=lfs -text
+backend/usage/variables/variables.data-00000-of-00001 filter=lfs diff=lfs merge=lfs -text
