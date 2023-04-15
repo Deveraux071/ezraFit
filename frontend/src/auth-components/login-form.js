@@ -41,7 +41,7 @@ export default function LoginForm( {formWidth} ) {
                 </Box>
             </Box>
             <Typography>
-                Don't have an account? <Link onClick={() => navigate('/register')}>Register here!</Link>
+                Don't have an account? <Link component="button" onClick={() => navigate('/register')}>Register here!</Link>
             </Typography>
         </Box>
     );
