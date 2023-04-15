@@ -28,14 +28,15 @@ export default function Calculating() {
             <Helmet>
                 <title>Get Measurements - Calculating Measurements | EzraFit</title>
             </Helmet>
-            <Typography fontSize='2rem' fontWeight={800}>
-                Please stand by while we calculate your measurements! 
-            </Typography>
-            <Typography fontSize='1.5rem' fontWeight={700} color={theme.colors.gray}>Loading... </Typography>
             {errMsg ? <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
                 <Typography fontSize='1.25rem' fontWeight={600} color={theme.colors.red}>{errMsg}</Typography>
                 <PinkFillButton onClick={() => navigate('/take-image')} text='Retake Images'/>
-            </Box> : <></>}
+            </Box> : <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
+                <Typography fontSize='2rem' fontWeight={800}>
+                    Please stand by while we calculate your measurements! 
+                </Typography>
+                <Typography fontSize='1.5rem' fontWeight={700} color={theme.colors.gray}>Loading... </Typography>
+            </Box>}
         </Box>
     )
 }
