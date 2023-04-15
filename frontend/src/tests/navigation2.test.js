@@ -1,23 +1,23 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Calculated from '../camera-pages/calculated';
+import { Navigation } from '../components/navigation';
 import { AuthProvider } from '../contexts/auth-context';
+import { Login } from '../auth-pages/login';
 import { Register } from '../auth-pages/register';
-import { InitialStylePage } from '../style_pages/initial_style';
 
-test('redirects to Style on button click', async () => {
+test('tests whether options are clickable when logged out', async () => {
     render(
         <Router>
             <AuthProvider>
                 <Routes>
-                    <Route index element={<Calculated/>}/>
+                    <Route index element={<Navigation loggedIn={false}/>}/>
+                    <Route path='/login' element={<Login/>}/>
                     <Route path='/register' element={<Register/>}/>
-                    <Route path='/style' element={<InitialStylePage/>}/>
                 </Routes>
             </AuthProvider>
         </Router>
     )
-    fireEvent.click(screen.getByText('Get Style Recommendations'))
-    await waitFor(() => {screen.getByText(/No Recommendations yet!/i)})
+    fireEvent.click(screen.getByText('Log in'))
+    await waitFor(() =>  screen.getAllByText('Log In'))
 })

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { BrowserRouter as Router } from 'react-router-dom';
 import { PasswordChangePopup } from '../account-page-components/password-change-popup';
@@ -25,4 +25,17 @@ test('test if onCancel is clickable', async () => {
     )
     fireEvent.click(screen.getByRole('button', {name: 'Cancel'}))
     expect(mock).toHaveBeenCalledTimes(1);
+})
+
+test('calls onCancel when empty fields are submitted', async () => {
+    const cancel = jest.fn()
+    render(
+        <Router>
+            <AuthProvider>
+                <PasswordChangePopup onCancel={cancel} open={true}/>
+            </AuthProvider>
+        </Router>
+    )
+    fireEvent.click(screen.getByText('Save Changes'))
+    expect(cancel).toHaveBeenCalledTimes(1)
 })
