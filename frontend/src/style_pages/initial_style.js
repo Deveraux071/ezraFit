@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import axios from 'axios'
+import '../user-pages/view-measurements.css';
+import { getAuth } from 'firebase/auth';
+import { onValue, ref, set, get } from "firebase/database";
+import { useAuth, useDatabase } from '../contexts/auth-context';
+import { ContentBox } from '../components/box-component';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { getAuth } from 'firebase/auth';
-import { ref, set } from "firebase/database";
-import { useDatabase } from '../contexts/auth-context';
 import { theme } from "../theme";
 import { useDropzone } from 'react-dropzone';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from "@mui/material";
@@ -83,26 +85,8 @@ export const InitialStylePage = () => {
                         <Typography sx={{marginBottom: "30px"}}>You will be redirected to the Clothing Store you last shopped at.</Typography>
                 <SubHeading title="My Preferences"/>
                         <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>These preferences are based on what we gathered from the image you uploaded.</Typography>
-                        <Box className='main-content'>
-                            <TableContainer sx={{ width: 250, boxShadow: "none" }} component={Paper}>
-                                <Table aria-label="simple table">
-                                    <TableBody>
-                                    {preferences.map((preference) => (
-                                        <TableRow
-                                            key={preference}
-                                            sx={{ 'td, th': { border: 0 }, 'th': { fontWeight: 1000 } }}>
-                                        <TableCell component="th" scope="row" className='measurement-label'>
-                                            {preference[0]}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            {preference[1]} 
-                                        </TableCell>
-                                        </TableRow>
-                                    ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                        </Box>
+                        <ContentBox preferences={preferences}>
+                        </ContentBox>
                         <SubHeading title={`${preferences.length === 0 ? "Set" : "Update"} Preferences`}/>
                         <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>{preferences.length === 0 ? "Set" : "Update"} your preferences by uploading {preferences.length === 0 ? "an" : "another"} image!</Typography>
                     </div>
@@ -115,6 +99,7 @@ export const InitialStylePage = () => {
                         <div>
                             <p style={{color:theme.colors.pink, fontSize:'1.25rem', fontWeight:650}}> Upload an Image and update your preferences</p>
                             <p style={{color:theme.colors.gray, fontSize:'1.25rem', fontWeight:650}}> Click here to upload an image that shows your style and we will recommend clothes that match it!</p>
+
                         </div>
                         </div>
                         : <Box width='100%' alignItems='center'>

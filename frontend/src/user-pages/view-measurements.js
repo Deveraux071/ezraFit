@@ -1,57 +1,49 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Navigation } from "../components/navigation";
+import './view-measurements.css';
+import { useAuth, useDatabase } from '../contexts/auth-context';
+import { onValue, ref, get } from "firebase/database";
+import { ContentBox } from '../components/box-component';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 import { Box } from "@mui/material"
 import './view-measurements.css';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { PrimaryLayout } from '../layout-components/primary-layout';
 import { PinkOutlineButton } from '../components/pink-outline-button';
 
 export const ViewMeasurements = () => {
     // TODO: make the measurements dynamic (connect to backend)
     // weight is in lb, the rest in inches
-    const navigate = useNavigate()
-    const [measurements, setMeasurements] = useState([
-        ["Height", 64],
-        ["Weight", 130],
-        ["Waist", 25],
-        ["Legs", 28],
-    ]);
+    const navigate = useNavigate();
+    const { user } = useAuth()
+    const db = useDatabase();
+    const [measurements, setMeasurements] = useState([['CHEST'], ['HIP'], ['LEG'], ['SHOULDER'], ['SLEEVE'], ['WAIST']])
+   
+    useEffect(() => {
+        const dbRef = ref(db, '/users/' + user?.uid + '/data');
+        onValue(dbRef, (snapshot) => {
+        if (snapshot.exists()){
+            const measure_list = snapshot.val()
+            let i = 0
+            const new_measurements = []
+            Object.entries(measure_list)
+            .map(([key, value]) => new_measurements.push([key.toUpperCase(), value]) )
+            setMeasurements(new_measurements)
+        }
+        })
+    }, [user]) 
 
     return (
         <PrimaryLayout loggedIn={true} showTab={true} activeTab='measurements'>
             <Helmet>
                 <title>My Measurements | EzraFit</title>
             </Helmet>
-            <Box className='main-content'>
-                <TableContainer sx={{ width: 160, boxShadow: "none" }} component={Paper}>
-                    <Table aria-label="simple table">
-                        <TableBody>
-                        {measurements.map((measurement) => (
-                            <TableRow
-                                key={measurement}
-                                sx={{ 'td, th': { border: 0 }, 'th': { fontWeight: 1000 } }}>
-                            <TableCell component="th" scope="row" className='measurement-label'>
-                                {measurement[0]}
-                            </TableCell>
-                            <TableCell align="right">
-                                {/* all measurements are in inches, except for weight */}
-                                {`${measurement[1]} ${(measurement[0].localeCompare("Weight") !== 0) ? "in" : "lb"}`}
-                            </TableCell>
-                            </TableRow>
-                        ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Box>
+            <ContentBox preferences={measurements}>
+            </ContentBox>
             <Box textAlign='center'>
                 <PinkOutlineButton text='Take Pictures' onClick={() => navigate('/take-image')}/>
             </Box>
         </PrimaryLayout>
+
     )
 }
