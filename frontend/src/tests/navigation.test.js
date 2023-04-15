@@ -27,7 +27,7 @@ test('renders logged in Navigation options', () => {
         </Router>
     )
     expect(screen.getByText(/EzraFit/i)).toBeInTheDocument();
-    expect(screen.getByText(/Settings/i)).toBeInTheDocument();
+    expect(screen.getByText(/Account/i)).toBeInTheDocument();
     expect(screen.getByText(/Log out/i)).toBeInTheDocument();
 })
 
@@ -56,6 +56,6 @@ test('tests whether options are clickable', async () => {
             </AuthProvider>
         </Router>
     )
-    fireEvent.click(screen.getByText('Settings'))
-    await waitFor(() =>  screen.getByText('View Account'))
+    fireEvent.click(screen.getByText('Account'))
+    await waitFor(() =>  screen.getByText('Edit'))
 })

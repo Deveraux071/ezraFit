@@ -5,7 +5,7 @@ import { AuthProvider } from '../contexts/auth-context';
 import LoginForm from '../auth-components/login-form';
 import { Register } from '../auth-pages/register';
 
-test('routes to Login on link click', async () => {
+test('routes to Register on link click', async () => {
     render(
         <Router>
             <AuthProvider>
@@ -16,6 +16,6 @@ test('routes to Login on link click', async () => {
             </AuthProvider>
         </Router>
     )
-    fireEvent.click(screen.getByText('Register here!'))
+    fireEvent.click(screen.getByText('Sign up here!'))
     await waitFor(() => screen.getAllByText(/Sign Up/))
 })

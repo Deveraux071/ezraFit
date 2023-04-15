@@ -17,13 +17,12 @@ test('renders EditAccount', () => {
             </AuthProvider>
         </Router>
     )
-    expect(screen.getByText('View Account')).toBeInTheDocument()
     expect(screen.getByText('Edit')).toBeInTheDocument()
     expect(screen.getByText('Name:')).toBeInTheDocument()
     expect(screen.getByText('Change Password')).toBeInTheDocument()
 })
 
-test('redirects to Account page on Cancel', async () => {
+test('redirects to Edit Account page on Cancel', async () => {
     render(
         <Router>
             <AuthProvider>
@@ -35,5 +34,5 @@ test('redirects to Account page on Cancel', async () => {
         </Router>
     )
     fireEvent.click(screen.getByText('Edit'))
-    await waitFor(() => {screen.getByText('Edit Account')})
+    await waitFor(() => {screen.getByText('Delete My Account')})
 })

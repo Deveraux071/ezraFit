@@ -14,7 +14,7 @@ test('renders LoginForm', () => {
         </Router>
     )
     
-    expect(screen.getAllByText(/Log in/i)[0]).toBeInTheDocument()
+    expect(screen.getAllByText(/Log In/i)[0]).toBeInTheDocument()
     expect(screen.getByText(/don't have an account?/i)).toBeInTheDocument()
 })
 
@@ -28,7 +28,7 @@ test('shows error on empty submission', async () => {
     )
 
     fireEvent.click(screen.getByText('Log In'))
-    await waitFor(() => screen.getByText(/Incorrect username or password./i))
+    await waitFor(() => screen.getByText(/Incorrect email or password./i))
 })
 
 test('redirects to Take Image on button click', async () => {
@@ -43,6 +43,6 @@ test('redirects to Take Image on button click', async () => {
         </Router>
     )
 
-    fireEvent.click(screen.getByText('Take measurements as a guest'))
+    fireEvent.click(screen.getByText('Continue as a guest'))
     await waitFor(() => screen.getByText(/Instructions/i))
 })

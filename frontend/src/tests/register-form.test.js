@@ -27,7 +27,7 @@ test('shows error on empty submission', async () => {
         </Router>
     )
 
-    fireEvent.click(screen.getAllByText('Sign Up')[1])
+    fireEvent.click(screen.getByText('Sign Up'))
     await waitFor(() => screen.getByText(/Failed to create account. Try again./i))
 })
 
@@ -42,6 +42,6 @@ test('routes to Login on link click', async () => {
             </AuthProvider>
         </Router>
     )
-    fireEvent.click(screen.getByText('Login here!'))
+    fireEvent.click(screen.getByText('Log in here!'))
     await waitFor(() => screen.getAllByText(/Log In/))
 })

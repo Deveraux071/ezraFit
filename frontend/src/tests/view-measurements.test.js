@@ -16,7 +16,8 @@ test('renders ViewMeasurements', () => {
             </AuthProvider>
         </Router>
     )
-    expect(screen.getByText('My Measurements')).toBeInTheDocument()
+    expect(screen.getByText('Measurements')).toBeInTheDocument()
+    expect(screen.getByText('Take Pictures')).toBeInTheDocument()
 })
 
 test('redirects to Take Image page on button click', async () => {

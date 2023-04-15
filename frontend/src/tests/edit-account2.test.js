@@ -17,5 +17,5 @@ test('redirects to Account page on Cancel', async () => {
         </Router>
     )
     fireEvent.click(screen.getByText('Cancel'))
-    await waitFor(() => {screen.getByText('View Account')})
+    await waitFor(() => {screen.getByText('Edit')})
 })

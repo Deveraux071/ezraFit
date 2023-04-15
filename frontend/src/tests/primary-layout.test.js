@@ -7,11 +7,10 @@ test('renders PrimaryLayout with all children', () => {
     render(
         <Router>
             <AuthProvider>
-                <PrimaryLayout loggedIn={true} welcomeText='hi' showWelcome={true} showTab={true} activeTab='style'/>
+                <PrimaryLayout loggedIn={true} showTab={true} activeTab='style'/>
             </AuthProvider>
         </Router>
     )
     expect(screen.getByText(/EzraFit/i)).toBeInTheDocument();
-    expect(screen.getByText(/hi/i)).toBeInTheDocument();
     expect(screen.getByText(/Style Recommendations/i)).toBeInTheDocument();
 })

@@ -16,7 +16,7 @@ test('renders EditAccount', () => {
             </AuthProvider>
         </Router>
     )
-    expect(screen.getByText('Edit Account')).toBeInTheDocument()
+    expect(screen.getByText('Save Changes')).toBeInTheDocument()
     expect(screen.getByText('Delete My Account')).toBeInTheDocument()
 })
 
@@ -32,5 +32,5 @@ test('redirects to Account page on Save', async () => {
         </Router>
     )
     fireEvent.click(screen.getByText('Save Changes'))
-    await waitFor(() => {screen.getByText('View Account')})
+    await waitFor(() => {screen.getByText('Edit')})
 })
