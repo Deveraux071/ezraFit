@@ -22,6 +22,11 @@ export const EditAccount = () => {
     const [pwChange, setPwChange] = useState(false);
     const [errMsg, setErrMsg] = useState('');
     
+    const fields = [
+        {title: 'Name:', defaultVal: currName, id: 'name', fn: (e) => {setCurrName(e.target.value)}}, 
+        {title: 'Email:', defaultVal: currEmail, id: 'email', fn: (e) => {setCurrEmail(e.target.value)}}
+    ]
+
     const onDelete = async () => {
         await deleteAccount().then(() => navigate('/register')).catch(e => console.log(e))
     }
@@ -35,9 +40,8 @@ export const EditAccount = () => {
     const onSave = async (e) => {
         e.preventDefault();
         updateValue('email', currEmail, user?.email).then(() => {
-            updateValue('name', currName, user?.displayName).then(() => {
-                navigate('/account')
-            }).catch(() => {setErrMsg('Failed to update. Please try again.')})
+            updateValue('name', currName, user?.displayName).then(() => {navigate('/account')})
+            .catch(() => {setErrMsg('Failed to update. Please try again.')})
         }).catch(() => {setErrMsg('Failed to update. Please try again.')})
     }
 
@@ -48,8 +52,9 @@ export const EditAccount = () => {
             </Helmet>
             <Box component="form" onSubmit={onSave} noValidate display='flex' flexDirection='column' justifyContent='center' width='50%' alignItems='center' sx={{m:'auto'}} >
                 <Typography fontSize='1rem' color={theme.colors.red}>{errMsg}</Typography>
-                <GridFormItem title='Name:' defaultValue={currName} id='name' onChange={(e) => {setCurrName(e.target.value)}}/>
-                <GridFormItem title='Email:' defaultValue={currEmail} id='email' onChange={(e) => {setCurrEmail(e.target.value)}}/>
+                {fields.map((field) => { return (
+                    <GridFormItem title={field.title} defaultValue={field.defaultVal} id={field.id} onChange={field.fn}/>
+                )})}
                 <PasswordChangeComp onClick={() => setPwChange(true)}/>
                 <Button variant='outlined' onClick={() => onDelete()} startIcon={<DeleteForeverOutlinedIcon sx={{ color: theme.colors.red}}/>} sx={{background: theme.colors.white, borderColor: theme.colors.red, borderRadius: '20px', textTransform: 'none'}}>
                     <Typography sx={{color: theme.colors.red}} fontSize='1.25rem' fontWeight={650}>Delete My Account</Typography>
