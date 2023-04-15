@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 import { Box } from "@mui/material"
 import { EditButton } from "../components/edit-button"
@@ -14,6 +15,9 @@ export const ViewAccount = () => {
     const [pwChange, setPwChange] = useState(false);
     return (
         <PrimaryLayout loggedIn={true}  showTab={true} activeTab='account'>
+            <Helmet>
+                <title>My Account | EzraFit</title>
+            </Helmet>
             <Box display='flex' flexDirection='column' justifyContent='center' width='35%' alignItems='center' sx={{m:'auto'}}>
                 <Box display='flex' flexDirection='row' justifyContent='flex-end' width='100%'>
                     <EditButton onClick={() => navigate('/edit')} fontSize='1.25rem' fontWeight={650}/>

@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import { Typography, Box } from "@mui/material"
 import { theme } from "../theme"
 import { useState, useEffect } from "react";
@@ -24,6 +25,9 @@ export default function Calculating() {
     
     return (
         <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' sx={{height: '100vh'}}>
+            <Helmet>
+                <title>Get Measurements - Calculating Measurements | EzraFit</title>
+            </Helmet>
             <Typography fontSize='2rem' fontWeight={800}>
                 Please stand by while we calculate your measurements! 
             </Typography>

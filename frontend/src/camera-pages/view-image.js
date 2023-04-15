@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { Grid, Box, Typography } from "@mui/material"
 import { useNavigate, useLocation } from 'react-router-dom';
 import { PinkFillButton } from '../components/pink-fill-button';
@@ -68,6 +69,9 @@ export const ViewImage = ( {imageType} ) => {
     
     return (
         <Box>
+            <Helmet>
+                <title>Get Measurements - View Captured Image | EzraFit</title>
+            </Helmet>
             <Grid container>
                 <Grid item xs={2}>
                     <AllImagePlacers/>

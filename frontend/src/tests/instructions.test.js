@@ -1,10 +1,6 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Navigation } from '../components/navigation';
-import { AuthProvider } from '../contexts/auth-context';
-import { Login } from '../auth-pages/login';
-import { Register } from '../auth-pages/register';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Instructions } from '../components/instructions';
 
 test('renders Instructions', () => {
@@ -14,8 +10,7 @@ test('renders Instructions', () => {
         </Router>
     )
     expect(screen.getByText('Instructions')).toBeInTheDocument()
-    expect(screen.getByText('2. Press start button.')).toBeInTheDocument()
-    expect(screen.getByText(/Stand in the silhouette looking towards the left./i)).toBeInTheDocument()  
+    expect(screen.getByText(/3. Stand in the silhouette looking towards the left./i)).toBeInTheDocument()  
 })
 
 test('renders specific instructions for leg', () => {

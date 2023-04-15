@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import { getAuth } from 'firebase/auth';
 import { ref, set } from "firebase/database";
 import { useDatabase } from '../contexts/auth-context';
 import { theme } from "../theme";
 import { useDropzone } from 'react-dropzone';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from "@mui/material";
-import { Navigation } from "../components/navigation";
-import { TabPanel } from '../account-page-components/tab-panel';
 import { SubHeading } from '../components/sub-heading';
 import { PinkOutlineButton } from '../components/pink-outline-button';
 import Popup from  '../components/popup';
@@ -70,6 +69,9 @@ export const InitialStylePage = () => {
     
     return(
         <PrimaryLayout loggedIn={true} welcomeText='My Style Recommendations' showWelcome={true} showTab={true} activeTab='style'>
+            <Helmet>
+                <title>My Style Recommendations | EzraFit</title>
+            </Helmet>
             <Box margin="40px">
                 {preferences.length === 0 ? 
                     <div>
