@@ -7,6 +7,7 @@ from keras.models import Model
 import keras.applications.efficientnet as en
 from keras.applications.resnet import ResNet50
 from keras.applications.mobilenet_v2 import MobileNetV2
+import keras
 import scipy
 # import tensorflow as tf
 import os
@@ -14,6 +15,10 @@ import os
 PATH = "training_data/"
 DEMO_PATH = "demo_data/1163.jpg"
 DEMO_PATH_2 = "demo_data/1855.jpg"
+USAGE_CLASS_INDICES = {0: 'Casual', 1: 'Ethnic', 2: 'Formal', 3: 'Party', 4: 'Smart Casual', 5: 'Sports'}
+ARTICLE_CLASS_INDICES = {0: 'Baby Dolls', 1: 'Bath Robe', 2: 'Blazers', 3: 'Boxers', 4: 'Bra', 5: 'Briefs', 6: 'Camisoles', 7: 'Capris', 8: 'Churidar', 9: 'Dresses', 10: 'Dupatta', 11: 'Innerwear Vests', 12: 'Jackets', 13: 'Jeans', 14: 'Jeggings', 15: 'Jumpsuit', 16: 'Kurta Sets', 17: 'Kurtas', 18: 'Kurtis', 19: 'Leggings', 20: 'Lounge Pants', 21: 'Lounge Shorts', 22: 'Lounge Tshirts', 23: 'Nehru Jackets', 24: 'Night suits', 25: 'Nightdress', 26: 'Patiala', 27: 'Rain Jacket', 28: 'Robe', 29: 'Rompers', 30: 'Salwar', 31: 'Salwar and Dupatta', 32: 'Sarees', 33: 'Shapewear', 34: 'Shirts', 35: 'Shorts', 36: 'Shrug', 37: 'Skirts', 38: 'Stockings', 39: 'Suspenders', 40: 'Sweaters', 41: 'Sweatshirts', 42: 'Swimwear', 43: 'Tights', 44: 'Tops', 45: 'Track Pants', 46: 'Tracksuits', 47: 'Trousers', 48: 'Trunk', 49: 'Tshirts', 50: 'Tunics', 51: 'Waistcoat'}
+SEASON_CLASS_INDICES = {0: 'Fall', 1: 'Spring', 2: 'Summer', 3: 'Winter'}
+COLOUR_CLASS_INDICES = {0: 'Beige', 1: 'Black', 2: 'Blue', 3: 'Brown', 4: 'Burgundy', 5: 'Charcoal', 6: 'Coffee Brown', 7: 'Cream', 8: 'Green', 9: 'Grey', 10: 'Grey Melange', 11: 'Khaki', 12: 'Lavender', 13: 'Lime Green', 14: 'Magenta', 15: 'Maroon', 16: 'Mauve', 17: 'Multi', 18: 'Mushroom Brown', 19: 'Mustard', 20: 'Navy Blue', 21: 'Nude', 22: 'Off White', 23: 'Olive', 24: 'Orange', 25: 'Peach', 26: 'Pink', 27: 'Purple', 28: 'Red', 29: 'Rose', 30: 'Rust', 31: 'Sea Green', 32: 'Skin', 33: 'Tan', 34: 'Teal', 35: 'Turquoise Blue', 36: 'White', 37: 'Yellow'}
 
 def get_gen(img_gen, subset, df, category):
     return img_gen.flow_from_dataframe(
@@ -86,6 +91,15 @@ def train_model(training_generator, validation_generator, ep):
 
     return model
 
+def load_all_models():
+    print('\n')
+    print("Loading all models")
+    usage_model = keras.models.load_model('usage')
+    article_model = keras.models.load_model('articleType')
+    season_model = keras.models.load_model('season')
+    bc_model = keras.models.load_model('baseColour')
+    return article_model, usage_model, season_model, bc_model
+
 def test_model(model, test_generator):
     results = model.evaluate(test_generator)
     print("Test Accuracy is" + str(results[1]))
@@ -125,11 +139,12 @@ def train_single_model(model, num, load1, load2):
     print("Training " + model + " model now")
     train_gen, val_gen, test_gen = load_data(model, load1, load2)
     rec_model = train_model(train_gen, val_gen, num)
+    rec_model.save(model)
     # test_model(rec_model, test_gen)
 
-    class_indices = {value: key for key, value in train_gen.class_indices.items()}
-    print(class_indices)
-    return rec_model, class_indices
+    # class_indices = {value: key for key, value in train_gen.class_indices.items()}
+    # print(class_indices)
+    # return rec_model, class_indices
     
 def predict(model, class_indices, path):
     image = tf.keras.preprocessing.image.load_img(path, target_size=(96, 96))
@@ -155,16 +170,26 @@ if __name__ == "__main__":
     # print(prediction2)
 
     print("\n training models")
-    article_model = train_single_model("article")
-    usage_model = train_single_model("usage")
-    season_model = train_single_model("season")
-    bc_model = train_single_model("bc")
+    # article_model = train_single_model("article")
+    # usage_model = train_single_model("usage")
+    # season_model = train_single_model("season")
+    # bc_model = train_single_model("bc")
+    # train_single_model("articleType", 3, 3000, 2500)
+    # train_single_model("usage", 1, 4000, 4000)
+    # train_single_model("season", 3, 4000, 4000)
+    train_single_model("baseColour", 3, 4000, 4000)
+
+    article_model, usage_model, season_model, bc_model = load_all_models()
 
     print("\n predicting")
-    article_prediction = predict(article_model[0], article_model[1], DEMO_PATH_2)
-    usage_prediction = predict(usage_model[0], usage_model[1], DEMO_PATH_2)
-    season_prediction = predict(season_model[0], season_model[1], DEMO_PATH_2)
-    bc_prediction = predict(bc_model[0], bc_model[1], DEMO_PATH_2)
+    # article_prediction = predict(article_model[0], article_model[1], DEMO_PATH_2)
+    # usage_prediction = predict(usage_model[0], usage_model[1], DEMO_PATH_2)
+    # season_prediction = predict(season_model[0], season_model[1], DEMO_PATH_2)
+    # bc_prediction = predict(bc_model[0], bc_model[1], DEMO_PATH_2)
+    article_prediction = predict(article_model, ARTICLE_CLASS_INDICES, DEMO_PATH_2)
+    usage_prediction = predict(usage_model, USAGE_CLASS_INDICES, DEMO_PATH_2)
+    season_prediction = predict(season_model, SEASON_CLASS_INDICES, DEMO_PATH_2)
+    bc_prediction = predict(bc_model, COLOUR_CLASS_INDICES, DEMO_PATH_2)
 
     print(article_prediction)
     print(usage_prediction)
