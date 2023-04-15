@@ -37,10 +37,7 @@ export const InitialStylePage = () => {
         formData.append('file', acceptedFiles[0])
         formData.append('fileName', acceptedFiles[0].path)
         const config = {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'content_type' : 'multipart/form-data'
-            },
+            headers: {'Access-Control-Allow-Origin': '*', 'content_type' : 'multipart/form-data'},
         }
 
         const currentUser = getAuth().currentUser
