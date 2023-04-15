@@ -2,7 +2,7 @@ import { Grid, TextField, Typography } from "@mui/material"
 
 export const GridFormItem = ( {title, titleSize='1.5rem', textSize='1.5rem', defaultValue, id, onChange, type} ) => {
     return (
-        <Grid container sx={{m: 1}} display='flex' flexDirection='row' alignItems='center'>
+        <Grid container sx={{m: 1}} display='flex' flexDirection='row' alignItems='center' height="50px">
             <Grid item xs={4} display='flex' flexDirection='row' justifyContent='flex-end' sx={{pr: 2}}>
                 <Typography fontSize={titleSize} fontWeight={650}>{title}</Typography>
             </Grid>
