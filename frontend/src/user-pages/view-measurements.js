@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box } from "@mui/material"
 import { WelcomeBanner } from "../components/welcome-banner";
 import { TabPanel } from '../account-page-components/tab-panel';
@@ -10,11 +11,13 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import { PrimaryLayout } from '../layout-components/primary-layout';
+import { PinkOutlineButton } from '../components/pink-outline-button';
 
 export const ViewMeasurements = () => {
     // TODO: make the measurements dynamic (connect to backend)
     // weight is in lb, the rest in inches
+    const navigate = useNavigate()
     const [measurements, setMeasurements] = useState([
         ["Height", 64],
         ["Weight", 130],
@@ -24,10 +27,7 @@ export const ViewMeasurements = () => {
 
 
     return (
-        <div>
-            <Navigation loggedIn={true}/>
-            <WelcomeBanner text='My Measurements'/>
-            <TabPanel activeTab='measurements'/>
+        <PrimaryLayout loggedIn={true} welcomeText='My Measurements' showWelcome={true} showTab={true} activeTab='measurements'>
             <Box className='main-content'>
                 <TableContainer sx={{ width: 160, boxShadow: "none" }} component={Paper}>
                     <Table aria-label="simple table">
@@ -49,6 +49,7 @@ export const ViewMeasurements = () => {
                     </Table>
                 </TableContainer>
             </Box>
-        </div>
+            <PinkOutlineButton text='Take Pictures' onClick={() => navigate('/take-image')}/>
+        </PrimaryLayout>
     )
 }

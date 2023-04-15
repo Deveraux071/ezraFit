@@ -1,12 +1,19 @@
 import { Typography, Box } from "@mui/material"
 import { PinkOutlineButton } from "../components/pink-outline-button"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { CalculatedPopup } from "../components/calculated-popup";
 
 export default function Calculated() {
     const navigate = useNavigate()
     const location = useLocation()
+
+    useEffect(() => {
+        localStorage.removeItem('check')
+        localStorage.removeItem('spread')
+        localStorage.removeItem('side')
+        localStorage.removeItem('leg')
+    }, [])
 
     const [showSize, setShowSize] = useState(false);
     const size = location.state !== null ? location.state.size : {upper: 0, lower: 0};
@@ -34,6 +41,5 @@ export default function Calculated() {
             <PinkOutlineButton onClick={(e) => navigateTo(e, '/register')} text='Create Account' fontSize='1.75rem'/>
             <CalculatedPopup onCancel={() => setShowSize(false)} open={showSize} size={size}/>
         </Box>
-        
     )
 }
