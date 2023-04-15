@@ -37,10 +37,7 @@ export const InitialStylePage = () => {
         formData.append('file', acceptedFiles[0])
         formData.append('fileName', acceptedFiles[0].path)
         const config = {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'content_type' : 'multipart/form-data'
-            },
+            headers: {'Access-Control-Allow-Origin': '*', 'content_type' : 'multipart/form-data'},
         }
 
         const currentUser = getAuth().currentUser
@@ -75,7 +72,7 @@ export const InitialStylePage = () => {
                 <title>My Style Recommendations | EzraFit</title>
             </Helmet>
             <Box margin="40px">
-                {preferences.length === 0 ? 
+                {preferences ? 
                     <div>
                     <Typography fontSize='1.5rem' fontWeight={650}>No Recommendations yet!</Typography> 
                         <Typography fontSize='1rem' fontWeight={500} marginTop={'1.5%'}>Upload an image of your preferred style below and we will take care of the rest!</Typography>

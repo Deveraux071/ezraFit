@@ -30,9 +30,7 @@ const Popup = ( props ) => {
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent sx = {{ minWidth: 500 }} >
-          {props.children}
-        </DialogContent>
+        <DialogContent sx = {{ minWidth: 500 }} >{props.children}</DialogContent>
         <DialogActions>
           <Button onClick={handleCancel}>Cancel</Button>
           <Button disabled={props.enableSubmit} autoFocus onClick={handleSubmit}>{props.submitText ?? "Submit"}</Button>
