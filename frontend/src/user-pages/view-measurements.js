@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box } from "@mui/material"
-import { WelcomeBanner } from "../components/welcome-banner";
-import { TabPanel } from '../account-page-components/tab-panel';
-import { Navigation } from "../components/navigation";
 import './view-measurements.css';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -24,7 +21,6 @@ export const ViewMeasurements = () => {
         ["Waist", 25],
         ["Legs", 28],
     ]);
-
 
     return (
         <PrimaryLayout loggedIn={true} welcomeText='My Measurements' showWelcome={true} showTab={true} activeTab='measurements'>
@@ -49,7 +45,9 @@ export const ViewMeasurements = () => {
                     </Table>
                 </TableContainer>
             </Box>
-            <PinkOutlineButton text='Take Pictures' onClick={() => navigate('/take-image')}/>
+            <Box textAlign='center'>
+                <PinkOutlineButton text='Take Pictures' onClick={() => navigate('/take-image')}/>
+            </Box>
         </PrimaryLayout>
     )
 }
