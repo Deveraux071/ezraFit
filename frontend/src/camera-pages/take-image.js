@@ -35,6 +35,10 @@ export const TakeImage = ( {imageType} ) => {
     imageType = imageType || location.state?.imageType 
     if (!imageType) {
         imageType = 'check'
+        localStorage.removeItem('check')
+        localStorage.removeItem('spread')
+        localStorage.removeItem('side')
+        localStorage.removeItem('leg')
     }
 
     const navigate = useNavigate();
