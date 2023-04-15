@@ -4,7 +4,7 @@ import { theme } from "../theme";
 
 export const ReturnToHome = ( {onClick} ) => {
     return (
-        <Link onClick={onClick} underline="always" display='flex' flexDirection='row'>
+        <Link component="button" onClick={onClick} underline="always" display='flex' flexDirection='row'>
             <NavigateBeforeIcon/>
             <Typography fontWeight={800} sx={{color: theme.colors.black}}>Return to Home</Typography>
         </Link>

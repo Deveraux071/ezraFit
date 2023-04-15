@@ -57,7 +57,7 @@ export default function RegisterForm( {formWidth} ) {
                 </Box>
             </Box>
             <Typography>
-                Already have an account? <Link onClick={() => navigate('/login')}>Login here!</Link>
+                Already have an account? <Link component="button" onClick={() => navigate('/login')}>Login here!</Link>
             </Typography>
         </Box>
     );
