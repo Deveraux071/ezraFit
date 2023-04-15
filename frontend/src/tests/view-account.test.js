@@ -18,6 +18,8 @@ test('renders EditAccount', () => {
         </Router>
     )
     expect(screen.getByText('View Account')).toBeInTheDocument()
+    expect(screen.getByText('Edit')).toBeInTheDocument()
+    expect(screen.getByText('Name:')).toBeInTheDocument()
     expect(screen.getByText('Change Password')).toBeInTheDocument()
 })
 
