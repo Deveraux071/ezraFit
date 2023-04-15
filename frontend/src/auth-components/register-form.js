@@ -43,22 +43,23 @@ export default function RegisterForm( {formWidth} ) {
     };
 
     return (
-        <Box sx={{paddingTop: 8, paddingBottom: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: theme.colors.white, width: '35%'}}>
-            <Typography fontSize='2.5rem'>Sign Up</Typography>
-            <Typography fontSize='1rem' color={theme.colors.red}>{err}</Typography>
-            <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1, width: '75%' }} width={formWidth} display='flex' flexDirection='column' justifyContent='center'>
-                <GridFormItem title='First Name:' titleSize='1.25rem' textSize='1rem' id='first_name' onChange={(e) => {setFirst(e.target.value)}}/>
-                <GridFormItem title='Last Name:' titleSize='1.25rem' textSize='1rem' id='last_name' onChange={(e) => {setLast(e.target.value)}}/>
-                <GridFormItem title='Email:' titleSize='1.25rem' textSize='1rem' id='email' onChange={(e) => {setEmail(e.target.value)}}/>
-                <GridFormItem title='Password:' titleSize='1.25rem' textSize='1rem' id='password' onChange={(e) => {setPw(e.target.value)}} type="password"/>
-                <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' sx={{marginTop: 8}}>
-                    <PinkFillButton text='Sign Up' fontSize='1.5rem' onClick={(e) => onSubmit(e)}/>
-                    <PinkOutlineButton text='Cancel' onClick={() => navigate('/landing')} fontSize='1.5rem'/>
+        <Box sx={{ paddingTop: 3, paddingBottom: 6, display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: theme.colors.white, width: '40%'}}>
+            <Typography fontSize='2.5rem' fontWeight="1000">Welcome! <span style={{fontWeight:'300'}}> - Sign Up</span> </Typography>
+            <Box sx={{ mt: 1, width: '80%', marginTop: "0px"}} width={formWidth} display='flex' flexDirection='column' justifyContent='center' alignSelf="center">
+            <GridFormItem title='First Name:' height="50px" titleSize='1rem' textSize='0.75rem' id='first_name' onChange={(e) => {setFirst(e.target.value)}}/>
+            <GridFormItem title='Last Name:' height="50px" titleSize='1rem' textSize='0.75rem' id='last_name' onChange={(e) => {setLast(e.target.value)}}/>
+            <GridFormItem title='Email:' height="50px" titleSize='1rem' textSize='0.75rem' id='email' onChange={(e) => {setEmail(e.target.value)}}/>
+            <GridFormItem title='Password:' height="50px" titleSize='1rem' textSize='0.75rem' id='password' onChange={(e) => {setPw(e.target.value)}} type="password"/>
+                <Typography textAlign="center" fontSize='1rem' color={theme.colors.red}>{err}</Typography>
+                <Box display='flex' flexDirection='column' justifyContent='top' alignItems='center' sx={{marginTop: 3}}>
+                    <PinkFillButton text='Sign Up' fontSize='1rem' onClick={(e) => onSubmit(e)} />
+                    <Typography marginTop="10px">
+                        Already have an account? <Link component="button" onClick={() => navigate('/login')}>Log in here!</Link>
+                    </Typography>
+                    <Typography marginBottom="15px" marginTop="15px" fontSize='1.5rem' fontWeight="1000"> OR </Typography>
+                    <PinkOutlineButton text='Continue as a guest' onClick={() => navigate('/take-image')} fontSize='1rem'/>
                 </Box>
             </Box>
-            <Typography>
-                Already have an account? <Link component="button" onClick={() => navigate('/login')}>Login here!</Link>
-            </Typography>
         </Box>
     );
 }
