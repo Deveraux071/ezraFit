@@ -20,7 +20,7 @@ export const ViewMeasurements = () => {
     const [measurements, setMeasurements] = useState([['CHEST'], ['HIP'], ['LEG'], ['SHOULDER'], ['SLEEVE'], ['WAIST']])
    
     useEffect(() => {
-        const dbRef = ref(db, '/users/' + user.uid + '/data');
+        const dbRef = ref(db, '/users/' + user?.uid + '/data');
         onValue(dbRef, (snapshot) => {
         if (snapshot.exists()){
             const measure_list = snapshot.val()
