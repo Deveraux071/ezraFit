@@ -142,6 +142,5 @@ export const SelectPoint = ( {img, type, dict} ) => {
             <Typography fontSize='2rem'>Click the {pos} point of the {currType === 'leg' ? 'ankle' : currType}</Typography>
             <img src={localStorage.getItem(currImg)} alt={currImg} onClick={(e) => getPos(e)}></img>
         </Box>
-        
     )
 }

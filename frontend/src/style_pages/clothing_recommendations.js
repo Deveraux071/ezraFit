@@ -21,16 +21,14 @@ export const ClothingRecommendationsPage = () => {
     });
     const [keywords, setKeywords] = useState([])
 
-    // calcualte keywords if the preferences are set
+    // calculate keywords if the preferences are set
     useEffect(() => {
-        // console.log("preferences changed")
         if (preferences.length > 0 && keywords.length === 0) {
             getKeywords()
         }
     }, [preferences]);
     
     const getKeywords = () => {
-        // console.log("getting keywords")
 
         // let url = 'https://ezrafit-backend.onrender.com/get-keywords'
         let url = 'http://localhost:5000/get-keywords'
@@ -40,7 +38,6 @@ export const ClothingRecommendationsPage = () => {
             url += `${encodeURIComponent(preference[0])}:${encodeURIComponent(preference[1])}&`
         )
         url = url.substring(url.length - 1) === "&" ? url.substring(0, url.length-1) : url  // remove last char if it's "&"
-        // console.log("url: ", url)
 
         const config = {
             headers: {
@@ -50,7 +47,6 @@ export const ClothingRecommendationsPage = () => {
         }
 
         axios.get(url, config).then((res) => {
-            // console.log("result:", res.data)
             setKeywords(res.data)
         })
     }
