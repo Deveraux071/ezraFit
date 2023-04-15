@@ -2,13 +2,13 @@ import sys, os
 sys.path.append(os.path.abspath(os.path.join('..', '')))
 #os.chdir#('..') #allows us to go back up one folder to body_measurement_folder
 import unittest
-from backend.body_measurement.code2 import analyze_chessboard, getDistance, pixel_to_distance, getHeadPoint, get_wrist, affine_correct, chess_board_corners, first_sharp_fall
+from backend.body_measurement.code2 import analyze_chessboard, getDistance, pixel_to_distance, affine_correct, chess_board_corners
 import cv2
 import numpy as np
 
 affine_correct_parameters_act_true = np.array([[9.40904323e-01, -2.06049356e-02, 8.65506247e+01], [6.93225464e-03, 9.72540133e-01, -8.98750876e+00], [-1.60726699e-05, 2.47661411e-06, 1.00000000e+00]])
-image1 = cv2.imread('./body_measurement/test_images/final_saket1.jpg')
-image2 = cv2.imread('./body_measurement/test_images/final_saket2.jpg')
+image1 = cv2.imread('./backend/tests/test_images/final_saket1.jpg')
+image2 = cv2.imread('./backend/tests/test_images/final_saket2.jpg')
 
 class TestUtils(unittest.TestCase):
     
