@@ -5,7 +5,6 @@ import { JointButton } from "./joint-button";
 import { Grid, Typography, Divider, Box } from "@mui/material";
 import { useAuth } from "../contexts/auth-context";
 
-
 export const Navigation = ( {loggedIn} ) => {
     const navigate = useNavigate();
     const { logout } = useAuth(); 
@@ -27,7 +26,7 @@ export const Navigation = ( {loggedIn} ) => {
                     <Divider orientation="vertical" variant="middle" flexItem/>
                     <Typography color={theme.colors.black} fontSize='1.75rem' fontWeight={500} sx={{paddingLeft: 2, paddingRight: 2, paddingTop: "7px"}}>Get your fit</Typography>
                 </Grid>
-                <Grid item xs={4} display='flex' justifyContent='flex-end' sx={{marginRight: 3}}>
+                <Grid item display='flex' flexDirection='row' justifyContent='flex-end' sx={{marginRight: 2}}>
                     <JointButton info={btns}/>
                 </Grid>
             </Grid>
