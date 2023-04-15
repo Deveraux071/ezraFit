@@ -1,12 +1,10 @@
 import os
 import openai
-
 import sys
-# to allow imports from parent directory, used for config
-sys.path.append("..")
-import config
+sys.path.append(os.path.abspath(os.path.join('..', '')))
+from backend.config import OPENAI_API_KEY
 
-openai.api_key = config.OPENAI_API_KEY
+openai.api_key = OPENAI_API_KEY
 
 
 def generate(preferences):

@@ -17,6 +17,10 @@ import { Instructions } from '../components/instructions';
 
 const times = [3, 5, 8, 10, 15, 20]
 const imgInfo = {
+    'check': {
+        'svg': <></>,
+        'nxt': 'spread',
+    },
     'spread': {
         'svg': <ArmsSpread/>,
         'nxt': 'side',
@@ -47,15 +51,8 @@ export const TakeImage = ( {imageType} ) => {
     const [time, setTime] = useState(-1);
     const [dropdownVal, setDropdownVal] = useState(-1);
     const [isTimeSet, setIsTimeSet] = useState(false);    
-    let svg;
-    let nxt = 'spread';
-    for (const image in imgInfo) {
-        if (image === imageType) {
-            svg = imgInfo[image]['svg']
-            nxt = imgInfo[image]['nxtsvg']
-            break;
-        }
-    }
+    let svg = imgInfo[imageType]['svg'];
+    let nxt = imgInfo[imageType]['nxt'];
 
     const showImage = () => {
         let img = webRef.current.getScreenshot();
