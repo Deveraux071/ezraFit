@@ -24,7 +24,7 @@ export const Navigation = ( {loggedIn} ) => {
     }
 
     let btns;
-    loggedIn ? (btns = [{'text': 'Settings', 'click': () => navigate('/settings')}, {'text': 'Log out', 'click': () => logOut()}]) : (btns = [{'text': 'Log in', 'click': () => navigate('/login')}, {'text': 'Sign up', 'click': () => navigate('/register')}])
+    loggedIn ? (btns = [{'text': 'Account', 'click': () => navigate('/account')}, {'text': 'Log out', 'click': () => logOut()}]) : (btns = [{'text': 'Log in', 'click': () => navigate('/login')}, {'text': 'Sign up', 'click': () => navigate('/register')}])
 
     return (
         <Box sx={{backgroundColor: theme.colors.white}}>
