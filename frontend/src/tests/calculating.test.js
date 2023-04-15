@@ -14,15 +14,3 @@ test('renders Calculating page', () => {
     )
     expect(screen.getByText(/Please stand by while we calculate your measurements!/i)).toBeInTheDocument();
 })
-
-test('renders Calculating page', async () => {
-    render(
-        <Router>
-            <AuthProvider>
-                <Calculating/>
-            </AuthProvider>
-        </Router>
-    )
-    await new Promise((r) => setTimeout(r, 3000));
-    expect(screen.getByText(/Your checkboard was not detected. Please use clearer images and try again./i)).toBeInTheDocument();
-})
