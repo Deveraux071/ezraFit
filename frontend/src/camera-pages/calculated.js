@@ -6,20 +6,20 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { CalculatedPopup } from "../components/calculated-popup";
 import { useAuth } from '../contexts/auth-context';
 
+const images = ['check', 'spread', 'side', 'leg']
 export default function Calculated() {
     const navigate = useNavigate()
     const location = useLocation()
     const { user } = useAuth()
 
     useEffect(() => {
-        localStorage.removeItem('check')
-        localStorage.removeItem('spread')
-        localStorage.removeItem('side')
-        localStorage.removeItem('leg')
+        images.map(img => {
+            localStorage.removeItem(img)
+        })
     }, [])
 
     const [showSize, setShowSize] = useState(false);
-    const size = location.state !== null ? location.state.size : {upper: 0, lower: 0};
+    const size = location.state?.size || {upper: 0, lower: 0};
 
     const onContinue = (e) => {
         e.preventDefault();
@@ -31,9 +31,7 @@ export default function Calculated() {
             <Helmet>
                 <title>Get Measurements - Measurements Calculated! | EzraFit</title>
             </Helmet>
-            <Typography fontSize='2rem' fontWeight={800}>
-                We have calculated your measurements!
-            </Typography>
+            <Typography fontSize='2rem' fontWeight={800}>We have calculated your measurements!</Typography>
             <PinkOutlineButton onClick={(e) => onContinue(e)} text='Continue Shopping >' fontSize='1.75rem'/>
             <Typography fontSize='1.5rem' fontWeight={700}>
                 Do more with EzraFit!
