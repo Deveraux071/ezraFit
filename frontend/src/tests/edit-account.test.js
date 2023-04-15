@@ -31,7 +31,6 @@ test('redirects to Account page on Save', async () => {
             </AuthProvider>
         </Router>
     )
-    screen.debug(undefined, 1000000)
     fireEvent.click(screen.getByText('Save Changes'))
     await waitFor(() => {screen.getByText('View Account')})
 })
