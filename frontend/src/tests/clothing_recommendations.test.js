@@ -3,17 +3,16 @@ import '@testing-library/jest-dom'
 import { BrowserRouter as Router } from 'react-router-dom';
 import { InitialStylePage } from '../style_pages/initial_style';
 import { AuthProvider } from '../contexts/auth-context';
+import { ClothingRecommendationsPage } from '../style_pages/clothing_recommendations';
 
-test('renders InitialStylePage with undefined user', async () => {
+test('renders page', () => {
     render(
         <Router>
             <AuthProvider>
-                <InitialStylePage/>
+                <ClothingRecommendationsPage/>
             </AuthProvider>
         </Router>
     )
-    expect(screen.getByText(/No Recommendations yet!/i))
-    fireEvent.click(screen.getByText(/Add Image/i))
-
-    await waitFor(() => screen.getByText("Upload an Image and update your preferences"))
+    expect(screen.getByText(/Zoe's Boutique/i))
+    expect(screen.getByText(/Here are some keywords that can be inputted into the store's search bar:/i))
 })

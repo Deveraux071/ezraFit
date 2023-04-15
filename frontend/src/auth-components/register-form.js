@@ -53,7 +53,6 @@ export default function RegisterForm( {formWidth} ) {
                 <GridFormItem title='Password:' titleSize='1.25rem' textSize='1rem' id='password' onChange={(e) => {setPw(e.target.value)}} type="password"/>
                 <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' sx={{marginTop: 8}}>
                     <PinkFillButton text='Sign Up' fontSize='1.5rem' onClick={(e) => onSubmit(e)}/>
-                    <PinkOutlineButton text='Cancel' onClick={() => navigate('/landing')} fontSize='1.5rem'/>
                 </Box>
             </Box>
             <Typography>
