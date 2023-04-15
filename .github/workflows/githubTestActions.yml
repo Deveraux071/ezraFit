@@ -1,0 +1,118 @@
+name: EzraFit CI
+run-name: ${{ github.actor }} is running tests
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20 # Add this line here
+    
+#     strategy:
+#       matrix:
+#         node-version: [12.x]
+    
+    steps:
+    - uses: tlambert03/setup-qt-libs@v1
+    - name: build "display"
+      run: |
+        /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 1920x1200x24 -ac +extension GLX
+    
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+        
+    - uses: actions/cache@v3 # not sure about this part 
+      id: cache
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.*') }}
+        restore-keys: | 
+          ${{ runner.os }}-pip-
+          
+#     - name: Check out repository code
+#       uses: actions/checkout@v3
+#     - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+#       - name: Use Node.js ${{ matrix.node-version }}
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: ${{ matrix.node-version }}
+# #       - name: List files in the repository
+# #         run: |
+# #           ls ${{ github.workspace }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest
+        pip install coverage
+        pip install numpy==1.21.6
+        pip install opencv-python
+        pip install python-math
+        
+    - name: Run frontend
+      working-directory: ./frontend
+      run: |
+        npm install
+        npm ci
+        npm test
+        npm install nyc
+        mkdir .nyc_output
+        
+    - name: Setup reporters
+      run: |
+        export GIT_BRANCH="${GITHUB_REF##*/}"    
+        curl -L codeclimate.com/downloads/test-reporter/test-reporter-0.7.0-darwin-amd64 > ./cc-test-reporter
+        chmod +x ./cc-test-reporter
+        ./cc-test-reporter before-build
+        
+    - name: "Python Coverage"
+      env:
+        DISPLAY: ':99.0'
+      run: |
+        coverage run -m pytest
+        coverage report && coverage xml
+        
+    - name: "Jest Coverage"
+      working-directory: ./frontend
+      run: |
+        ./node_modules/.bin/nyc report --reporter=lcov
+        npm ci
+        npm test -- --coverage --watchAll=false
+        
+    - name: "Format and upload test"
+      env:
+        CC_TEST_REPORTER_ID: 1b6106874f51e674209d8804a115173e144ec375da5489ec4867f0a9dac41eed
+      run: |                             
+        ./cc-test-reporter format-coverage -t lcov -o codeclimate.frontend.info frontend/coverage/lcov.info
+        ./cc-test-reporter format-coverage -t coverage.py -o codeclimate.backend.info
+        ./cc-test-reporter sum-coverage codeclimate.*.info -p 2 -o codeclimate.total.info
+        ./cc-test-reporter upload-coverage -i codeclimate.total.info --id $CC_TEST_REPORTER_ID
+ 
+#   coverage:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 20
+#     steps:
+#     - name: checkout code
+#       uses: actions/checkout@v3
+
+#     - name: install dependencies
+#       run: cd frontend && npm ci
+
+#     - name: run tests and instrument coverage
+#       run: cd frontend && npm run coverage
+   
+#     - name: publish code coverage to code-climate 
+#       uses: paambaati/codeclimate-action@v3.2.0
+#       env:
+#         CC_TEST_REPORTER_ID: 1b6106874f51e674209d8804a115173e144ec375da5489ec4867f0a9dac41eed
+#       with:
+#         debug: true
+#         coverageLocations: ${{github.workspace}}/frontend/coverage/lcov.info:lcov
+
+
+  
