@@ -12,6 +12,7 @@ import scipy
 # import tensorflow as tf
 import os
 
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 PATH = "training_data/"
 DEMO_PATH = "demo_data/1163.jpg"
 DEMO_PATH_2 = "demo_data/1855.jpg"
