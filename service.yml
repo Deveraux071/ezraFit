@@ -19,5 +19,6 @@ commands:
   server: 
     frontend: cd frontend; npm start
     backend: cd backend; source be/bin/activate; python3 app.py
-  test: cd frontend; npm test
-  python_test: python -m pytest
+  test: 
+    frontend: cd frontend; npm test
+    backend: python -m pytest
