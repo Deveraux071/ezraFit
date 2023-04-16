@@ -4,7 +4,7 @@ from sentry_sdk.integrations.flask import FlaskIntegration
 # import firebase
 from firebase import firebase
 
-from style_recommender import train_classifier
+# from style_recommender import train_classifier
 from body_measurement.code2 import measure_distance_new
 from size_recommender import get_size
 import firebase_admin
@@ -16,7 +16,7 @@ from flask_cors import CORS
 
 import sys
 sys.path.append('./style_recommender')
-import search_keywords
+# import search_keywords
 
 cred_obj = firebase_admin.credentials.Certificate('ezrafit-e157e-firebase-adminsdk-cen4y-5f13f60f88.json')
 default_app = firebase_admin.initialize_app(cred_obj, {
@@ -108,73 +108,73 @@ def upload_sample():
 def trigger_error():
   return 1/0
 
-@app.post('/train_usage')
-def train_usage():
-  global usage_model
-  global usage_classes
-  usage_res = train_classifier.train_single_model("usage", 1, 4000, 4000)
-  usage_model = usage_res[0]
-  usage_classes = usage_res[1]
+# @app.post('/train_usage')
+# def train_usage():
+#   global usage_model
+#   global usage_classes
+#   usage_res = train_classifier.train_single_model("usage", 1, 4000, 4000)
+#   usage_model = usage_res[0]
+#   usage_classes = usage_res[1]
 
-  return "ok"
+#   return "ok"
 
-@app.post('/train_all_models')
-def train_models():
-  global usage_model
-  global usage_classes
-  global article_model
-  global article_classes
-  global season_model
-  global season_classes
-  global bc_model
-  global bc_classes
+# @app.post('/train_all_models')
+# def train_models():
+#   global usage_model
+#   global usage_classes
+#   global article_model
+#   global article_classes
+#   global season_model
+#   global season_classes
+#   global bc_model
+#   global bc_classes
   
-  usage_res = train_classifier.train_single_model("usage", 1, 4000, 4000)
-  usage_model = usage_res[0]
-  usage_classes = usage_res[1]
+#   usage_res = train_classifier.train_single_model("usage", 1, 4000, 4000)
+#   usage_model = usage_res[0]
+#   usage_classes = usage_res[1]
 
-  article_res = train_classifier.train_single_model("articleType", 3, 3000, 2500)
-  article_model = article_res[0]
-  article_classes = article_res[1]
+#   article_res = train_classifier.train_single_model("articleType", 3, 3000, 2500)
+#   article_model = article_res[0]
+#   article_classes = article_res[1]
 
-  season_res = train_classifier.train_single_model("season", 3, 4000, 4000)
-  season_model = season_res[0]
-  season_classes = season_res[1]
+#   season_res = train_classifier.train_single_model("season", 3, 4000, 4000)
+#   season_model = season_res[0]
+#   season_classes = season_res[1]
 
-  bc_res = train_classifier.train_single_model("baseColour", 3, 4000, 4000)
-  bc_model = bc_res[0]
-  bc_classes = bc_res[1]
+#   bc_res = train_classifier.train_single_model("baseColour", 3, 4000, 4000)
+#   bc_model = bc_res[0]
+#   bc_classes = bc_res[1]
 
-  return "ok"
+#   return "ok"
 
-@app.post('/predict_usage')
-def predict_usage():
-  img = request.files['file']
-  if img.filename == '':
-    return redirect(request.url)
-  else:
-    img.filename = "uploaded_img.jpg"
-    filename = secure_filename(img.filename)
-    img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    # return "ok"
-    return train_classifier.predict(usage_model, USAGE_CLASS_INDICES, "demo_data/uploaded_img.jpg")
+# @app.post('/predict_usage')
+# def predict_usage():
+#   img = request.files['file']
+#   if img.filename == '':
+#     return redirect(request.url)
+#   else:
+#     img.filename = "uploaded_img.jpg"
+#     filename = secure_filename(img.filename)
+#     img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+#     # return "ok"
+#     return train_classifier.predict(usage_model, USAGE_CLASS_INDICES, "demo_data/uploaded_img.jpg")
 
-@app.post('/predict_all')
-def predict_all():
-  img = request.files['file']
-  if img.filename == '':
-    return redirect(request.url)
-  else:
-    img.filename = "uploaded_img.jpg"
-    filename = secure_filename(img.filename)
-    img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    usage = train_classifier.predict(usage_model, USAGE_CLASS_INDICES, "demo_data/uploaded_img.jpg")
-    article = train_classifier.predict(article_model, ARTICLE_CLASS_INDICES, "demo_data/uploaded_img.jpg")
-    season = train_classifier.predict(season_model, SEASON_CLASS_INDICES, "demo_data/uploaded_img.jpg")
-    bc = train_classifier.predict(bc_model, COLOUR_CLASS_INDICES, "demo_data/uploaded_img.jpg")
+# @app.post('/predict_all')
+# def predict_all():
+#   img = request.files['file']
+#   if img.filename == '':
+#     return redirect(request.url)
+#   else:
+#     img.filename = "uploaded_img.jpg"
+#     filename = secure_filename(img.filename)
+#     img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+#     usage = train_classifier.predict(usage_model, USAGE_CLASS_INDICES, "demo_data/uploaded_img.jpg")
+#     article = train_classifier.predict(article_model, ARTICLE_CLASS_INDICES, "demo_data/uploaded_img.jpg")
+#     season = train_classifier.predict(season_model, SEASON_CLASS_INDICES, "demo_data/uploaded_img.jpg")
+#     bc = train_classifier.predict(bc_model, COLOUR_CLASS_INDICES, "demo_data/uploaded_img.jpg")
 
-    to_return = [article, usage, season, bc]
-    return to_return
+#     to_return = [article, usage, season, bc]
+#     return to_return
 
 @app.route('/get-measurements', methods=['POST'])
 def get_measurements():
@@ -227,10 +227,10 @@ def get_measurements():
       "lower": recommanded_lower_size
     })
 
-@app.route('/get-keywords')
-def get_search_keywords():
-  response = search_keywords.generate(request.args.to_dict())
-  return response, 200
+# @app.route('/get-keywords')
+# def get_search_keywords():
+#   response = search_keywords.generate(request.args.to_dict())
+#   return response, 200
 
 
 if __name__ == "__main__":
