@@ -11,17 +11,17 @@ export const TabPanel = ( {activeTab} ) => {
     const tabs = [ {
             'name': 'style',
             'text': 'Style Recommendations',
-            'icon': <ClothesIcon width='5%' color={activeTab === 'style' ? theme.colors.pink : theme.colors.gray}/>
+            'icon': <ClothesIcon width='25px' color={activeTab === 'style' ? theme.colors.pink : theme.colors.gray}/>
         }, 
         {
             'name': 'measurements',
             'text': 'Measurements',
-            'icon': <MeasuringTape width='5%' color={activeTab === 'measurements' ? theme.colors.pink : theme.colors.gray}/>
+            'icon': <MeasuringTape width='25px' color={activeTab === 'measurements' ? theme.colors.pink : theme.colors.gray}/>
         },
         {
             'name': 'account',
             'text': 'Account',
-            'icon': <AccountIcon width='5%' color={activeTab === 'account' ? theme.colors.pink : theme.colors.gray}/>
+            'icon': <AccountIcon width='25px' color={activeTab === 'account' ? theme.colors.pink : theme.colors.gray}/>
         }
     ]
 
