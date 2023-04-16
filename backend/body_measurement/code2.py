@@ -1,7 +1,5 @@
-import argparse
 import cv2
 import numpy as np
-import argparse
 import math
 import sys, os
 sys.path.append(os.path.abspath(os.path.join('..', '')))
@@ -175,8 +173,7 @@ def measure_distance_new(checkboardImage, points, affineFlag='False'):
 	hip_b = get_points_from_measurements(points, 'hip', 'side')
 	all_measurements['hip'] = get_perimeter(hip_a, hip_b, metre_pixel_x, metre_pixel_y)
 
-	cv2.imwrite('detected2.jpg', segmented_image)	
-	
+	cv2.imwrite('detected2.jpg', segmented_image)
 	left_fall = points['neck']['check']['left']
 	left_shoulder = points['shoulder']['check']['left']
 	right_fall = points['neck']['check']['right']

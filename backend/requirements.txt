@@ -184,7 +184,5 @@ whitenoise==6.0.0
 wordcloud==1.8.2.2
 wrapt==1.15.0
 wsproto==1.2.0
-python-firebase
-firebase_admin
 coverage
 yarl==1.8.2
