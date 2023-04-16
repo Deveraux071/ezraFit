@@ -53,6 +53,8 @@ jobs:
         pip install numpy==1.21.6
         pip install opencv-python
         pip install python-math
+        pip install openai
+        pip install python-dotenv
         
     - name: Run frontend
       working-directory: ./frontend
@@ -92,27 +94,4 @@ jobs:
         ./cc-test-reporter format-coverage -t coverage.py -o codeclimate.backend.info
         ./cc-test-reporter sum-coverage codeclimate.*.info -p 2 -o codeclimate.total.info
         ./cc-test-reporter upload-coverage -i codeclimate.total.info --id $CC_TEST_REPORTER_ID
- 
-#   coverage:
-#     runs-on: ubuntu-latest
-#     timeout-minutes: 20
-#     steps:
-#     - name: checkout code
-#       uses: actions/checkout@v3
-
-#     - name: install dependencies
-#       run: cd frontend && npm ci
-
-#     - name: run tests and instrument coverage
-#       run: cd frontend && npm run coverage
-   
-#     - name: publish code coverage to code-climate 
-#       uses: paambaati/codeclimate-action@v3.2.0
-#       env:
-#         CC_TEST_REPORTER_ID: 1b6106874f51e674209d8804a115173e144ec375da5489ec4867f0a9dac41eed
-#       with:
-#         debug: true
-#         coverageLocations: ${{github.workspace}}/frontend/coverage/lcov.info:lcov
-
-
   
