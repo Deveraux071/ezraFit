@@ -7,8 +7,8 @@ tools:
 
 services:
   production: 
-    frontend: https://ezrafit.onrender.com/
-    backend: https://ezrafit-backend.onrender.com/ 
+    frontend: https://ezrafit-frontend.onrender.com/
+    backend: https://ezrafit-backend-ayjn.onrender.com
 
 docs:
   getting_started: https://github.com/dcsil/ezra
