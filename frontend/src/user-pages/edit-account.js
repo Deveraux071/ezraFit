@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 import { theme } from "../theme"
 import { Box, Typography, Button } from "@mui/material"
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { PinkOutlineButton } from "../components/pink-outline-button"
 import { PinkFillButton } from "../components/pink-fill-button"
 import { PasswordChangePopup } from '../account-page-components/password-change-popup';
@@ -51,10 +52,15 @@ export const EditAccount = () => {
                 <title>Edit My Account | EzraFit</title>
             </Helmet>
             <Box component="form" onSubmit={onSave} noValidate display='flex' flexDirection='column' justifyContent='center' width='50%' alignItems='center' sx={{m:'auto'}} >
-                <Typography fontSize='1rem' color={theme.colors.red}>{errMsg}</Typography>
                 {fields.map((field) => { return (
                     <GridFormItem key={field.id} title={field.title} defaultValue={field.defaultVal} id={field.id} onChange={field.fn}/>
                 )})}
+                {errMsg ? 
+                    <Typography display='flex' justifyContent="center" textAlign="center" alignItems="center" fontSize='1rem' color={theme.colors.red}>
+                        <ErrorOutlineIcon/>
+                        {errMsg}
+                    </Typography> : null
+                }
                 <PasswordChangeComp onClick={() => setPwChange(true)}/>
                 <Button variant='outlined' onClick={() => onDelete()} startIcon={<DeleteForeverOutlinedIcon sx={{ color: theme.colors.red}}/>} sx={{background: theme.colors.white, borderColor: theme.colors.red, borderRadius: '20px', textTransform: 'none'}}>
                     <Typography sx={{color: theme.colors.red}} fontSize='1.25rem' fontWeight={650}>Delete My Account</Typography>

@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet';
 import { Typography, Box } from "@mui/material"
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { theme } from "../theme"
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -28,7 +29,10 @@ export default function Calculating() {
                 <title>Get Measurements - Calculating Measurements | EzraFit</title>
             </Helmet>
             {errMsg ? <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
-                <Typography fontSize='1.25rem' fontWeight={600} color={theme.colors.red}>{errMsg}</Typography>
+                <Typography display='flex' justifyContent="center" textAlign="center" alignItems="center" fontSize='1.25rem' fontWeight={600} color={theme.colors.red}>
+                    <ErrorOutlineIcon/>
+                    {errMsg}
+                </Typography>
                 <PinkFillButton onClick={() => navigate('/take-image')} text='Retake Images'/>
             </Box> : <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
                 <Typography fontSize='2rem' fontWeight={800}>
