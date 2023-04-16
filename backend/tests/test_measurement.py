@@ -2,7 +2,7 @@ import sys, os
 sys.path.append(os.path.abspath(os.path.join('..', '')))
 #os.chdir#('..') #allows us to go back up one folder to body_measurement_folder
 import unittest
-from backend.body_measurement.code2 import analyze_chessboard, getDistance, pixel_to_distance, affine_correct, chess_board_corners
+from backend.body_measurement.code2 import analyze_chessboard, getDistance, pixel_to_distance, affine_correct, chess_board_corners, get_pixel_distance, get_perimeter, get_distance_between_fall, get_points_from_measurements
 import cv2
 import numpy as np
 
@@ -12,6 +12,30 @@ image2 = cv2.imread('./backend/tests/test_images/final_saket2.jpg')
 
 class TestUtils(unittest.TestCase):
     
+    def test_get_points_from_measurements(self):
+        points_arr, body_part, position = {'waist': {'spread': {'left': [276.5, 351], 'right': [420.5, 361]}, 'side': {'left': [256.5, 371], 'right': [355.5, 355]}, 'leg': {'left': [315.5, 200], 'right': [408.5, 201]}}, 'chest': {'spread': {'left': [295.5, 189], 'right': [411.5, 195]}, 'side': {'left': [254.5, 265], 'right': [378.5, 266]}}, 'hip': {'spread': {'left': [262.5, 411], 'right': [428.5, 415]}, 'side': {'left': [259.5, 416], 'right': [379.5, 417]}}, 'neck': {'spread': {'left': [330.5, 181], 'right': [382.5, 176]}, 'check': {'left': [311.5, 172], 'right': [367.5, 172]}}, 'shoulder': {'spread': {'left': [282.5, 178], 'right': [417.5, 184]}, 'check': {'left': [255.5, 205], 'right': [415.5, 203]}}, 'wrist': {'spread': {'left': [95.5, 179], 'right': [641.5, 197]}}, 'leg': {'leg': {'left': [308.5, 428], 'right': [422.5, 425]}}}, 'hip', 'spread'
+        points_out = get_points_from_measurements(points_arr, body_part, position)
+        points_act = [[262.5, 411], [428.5, 415]]
+        self.assertEqual(points_act, points_out)
+
+    def test_get_pixel_distance(self):
+        loc1, loc2, metre_pixel_x, metre_pixel_y = [255.5, 205], [311.5, 172], 0.10531999691445322, 0.3252523974187657
+        dist_out = get_pixel_distance(loc1, loc2, metre_pixel_x, metre_pixel_y)
+        dist_act = 12.247032790648374
+        self.assertEqual(dist_act, dist_out)
+
+    def test_get_distance_between_fall(self):
+        points_arr, metre_pixel_x, metre_pixel_y = [[255.5, 205], [311.5, 172], [415.5, 203], [367.5, 172]], 0.10531999691445322, 0.3252523974187657
+        dist_out = get_distance_between_fall(points_arr, metre_pixel_x, metre_pixel_y)
+        dist_act = 29.42413740665142
+        self.assertEqual(dist_act, dist_out)
+
+    def test_get_perimeter(self):
+        points1, points2, metre_pixel_x, metre_pixel_y = [[259.5, 416], [379.5, 417]],[[259.5, 416], [379.5, 417]],0.10531999691445322, 0.3252523974187657
+        perimeter_acc = 39.716678148606015
+        perimeter_out = get_perimeter(points1, points2, metre_pixel_x, metre_pixel_y)
+        self.assertEqual(perimeter_acc, perimeter_out)
+
     def test_getDistance(self):
         getDistance_out = getDistance([620, 1045], [1582, 782])
         getDistance_act = (-962, 263)
