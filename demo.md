@@ -2,7 +2,7 @@
 
 Link to the demo video: https://drive.google.com/file/d/1tnR3h6lRXTMCNwa-c8oO4rxh9lr4Z7kf/view?usp=sharing
 
-NOTE: To test the size recommender, you will need a 9x6 black and white checkboard that has been added to this repo as checkboardImg.png. When using this checkboard, ensure that the length of each square's side is 2.84cm. This is required for caliberation. 
+NOTE: To test the size recommender, you will need a 9x6 inch black and white checkerboard that has been added to this repo as `checkboardImg.png`. When using this checkerboard, ensure that the length of each square's side is 2.84cm. This is required for calibration. 
 
 ## Demo Writeup
 
