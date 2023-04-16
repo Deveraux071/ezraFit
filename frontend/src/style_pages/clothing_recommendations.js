@@ -28,9 +28,9 @@ export const ClothingRecommendationsPage = () => {
     }, [preferences]);
     
     const getKeywords = () => {
-
-        // let url = 'https://ezrafit-backend.onrender.com/get-keywords'
-        let url = 'http://localhost:5000/get-keywords'
+        // Change here
+        let url = 'https://ezrafit-backend-ayjn.onrender.com/get-keywords'
+        // let url = 'http://localhost:5000/get-keywords'
         // add preferences as query params
         url += preferences[0] ? "?" : ""
         preferences.forEach((preference) =>

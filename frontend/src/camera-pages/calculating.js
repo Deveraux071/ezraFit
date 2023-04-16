@@ -13,9 +13,11 @@ export default function Calculating() {
     const navigate = useNavigate();
     const [errMsg, setErrMsg] = useState('')
 
+    // Deploy URL: "https://ezrafit-backend-ayjn.onrender.com/get-measurements"
+    // Test URL: 'http://localhost:5000/get-measurements'
     useEffect(() => {
         const check = localStorage.getItem('check') !== null ? localStorage.getItem('check').split(',')[1] : ''
-        fetch('http://localhost:5000/get-measurements', {
+        fetch('https://ezrafit-backend-ayjn.onrender.com/get-measurements', {
             method: 'POST',
             headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
             body: JSON.stringify({checkboardImg: check, points: points, company: 'zara', user: user ? user.uid : ''})

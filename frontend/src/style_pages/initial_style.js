@@ -31,8 +31,9 @@ export const InitialStylePage = () => {
         
 
     const handleSubmit = () => {
-        // const url = 'https://ezrafit-backend.onrender.com/predict_all'
-        const url = 'http://localhost:5000/predict_all'
+        // Change here
+        const url = 'https://ezrafit-backend-ayjn.onrender.com/predict_all'
+        // const url = 'http://localhost:5000/predict_all'
         const formData = new FormData()
         formData.append('file', acceptedFiles[0])
         formData.append('fileName', acceptedFiles[0].path)

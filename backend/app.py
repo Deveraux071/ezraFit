@@ -45,41 +45,46 @@ sentry_sdk.init(
     traces_sample_rate=0.1,
     environment="production",
 )
-
-def create_app():
-  app = Flask(__name__)
-  app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-  global usage_model
-  # global usage_classes
-  global article_model
-  # global article_classes
-  global season_model
-  # global season_classes
-  global bc_model
-  # global bc_classes
+# This was code to train models before server start, but I am removing this for deployment
+# def create_app():
+#   app = Flask(__name__)
+#   app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+#   global usage_model
+#   # global usage_classes
+#   global article_model
+#   # global article_classes
+#   global season_model
+#   # global season_classes
+#   global bc_model
+#   # global bc_classes
   
-  # usage_res = train_classifier.train_single_model("usage", 1, 4000, 4000)
-  # usage_model = usage_res[0]
-  # usage_classes = usage_res[1]
+#   # usage_res = train_classifier.train_single_model("usage", 1, 4000, 4000)
+#   # usage_model = usage_res[0]
+#   # usage_classes = usage_res[1]
 
-  # article_res = train_classifier.train_single_model("articleType", 3, 3000, 2500)
-  # article_model = article_res[0]
-  # article_classes = article_res[1]
+#   # article_res = train_classifier.train_single_model("articleType", 3, 3000, 2500)
+#   # article_model = article_res[0]
+#   # article_classes = article_res[1]
 
-  # season_res = train_classifier.train_single_model("season", 3, 4000, 4000)
-  # season_model = season_res[0]
-  # season_classes = season_res[1]
+#   # season_res = train_classifier.train_single_model("season", 3, 4000, 4000)
+#   # season_model = season_res[0]
+#   # season_classes = season_res[1]
 
-  # bc_res = train_classifier.train_single_model("baseColour", 3, 4000, 4000)
-  # bc_model = bc_res[0]
-  # bc_classes = bc_res[1]
+#   # bc_res = train_classifier.train_single_model("baseColour", 3, 4000, 4000)
+#   # bc_model = bc_res[0]
+#   # bc_classes = bc_res[1]
 
-  article_model, usage_model, season_model, bc_model = train_classifier.load_all_models()
+#   article_model, usage_model, season_model, bc_model = train_classifier.load_all_models()
 
-  return app
+#   return app
 
-app = create_app()
-CORS(app, origins=['http://localhost:3000'])
+# app = create_app()
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+# This is for local deployment
+# CORS(app, origins=['http://localhost:3000'])
+# This is for production
+CORS(app, origins=['https://ezrafit-frontend.onrender.com/'])
 
 
 @app.route("/")
