@@ -2,6 +2,7 @@ import * as React from 'react';
 import { PinkFillButton } from '../components/pink-fill-button';
 import { PinkOutlineButton } from '../components/pink-outline-button';
 import { Box, Typography, Link } from '@mui/material';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { theme } from '../theme';
 import { useNavigate } from 'react-router-dom';
 import { GridFormItem } from '../styled-grids/grid-form-item';
@@ -26,7 +27,10 @@ export default function LoginRegisterForm( {formWidth, login, inputs, onSubmit, 
                         type={input.type ?? "default"}
                     />
                 )}
-                <Typography textAlign="center" fontSize='1rem' color={theme.colors.red}>{err}</Typography>
+                { err ?
+                    <Typography display='flex' justifyContent="center" textAlign="center" alignItems="center" fontSize='1rem' color={theme.colors.red}><ErrorOutlineIcon/>{err}</Typography>
+                    : null
+                }  
                 <Box display='flex' flexDirection='column' justifyContent='top' alignItems='center' sx={{marginTop: 3}}>
                     <PinkFillButton 
                         text={`${login ? "Log In" : "Sign Up"}`} 

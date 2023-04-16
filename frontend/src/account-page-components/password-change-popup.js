@@ -1,4 +1,5 @@
 import { Box, Typography, Dialog } from "@mui/material"
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { PinkOutlineButton } from "../components/pink-outline-button"
 import { PinkFillButton } from "../components/pink-fill-button"
 import { useAuth } from "../contexts/auth-context";
@@ -43,7 +44,11 @@ export const PasswordChangePopup = ( {onCancel, open} ) => {
                     <PinkOutlineButton text='Cancel' onClick={onCancel} width='15%'/>
                     <PinkFillButton text='Save Changes' width='25%' type='submit'/>
                 </Box>
-                <Typography  fontSize='1.5rem' color={theme.colors.red}>{err}</Typography>
+                {err ? <Typography display='flex' justifyContent="center" textAlign="center" alignItems="center" fontSize='1.5rem' color={theme.colors.red}>
+                        <ErrorOutlineIcon/>
+                        {err}
+                    </Typography> : null
+                }
             </Box>
         </Dialog>
     )
